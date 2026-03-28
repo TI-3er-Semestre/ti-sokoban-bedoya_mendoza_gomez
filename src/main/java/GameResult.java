@@ -1,0 +1,47 @@
+/**
+ * Stores the result of a completed game session for a player on a specific level.
+ * Implements Comparable to allow sorting in the leaderboard.
+ */
+public class GameResult implements Comparable<GameResult> {
+
+    private Player player;
+    private int levelId;
+    private int moves;
+    private int pushes;
+    private long timeMillis;
+
+    public GameResult(Player player, int levelId, int moves, int pushes, long timeMillis) {
+        // TODO: implement
+    }
+
+    /**
+     * Compares results: lower moves wins; if tied, lower time wins.
+     * @param r other GameResult to compare against
+     * @return negative if this is better, positive if r is better
+     */
+    @Override
+    public int compareTo(GameResult r) {
+        // TODO: implement
+        return 0;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public int getLevelId() {
+        return levelId;
+    }
+
+    public int getMoves() {
+        return moves;
+    }
+
+    public int getPushes() {
+        return pushes;
+    }
+
+    public long getTimeMillis() {
+        return timeMillis;
+    }
+}
