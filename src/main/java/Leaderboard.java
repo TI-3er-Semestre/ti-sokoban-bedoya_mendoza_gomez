@@ -1,5 +1,3 @@
-package com.sokoban.model;
-
 /**
  * Maintains the top-K leaderboard for a specific level.
  * Uses a priority queue structure (implemented manually, no PriorityQueue from Java).
