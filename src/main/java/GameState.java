@@ -14,6 +14,9 @@ public class GameState {
 
     public GameState(Board board, Position playerPosition, int currentLevel) {
         // TODO: implement
+        this.board = board;
+        this.playerPosition = playerPosition;
+        this.currentLevel = currentLevel;
     }
 
     /**
@@ -23,7 +26,7 @@ public class GameState {
      */
     public boolean isVictory() {
         // TODO: implement
-        return false;
+        return this.board != null && this.board.isCompleted();
     }
 
     /**
