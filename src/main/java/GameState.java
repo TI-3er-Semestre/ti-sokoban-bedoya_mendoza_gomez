@@ -13,9 +13,7 @@ public class GameState {
     private int currentLevel;
 
     public GameState(Board board, Position playerPosition, int currentLevel) {
-        this.board = board;
-        this.playerPosition = playerPosition;
-        this.currentLevel = currentLevel;
+        // TODO: implement
     }
 
     /**

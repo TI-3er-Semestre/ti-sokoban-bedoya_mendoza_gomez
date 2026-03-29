@@ -27,16 +27,63 @@ public class GameControllerTest {
      * Celda libre en (2,1)
      * Muro en (2,0)
      */
+
+
     private GameState setupStage1() {
         Board board = new Board(5, 5);
-
-        board.setCell(2, 2, new PlayerCell());
-        // la celda libre
-        board.setCell(2, 1, new EmptyCell());
-        // el muro
         board.setCell(2, 0, new WallCell());
+        board.setCell(2, 1, new PlayerCell());
+        board.setGoalPositions(new Position[]{});
+        return new GameState(board, new Position(2, 1), 1);
+    }
 
+    /**
+     * setupStage2:
+     * Tablero 5x5. Jugador en (2,2). Caja en (2,1). Celda libre en (2,0).
+     *
+     *   Col:  0    1    2    3    4
+     * Fila 2: [ ] [B]  [P]  [ ]  [ ]
+     */
+    private GameState setupStage2() {
+        Board board = new Board(5, 5);
+        board.setCell(2, 1, new BoxCell());
+        board.setCell(2, 2, new PlayerCell());
+        board.setGoalPositions(new Position[]{});
         return new GameState(board, new Position(2, 2), 1);
+    }
+
+    /**
+     * setupStage3:
+     * Tablero 5x5. Jugador en (2,2). Caja en (2,1). Muro en (2,0).
+     * La caja está bloqueada por el muro — no se puede empujar.
+     *
+     *   Col:  0    1    2    3    4
+     * Fila 2: [W] [B]  [P]  [ ]  [ ]
+     */
+    private GameState setupStage3() {
+        Board board = new Board(5, 5);
+        board.setCell(2, 0, new WallCell());
+        board.setCell(2, 1, new BoxCell());
+        board.setCell(2, 2, new PlayerCell());
+        board.setGoalPositions(new Position[]{});
+        return new GameState(board, new Position(2, 2), 1);
+    }
+
+    /**
+     * setupStage4:
+     * Tablero 5x5. Jugador en (2,3). Dos cajas consecutivas en (2,2) y (2,1).
+     * No se pueden empujar dos cajas seguidas.
+     *
+     *   Col:  0    1    2    3    4
+     * Fila 2: [ ] [B]  [B]  [P]  [ ]
+     */
+    private GameState setupStage4() {
+        Board board = new Board(5, 5);
+        board.setCell(2, 1, new BoxCell());
+        board.setCell(2, 2, new BoxCell());
+        board.setCell(2, 3, new PlayerCell());
+        board.setGoalPositions(new Position[]{});
+        return new GameState(board, new Position(2, 3), 1);
     }
 
     /**
@@ -199,4 +246,60 @@ public class GameControllerTest {
         controller.setStateForTesting(setupStage5());
         assertFalse(controller.checkVictory());
     }
+    // ---------------------------------------------------------------
+    // move()
+    // ---------------------------------------------------------------
+    @Test
+    void testMove_stage2_LEFT_pushesBox_returnsTrue() {
+        GameController controller = new GameController(null, null, null);
+        controller.setStateForTesting(setupStage2());
+
+        boolean result = controller.move(Direction.LEFT);
+
+        assertTrue(result);
+    }
+
+    @Test
+    void testMove_stage3_LEFT_boxBlockedByWall_returnsFalse() {
+        GameController controller = new GameController(null, null, null);
+        controller.setStateForTesting(setupStage3());
+
+        boolean result = controller.move(Direction.LEFT);
+
+        assertFalse(result);
+    }
+
+    @Test
+    void testMove_stage4_LEFT_twoConsecutiveBoxes_returnsFalse() {
+        GameController controller = new GameController(null, null, null);
+        controller.setStateForTesting(setupStage4());
+
+        boolean result = controller.move(Direction.LEFT);
+
+        assertFalse(result);
+    }
+
+    // ---------------------------------------------------------------
+    // isPushingBox()
+    // ---------------------------------------------------------------
+    @Test
+    void testIsPushingBox_stage2_LEFT_returnsTrue() {
+        GameController controller = new GameController(null, null, null);
+        controller.setStateForTesting(setupStage2());
+
+        controller.move(Direction.LEFT);
+
+        assertEquals(1, controller.getPushCount());
+    }
+
+    @Test
+    void testIsPushingBox_stage1_LEFT_returnsFalse() {
+        GameController controller = new GameController(null, null, null);
+        controller.setStateForTesting(setupStage1());
+
+        controller.move(Direction.LEFT);
+
+        assertEquals(0, controller.getPushCount());
+    }
+
 }
