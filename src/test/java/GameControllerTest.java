@@ -18,8 +18,26 @@ public class GameControllerTest {
     }
 
     // ---------------------------------------------------------------
-    // Helpers — escenarios de prueba
+    // escenarios de prueba
     // ---------------------------------------------------------------
+    /**
+     * setupStage1:
+     * Tablero 5×5
+     * Jugador en (2,2)
+     * Celda libre en (2,1)
+     * Muro en (2,0)
+     */
+    private GameState setupStage1() {
+        Board board = new Board(5, 5);
+
+        board.setCell(2, 2, new PlayerCell());
+        // la celda libre
+        board.setCell(2, 1, new EmptyCell());
+        // el muro
+        board.setCell(2, 0, new WallCell());
+
+        return new GameState(board, new Position(2, 2), 1);
+    }
 
     /**
      * setupStage6: tablero 4x4.
@@ -53,6 +71,80 @@ public class GameControllerTest {
                 new Position(0, 1)
         });
         return new GameState(board, new Position(3, 3), 1);
+    }
+
+
+    /**
+     * PRUEBA 1
+      */
+
+    @Test
+    void testMoveLeft_validMove() {
+        // Arrange
+        controller.setStateForTesting(setupStage1());
+        // Act
+        boolean result = controller.move(Direction.LEFT);
+
+        // Assert
+        assertTrue(result, "El jugador debería poder moverse a la izquierda");
+        assertEquals(2, controller.getCurrentState().getPlayerPosition().getRow());
+        assertEquals(1, controller.getCurrentState().getPlayerPosition().getCol());
+    }
+
+    @Test
+    void testMoveUp_validMove() {
+        // Arrange
+        controller.setStateForTesting(setupStage1());
+
+        // Act
+        boolean result = controller.move(Direction.UP);
+
+        // Assert
+        assertTrue(result);
+        assertEquals(1, controller.getCurrentState().getPlayerPosition().getRow());
+        assertEquals(2, controller.getCurrentState().getPlayerPosition().getCol());
+    }
+
+    @Test
+    void testMoveDown_validMove() {
+        // Arrange
+        controller.setStateForTesting(setupStage1());
+
+        // Act
+        boolean result = controller.move(Direction.DOWN);
+
+        // Assert
+        assertTrue(result);
+        assertEquals(3, controller.getCurrentState().getPlayerPosition().getRow());
+        assertEquals(2, controller.getCurrentState().getPlayerPosition().getCol());
+    }
+
+    @Test
+    void testMoveRight_validMove() {
+        // Arrange
+        controller.setStateForTesting(setupStage1());
+
+        // Act
+        boolean result = controller.move(Direction.RIGHT);
+        // Assert
+        assertTrue(result);
+        assertEquals(2, controller.getCurrentState().getPlayerPosition().getRow());
+        assertEquals(3, controller.getCurrentState().getPlayerPosition().getCol());
+    }
+
+    @Test
+    void testMoveLeftTwice_hitsWall() {
+        // Arrange
+        controller.setStateForTesting(setupStage1());
+
+        // Act
+        controller.move(Direction.LEFT);
+        boolean result = controller.move(Direction.LEFT);
+
+        // Assert
+        assertFalse(result, "Debe bloquearse por muro");
+        assertEquals(2, controller.getCurrentState().getPlayerPosition().getRow());
+        assertEquals(1, controller.getCurrentState().getPlayerPosition().getCol());
     }
 
     // ---------------------------------------------------------------

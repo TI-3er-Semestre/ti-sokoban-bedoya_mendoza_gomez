@@ -15,7 +15,7 @@ public class BoardTest {
 
     @Test
     void testIsCompleted_allBoxesOnGoals_returnsTrue() {
-        // Escenario: setupStage6 — tablero 4x4, ambas cajas sobre objetivos
+        // Escenario: setupStage6  — tablero 4x4, ambas cajas sobre objetivos
         // Entrada: ninguna (se evalúa el estado del tablero)
         // Resultado esperado: true — todas las goalPositions cubiertas por BoxOnGoalCell
         Board b = new Board(4, 4);
