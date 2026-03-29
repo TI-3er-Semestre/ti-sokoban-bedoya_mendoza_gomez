@@ -147,6 +147,37 @@ public class GameControllerTest {
         assertEquals(1, controller.getCurrentState().getPlayerPosition().getCol());
     }
 
+
+    /**
+     * PRUEBA 2
+     */
+
+    @Test
+    void testIsValidMove_left_isTrue() {
+        // Arrange
+        controller.setStateForTesting(setupStage1());
+
+        // Act
+        boolean result = controller.move(Direction.LEFT);
+
+        // Assert
+        assertTrue(result, "El movimiento deberia ser valido (celda libre)");
+    }
+
+
+    @Test
+    void testIsValidMove_left_inWall_isFalse() {
+        // Arrange
+        controller.setStateForTesting(setupStage1());
+
+        // Act
+        controller.move(Direction.LEFT); // primer movimiento valido
+        boolean result = controller.move(Direction.LEFT); // segundo movimiento muro
+
+        // Assert
+        assertFalse(result, "El movimiento deberia ser invalido por que hay un muro");
+    }
+
     // ---------------------------------------------------------------
     // checkVictory()
     // ---------------------------------------------------------------
