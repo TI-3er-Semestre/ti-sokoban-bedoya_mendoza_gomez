@@ -9,6 +9,17 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class BoardTest {
 
+    private Board setupStage1() {
+        Board board = new Board(5, 5);
+        board.setCell(2, 0, new WallCell());
+        return board;
+    }
+
+    private Board setupStage7() {
+        return new Board(5, 5);
+    }
+
+
     // ---------------------------------------------------------------
     // isCompleted — condición de victoria
     // ---------------------------------------------------------------
@@ -55,4 +66,45 @@ public class BoardTest {
         b.setGoalPositions(new Position[]{ new Position(0, 0) });
         assertFalse(b.isCompleted());
     }
+
+    // ---------------------------------------------------------------
+    // isValidPosition()
+    // ---------------------------------------------------------------
+
+    @Test
+    void testIsValidPosition_negativeRow_returnsFalse() {
+        Board board = setupStage7();
+
+        assertFalse(board.isValidPosition(-1, 0));
+    }
+
+    @Test
+    void testIsValidPosition_rowEqualsHeight_returnsFalse() {
+        Board board = setupStage7();
+
+        assertFalse(board.isValidPosition(5, 0));
+    }
+
+    @Test
+    void testIsValidPosition_validCell_returnsTrue() {
+        Board board = setupStage7();
+
+        assertTrue(board.isValidPosition(2, 2));
+    }
+
+    // ---------------------------------------------------------------
+    // getCell()
+    // ---------------------------------------------------------------
+
+    @Test
+    void testGetCell_wallPosition_returnsWallCellNotWalkable() {
+        Board board = setupStage1();
+
+        Cell cell = board.getCell(2, 0);
+
+        assertInstanceOf(WallCell.class, cell);
+        assertFalse(cell.isWalkable());
+    }
+
+
 }

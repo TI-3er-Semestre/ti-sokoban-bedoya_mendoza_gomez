@@ -302,4 +302,29 @@ public class GameControllerTest {
         assertEquals(0, controller.getPushCount());
     }
 
+    // ---------------------------------------------------------------
+    // move()
+    // ---------------------------------------------------------------
+    @Test
+    void testMove_stage1_LEFT_twice_blockedByDirectWall() {
+        GameController controller = new GameController(null, null, null);
+        controller.setStateForTesting(setupStage1());
+
+        boolean firstMove  = controller.move(Direction.LEFT);
+        boolean secondMove = controller.move(Direction.LEFT);
+
+        assertFalse(firstMove);
+        assertFalse(secondMove);
+    }
+
+    @Test
+    void testMove_stage3_LEFT_wallBehindBox_playerBlocked() {
+        GameController controller = new GameController(null, null, null);
+        controller.setStateForTesting(setupStage3());
+
+        boolean result = controller.move(Direction.LEFT);
+
+        assertFalse(result);
+    }
+
 }
