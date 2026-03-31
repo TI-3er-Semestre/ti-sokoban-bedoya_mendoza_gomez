@@ -20,8 +20,11 @@ public class Board {
      * @return cell at (r, c)
      */
     public Cell getCell(int r, int c) {
-        // TODO: implement
-        return null;
+        if (this.isValidPosition(r, c)) {
+            return this.grid[r][c];
+        } else {
+            return new WallCell();
+        }
     }
 
     /**
@@ -41,8 +44,13 @@ public class Board {
      * @return true if position is valid
      */
     public boolean isValidPosition(int r, int c) {
-        // TODO: implement
-        return false;
+        if (r < 0 || r >= this.rows) {
+            return false;
+        }
+        if (c < 0 || c >= this.cols) {
+            return false;
+        }
+        return true;
     }
 
     /**

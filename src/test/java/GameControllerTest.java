@@ -23,8 +23,8 @@ public class GameControllerTest {
     /**
      * setupStage1:
      * Tablero 5×5
-     * Jugador en (2,2)
-     * Celda libre en (2,1)
+     * Jugador en (2,1)
+     * Celda libre en (2,2)
      * Muro en (2,0)
      */
 
