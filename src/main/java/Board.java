@@ -10,7 +10,16 @@ public class Board {
     private Position[] goalPositions;
 
     public Board(int rows, int cols) {
-        // TODO: implement — initialize grid with EmptyCells
+        this.rows = rows;
+        this.cols = cols;
+
+        grid = new Cell[rows][cols];
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                grid[i][j] = new EmptyCell();
+            }
+        }
     }
 
     /**
@@ -34,7 +43,9 @@ public class Board {
      * @param cell new cell to place
      */
     public void setCell(int r, int c, Cell cell) {
-        // TODO: implement
+        if (isValidPosition(r, c)) {
+            grid[r][c] = cell;
+        }
     }
 
     /**
