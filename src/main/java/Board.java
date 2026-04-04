@@ -97,6 +97,6 @@ public class Board {
     }
 
     public void setGoalPositions(Position[] goalPositions) {
-        // TODO: implement
+        this.goalPositions = goalPositions;
     }
 }

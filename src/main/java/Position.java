@@ -1,5 +1,6 @@
 /**
  * Represents a (row, col) position on the board grid.
+ * Commit 1 (3 abril): implementación completa — base para todos los tests.
  */
 public class Position {
 
@@ -7,34 +8,33 @@ public class Position {
     private int col;
 
     public Position(int row, int col) {
-        // TODO: implement
+        this.row = row;
+        this.col = col;
     }
 
     public int getRow() {
-        // TODO: implement
-        return 0;
+        return row;
     }
 
     public int getCol() {
-        // TODO: implement
-        return 0;
+        return col;
     }
 
     @Override
     public boolean equals(Object o) {
-        // TODO: implement — two positions are equal if row and col match
-        return false;
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Position position = (Position) o;
+        return row == position.row && col == position.col;
     }
 
     @Override
     public int hashCode() {
-        // TODO: implement
-        return 0;
+        return 31 * row + col;
     }
 
     @Override
     public String toString() {
-        // TODO: implement — e.g. "(2,3)"
-        return "";
+        return "(" + row + "," + col + ")";
     }
 }

@@ -8,15 +8,14 @@ public abstract class Cell {
     private boolean isGoal;
 
     public Cell(boolean isGoal) {
-        // TODO: implement
+        this.isGoal = isGoal;
     }
 
     /**
      * Returns true if this cell is a goal position.
      */
     public boolean isGoal() {
-        // TODO: implement
-        return false;
+        return isGoal;
     }
 
     /**
