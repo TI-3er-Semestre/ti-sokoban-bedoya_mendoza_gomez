@@ -30,8 +30,14 @@ public class GameController {
      * @return true if the move was executed, false if blocked
      */
     public boolean move(Direction direction) {
-        // TODO: implement
-        return false;
+        if (!isValidMove(direction)) return false;
+
+        Position nextPos = getNextPosition(currentState.getPlayerPosition(), direction);
+
+        currentState.setPlayerPosition(nextPos);
+        this.moveCount++;
+
+        return true;
     }
 
     /**
@@ -41,8 +47,9 @@ public class GameController {
      * @return true if the move is allowed
      */
     private boolean isValidMove(Direction direction) {
-        // TODO: implement
-        return false;
+        Position nextPos = getNextPosition(currentState.getPlayerPosition(), direction);
+
+        return currentState.getBoard().isValidPosition(nextPos.getRow(), nextPos.getCol());
     }
 
     /**
@@ -53,6 +60,25 @@ public class GameController {
     private boolean isPushingBox(Direction direction) {
         // TODO: implement
         return false;
+    }
+
+    /**
+     * Calculates the next position based on a starting point and a direction.
+     * @param current Current position.
+     * @param direction Direction to move.
+     * @return The new calculated position.
+     */
+    private Position getNextPosition(Position current, Direction direction) {
+        int row = current.getRow();
+        int col = current.getCol();
+
+        switch (direction) {
+            case UP:    row--; break;
+            case DOWN:  row++; break;
+            case LEFT:  col--; break;
+            case RIGHT: col++; break;
+        }
+        return new Position(row, col);
     }
 
     /**
