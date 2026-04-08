@@ -47,7 +47,12 @@ public class GameController {
      * @return true if the move is allowed
      */
     private boolean isValidMove(Direction direction) {
+        if (currentState == null || currentState.getPlayerPosition() == null) {
+            return false;
+        }
         Position nextPos = getNextPosition(currentState.getPlayerPosition(), direction);
+
+        if (nextPos == null) return false;
 
         return currentState.getBoard().isValidPosition(nextPos.getRow(), nextPos.getCol());
     }
@@ -69,6 +74,9 @@ public class GameController {
      * @return The new calculated position.
      */
     private Position getNextPosition(Position current, Direction direction) {
+        if (current == null) {
+            return null;
+        }
         int row = current.getRow();
         int col = current.getCol();
 
@@ -86,8 +94,9 @@ public class GameController {
      * @return true if all boxes are on goal positions
      */
     public boolean checkVictory() {
-        // TODO: implement
-        return false;
+        return currentState != null
+                && currentState.getBoard() != null
+                && currentState.getBoard().isCompleted();
     }
 
     /**
