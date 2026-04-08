@@ -70,8 +70,20 @@ public class Board {
      * @return true if level is completed
      */
     public boolean isCompleted() {
-        // TODO: implement — check each goalPosition for BoxOnGoalCell
-        return false;
+        if (goalPositions == null || goalPositions.length == 0) {
+            return false;
+        }
+
+        for (Position pos : goalPositions) {
+            Cell cell = getCell(pos.getRow(), pos.getCol());
+
+            if (!(cell instanceof BoxOnGoalCell)) {
+                return false;
+            }
+        }
+
+        return true;
+
     }
 
     /**
