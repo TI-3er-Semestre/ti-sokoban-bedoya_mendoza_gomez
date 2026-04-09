@@ -13,7 +13,12 @@ public class GameState {
     private int currentLevel;
 
     public GameState(Board board, Position playerPosition, int currentLevel) {
-        // TODO: implement
+        this.board = board;
+        this.playerPosition = playerPosition;
+        this.currentLevel = currentLevel;
+        this.moveCount = 0;
+        this.pushCount = 0;
+        this.elapsedTime = 0;
     }
 
     /**
@@ -22,8 +27,8 @@ public class GameState {
      * @return true if the level is won
      */
     public boolean isVictory() {
-        // TODO: implement
-        return false;
+        if (board == null) return false;
+        return board.isCompleted();
     }
 
     /**
@@ -45,7 +50,7 @@ public class GameState {
     }
 
     public void setPlayerPosition(Position playerPosition) {
-        // TODO: implement
+        this.playerPosition = playerPosition;
     }
 
     public int getMoveCount() {
@@ -53,7 +58,7 @@ public class GameState {
     }
 
     public void setMoveCount(int moveCount) {
-        // TODO: implement
+        this.moveCount = moveCount;
     }
 
     public int getPushCount() {
@@ -61,7 +66,7 @@ public class GameState {
     }
 
     public void setPushCount(int pushCount) {
-        // TODO: implement
+        this.pushCount = pushCount;
     }
 
     public long getElapsedTime() {
@@ -69,7 +74,7 @@ public class GameState {
     }
 
     public void setElapsedTime(long elapsedTime) {
-        // TODO: implement
+        this.elapsedTime = elapsedTime;
     }
 
     public int getCurrentLevel() {
