@@ -32,7 +32,15 @@ public class GameController {
     public boolean move(Direction direction) {
         if (!isValidMove(direction)) return false;
 
-        Position nextPos = getNextPosition(currentState.getPlayerPosition(), direction);
+        Position currentPos = currentState.getPlayerPosition();
+        Position nextPos = getNextPosition(currentPos, direction);
+        Cell targetCell = currentState.getBoard().getCell(nextPos.getRow(), nextPos.getCol());
+
+        if (targetCell instanceof BoxCell || targetCell instanceof BoxOnGoalCell) {
+            Position boxDest = getNextPosition(nextPos, direction);
+
+            this.pushCount++;
+        }
 
         currentState.setPlayerPosition(nextPos);
         this.moveCount++;
@@ -47,14 +55,25 @@ public class GameController {
      * @return true if the move is allowed
      */
     private boolean isValidMove(Direction direction) {
-        if (currentState == null || currentState.getPlayerPosition() == null) {
-            return false;
-        }
+        if (currentState == null) return false;
+
         Position nextPos = getNextPosition(currentState.getPlayerPosition(), direction);
 
-        if (nextPos == null) return false;
+        if (!currentState.getBoard().isValidPosition(nextPos.getRow(), nextPos.getCol())) {
+            return false;
+        }
 
-        return currentState.getBoard().isValidPosition(nextPos.getRow(), nextPos.getCol());
+        Cell targetCell = currentState.getBoard().getCell(nextPos.getRow(), nextPos.getCol());
+
+        if (targetCell instanceof WallCell) {
+            return false;
+        }
+
+        if (targetCell instanceof BoxCell || targetCell instanceof BoxOnGoalCell) {
+            return isPushingBox(direction);
+        }
+
+        return targetCell.isWalkable();
     }
 
     /**
@@ -63,7 +82,22 @@ public class GameController {
      * @return true if a box is in the target cell
      */
     private boolean isPushingBox(Direction direction) {
-        // TODO: implement
+        Position currentPos = currentState.getPlayerPosition();
+        Position nextPos = getNextPosition(currentPos, direction);
+
+        Cell targetCell = currentState.getBoard().getCell(nextPos.getRow(), nextPos.getCol());
+
+        if (targetCell instanceof BoxCell || targetCell instanceof BoxOnGoalCell) {
+            Position afterNextPos = getNextPosition(nextPos, direction);
+
+            if (currentState.getBoard().isValidPosition(afterNextPos.getRow(), afterNextPos.getCol())) {
+                Cell cellBehindBox = currentState.getBoard().getCell(afterNextPos.getRow(), afterNextPos.getCol());
+
+                return cellBehindBox.isWalkable() &&
+                        !(cellBehindBox instanceof BoxCell) &&
+                        !(cellBehindBox instanceof BoxOnGoalCell);
+            }
+        }
         return false;
     }
 
