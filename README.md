@@ -41,7 +41,7 @@ ti-sokoban-bedoya_mendoza_gomez created by GitHub Classroom
 - Confiabilidad = 0.60
 - Completitud = 1.47
 
-- ### Itreacion 7: 
+- ### Itreacion 7: 5dab9e7d
 
 - Densidad de errores-fallos = 0.28
 - Confiabilidad = 0.72
