@@ -7,8 +7,8 @@ public class GoalCell extends Cell {
 
     @Override
     public boolean isWalkable() {
-        // TODO: implement — true, player can walk onto a goal
-        return false;
+
+        return true;
     }
 
     @Override

@@ -37,8 +37,21 @@ public class GameState {
      * @return cloned GameState
      */
     public GameState clone() {
-        // TODO: implement
-        return null;
+
+        Board boardCopy = this.board.clone();
+
+        Position positionCopy = new Position(
+                this.playerPosition.getRow(),
+                this.playerPosition.getCol()
+        );
+
+        GameState copy = new GameState(boardCopy, positionCopy, this.currentLevel);
+
+        copy.setMoveCount(this.moveCount);
+        copy.setPushCount(this.pushCount);
+        copy.setElapsedTime(this.elapsedTime);
+
+        return copy;
     }
 
     public Board getBoard() {
