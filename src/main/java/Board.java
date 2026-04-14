@@ -92,8 +92,42 @@ public class Board {
      * @return cloned Board
      */
     public Board clone() {
-        // TODO: implement
-        return null;
+        Board copy = new Board(this.rows, this.cols);
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+
+                Cell cell = this.grid[i][j];
+
+                if (cell instanceof WallCell) {
+                    copy.setCell(i, j, new WallCell());
+                } else if (cell instanceof BoxCell) {
+                    copy.setCell(i, j, new BoxCell());
+                } else if (cell instanceof BoxOnGoalCell) {
+                    copy.setCell(i, j, new BoxOnGoalCell());
+                } else if (cell instanceof GoalCell) {
+                    copy.setCell(i, j, new GoalCell());
+                } else if (cell instanceof PlayerCell) {
+                    copy.setCell(i, j, new PlayerCell());
+                } else if (cell instanceof PlayerOnGoalCell) {
+                    copy.setCell(i, j, new PlayerOnGoalCell());
+                } else {
+                    copy.setCell(i, j, new EmptyCell());
+                }
+            }
+        }
+
+        //copiar goals
+        if (this.goalPositions != null) {
+            Position[] goalsCopy = new Position[this.goalPositions.length];
+            for (int i = 0; i < this.goalPositions.length; i++) {
+                Position p = this.goalPositions[i];
+                goalsCopy[i] = new Position(p.getRow(), p.getCol());
+            }
+            copy.setGoalPositions(goalsCopy);
+        }
+
+        return copy;
     }
 
     public int getRows() {

@@ -30,6 +30,10 @@ public class GameController {
      * @return true if the move was executed, false if blocked
      */
     public boolean move(Direction direction) {
+        if (currentState == null || currentState.getPlayerPosition() == null) {
+            return false;
+        }
+
         if (!isValidMove(direction)) return false;
 
         Position currentPos = currentState.getPlayerPosition();

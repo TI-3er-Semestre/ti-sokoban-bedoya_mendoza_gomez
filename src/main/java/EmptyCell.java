@@ -7,8 +7,7 @@ public class EmptyCell extends Cell {
 
     @Override
     public boolean isWalkable() {
-        // TODO: implement — always true
-        return false;
+        return true;
     }
 
     @Override
