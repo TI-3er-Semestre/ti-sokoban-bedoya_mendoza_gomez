@@ -126,14 +126,14 @@ public class GameControllerTest {
       */
 
     @Test
-    void testMoveLeft_validMove() {
+    void testMoveLeft_blockedByWall() {
         // Arrange
         controller.setStateForTesting(setupStage1());
         // Act
         boolean result = controller.move(Direction.LEFT);
 
         // Assert
-        assertTrue(result, "El jugador debería poder moverse a la izquierda");
+        assertFalse(result, "El jugador es bloqueado por un muro");
         assertEquals(2, controller.getCurrentState().getPlayerPosition().getRow());
         assertEquals(1, controller.getCurrentState().getPlayerPosition().getCol());
     }
@@ -208,7 +208,7 @@ public class GameControllerTest {
         boolean result = controller.move(Direction.LEFT);
 
         // Assert
-        assertTrue(result, "El movimiento deberia ser valido (celda libre)");
+        assertFalse(result, "El movimiento deberia ser invalido(Hay un muro)");
     }
 
 

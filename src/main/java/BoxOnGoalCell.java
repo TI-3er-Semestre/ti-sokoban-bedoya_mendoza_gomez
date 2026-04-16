@@ -14,6 +14,6 @@ public class BoxOnGoalCell extends Cell {
     @Override
     public char getSymbol() {
         // TODO: implement — return '*'
-        return '*';
+        return 0;
     }
 }

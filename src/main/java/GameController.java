@@ -36,14 +36,44 @@ public class GameController {
 
         if (!isValidMove(direction)) return false;
 
+        Board board = currentState.getBoard();
         Position currentPos = currentState.getPlayerPosition();
         Position nextPos = getNextPosition(currentPos, direction);
-        Cell targetCell = currentState.getBoard().getCell(nextPos.getRow(), nextPos.getCol());
+
+        Cell currentCell = board.getCell(currentPos.getRow(), currentPos.getCol());
+        Cell targetCell = board.getCell(nextPos.getRow(), nextPos.getCol());
 
         if (targetCell instanceof BoxCell || targetCell instanceof BoxOnGoalCell) {
+
             Position boxDest = getNextPosition(nextPos, direction);
+            Cell destinationCell = board.getCell(boxDest.getRow(), boxDest.getCol());
+
+            // mover caja
+            if (destinationCell instanceof GoalCell) {
+                board.setCell(boxDest.getRow(), boxDest.getCol(), new BoxOnGoalCell());
+            } else {
+                board.setCell(boxDest.getRow(), boxDest.getCol(), new BoxCell());
+            }
+
+            // limpiar celda donde estaba la caja
+            if (targetCell instanceof BoxOnGoalCell) {
+                board.setCell(nextPos.getRow(), nextPos.getCol(), new GoalCell());
+            } else {
+                board.setCell(nextPos.getRow(), nextPos.getCol(), new EmptyCell());
+            }
 
             this.pushCount++;
+        }
+        if (currentCell instanceof PlayerOnGoalCell) {
+            board.setCell(currentPos.getRow(), currentPos.getCol(), new GoalCell());
+        } else {
+            board.setCell(currentPos.getRow(), currentPos.getCol(), new EmptyCell());
+        }
+
+        if (targetCell instanceof GoalCell) {
+            board.setCell(nextPos.getRow(), nextPos.getCol(), new PlayerOnGoalCell());
+        } else {
+            board.setCell(nextPos.getRow(), nextPos.getCol(), new PlayerCell());
         }
 
         currentState.setPlayerPosition(nextPos);
@@ -61,23 +91,42 @@ public class GameController {
     private boolean isValidMove(Direction direction) {
         if (currentState == null) return false;
 
-        Position nextPos = getNextPosition(currentState.getPlayerPosition(), direction);
+        Position currentPos = currentState.getPlayerPosition();
+        Position nextPos = getNextPosition(currentPos, direction);
 
-        if (!currentState.getBoard().isValidPosition(nextPos.getRow(), nextPos.getCol())) {
+        Board board = currentState.getBoard();
+
+        if (!board.isValidPosition(nextPos.getRow(), nextPos.getCol())) {
             return false;
         }
 
-        Cell targetCell = currentState.getBoard().getCell(nextPos.getRow(), nextPos.getCol());
+        Cell targetCell = board.getCell(nextPos.getRow(), nextPos.getCol());
 
         if (targetCell instanceof WallCell) {
             return false;
         }
 
         if (targetCell instanceof BoxCell || targetCell instanceof BoxOnGoalCell) {
-            return isPushingBox(direction);
+
+            Position afterNext = getNextPosition(nextPos, direction);
+
+
+            if (!board.isValidPosition(afterNext.getRow(), afterNext.getCol())) {
+                return false;
+            }
+
+            Cell behindCell = board.getCell(afterNext.getRow(), afterNext.getCol());
+
+            if (behindCell instanceof WallCell ||
+                    behindCell instanceof BoxCell ||
+                    behindCell instanceof BoxOnGoalCell) {
+                return false;
+            }
+
+            return true;
         }
 
-        return targetCell.isWalkable();
+        return true;
     }
 
     /**
