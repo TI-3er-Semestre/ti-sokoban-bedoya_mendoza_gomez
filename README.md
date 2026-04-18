@@ -59,3 +59,9 @@ ti-sokoban-bedoya_mendoza_gomez created by GitHub Classroom
 - Densidad de errores-fallos = 0.12
 - Confiabilidad = 0.88
 - Completitud = 1.47
+
+- ### Iteracion 10: e6b00c63
+
+- Densidad de errores-fallos = 0.12
+- Confiabilidad = 0.88
+- Completitud = 1.47
