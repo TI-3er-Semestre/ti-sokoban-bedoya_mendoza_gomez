@@ -30,24 +30,32 @@ public class GameController {
      * @return true if the move was executed, false if blocked
      */
     public boolean move(Direction direction) {
-        if (currentState == null || currentState.getPlayerPosition() == null) {
-            return false;
-        }
+        if (currentState == null || !isValidMove(direction)) return false;
 
-        if (!isValidMove(direction)) return false;
+        Position oldPos = currentState.getPlayerPosition();
+        Position nextPos = getNextPosition(oldPos, direction);
+        Board board = currentState.getBoard();
 
-        Position currentPos = currentState.getPlayerPosition();
-        Position nextPos = getNextPosition(currentPos, direction);
-        Cell targetCell = currentState.getBoard().getCell(nextPos.getRow(), nextPos.getCol());
+        Cell target = board.getCell(nextPos.getRow(), nextPos.getCol());
 
-        if (targetCell instanceof BoxCell || targetCell instanceof BoxOnGoalCell) {
+        if (target instanceof BoxCell || target instanceof BoxOnGoalCell) {
             Position boxDest = getNextPosition(nextPos, direction);
-
+            board.moveBox(nextPos, boxDest);
             this.pushCount++;
+            currentState.setPushCount(this.pushCount);
         }
+
+        Cell oldCell = board.getCell(oldPos.getRow(), oldPos.getCol());
+        board.setCell(oldPos.getRow(), oldPos.getCol(),
+                (oldCell instanceof PlayerOnGoalCell) ? new GoalCell() : new EmptyCell());
+
+        Cell destCell = board.getCell(nextPos.getRow(), nextPos.getCol());
+        board.setCell(nextPos.getRow(), nextPos.getCol(),
+                (destCell instanceof GoalCell) ? new PlayerOnGoalCell() : new PlayerCell());
 
         currentState.setPlayerPosition(nextPos);
         this.moveCount++;
+        currentState.setMoveCount(this.moveCount);
 
         return true;
     }
@@ -61,23 +69,25 @@ public class GameController {
     private boolean isValidMove(Direction direction) {
         if (currentState == null) return false;
 
-        Position nextPos = getNextPosition(currentState.getPlayerPosition(), direction);
+        Position currentPos = currentState.getPlayerPosition();
+        Position nextPos = getNextPosition(currentPos, direction);
+        Board board = currentState.getBoard();
 
-        if (!currentState.getBoard().isValidPosition(nextPos.getRow(), nextPos.getCol())) {
-            return false;
+        if (!board.isValidPosition(nextPos.getRow(), nextPos.getCol())) return false;
+
+        Cell target = board.getCell(nextPos.getRow(), nextPos.getCol());
+
+        if (target instanceof WallCell) return false;
+
+        if (target instanceof BoxCell || target instanceof BoxOnGoalCell) {
+            Position boxDest = getNextPosition(nextPos, direction);
+            if (!board.isValidPosition(boxDest.getRow(), boxDest.getCol())) return false;
+
+            Cell cellBehind = board.getCell(boxDest.getRow(), boxDest.getCol());
+            return (cellBehind instanceof EmptyCell || cellBehind instanceof GoalCell);
         }
 
-        Cell targetCell = currentState.getBoard().getCell(nextPos.getRow(), nextPos.getCol());
-
-        if (targetCell instanceof WallCell) {
-            return false;
-        }
-
-        if (targetCell instanceof BoxCell || targetCell instanceof BoxOnGoalCell) {
-            return isPushingBox(direction);
-        }
-
-        return targetCell.isWalkable();
+        return true;
     }
 
     /**
@@ -112,19 +122,12 @@ public class GameController {
      * @return The new calculated position.
      */
     private Position getNextPosition(Position current, Direction direction) {
-        if (current == null) {
-            return null;
-        }
-        int row = current.getRow();
-        int col = current.getCol();
+        if (current == null || direction == null) return null;
 
-        switch (direction) {
-            case UP:    row--; break;
-            case DOWN:  row++; break;
-            case LEFT:  col--; break;
-            case RIGHT: col++; break;
-        }
-        return new Position(row, col);
+        return new Position(
+                current.getRow() + direction.getDRow(),
+                current.getCol() + direction.getDCol()
+        );
     }
 
     /**
@@ -241,5 +244,9 @@ public class GameController {
 
     void setStateForTesting(GameState state) {
         this.currentState = state;
+        if (state != null) {
+            this.moveCount = state.getMoveCount();
+            this.pushCount = state.getPushCount();
+        }
     }
 }

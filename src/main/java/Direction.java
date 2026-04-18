@@ -9,8 +9,11 @@ public enum Direction {
      * @return row offset (-1, 1, or 0)
      */
     public int getDRow() {
-        // TODO: implement
-        return 0;
+        switch (this) {
+            case UP:    return -1;
+            case DOWN:  return 1;
+            default:    return 0;
+        }
     }
 
     /**
@@ -18,8 +21,11 @@ public enum Direction {
      * @return column offset (-1, 1, or 0)
      */
     public int getDCol() {
-        // TODO: implement
-        return 0;
+        switch (this) {
+            case LEFT:  return -1;
+            case RIGHT: return 1;
+            default:    return 0;
+        }
     }
 
     /**
