@@ -32,6 +32,8 @@ public class GameController {
     public boolean move(Direction direction) {
         if (currentState == null || !isValidMove(direction)) return false;
 
+        if (currentState.getBoard() == null) return false;
+
         Position oldPos = currentState.getPlayerPosition();
         Position nextPos = getNextPosition(oldPos, direction);
         Board board = currentState.getBoard();
@@ -196,7 +198,7 @@ public class GameController {
      * Records the start time of the current game session.
      */
     public void startTimer() {
-        // TODO: implement
+        this.startTime = System.currentTimeMillis();
     }
 
     /**
@@ -204,8 +206,10 @@ public class GameController {
      * @return elapsed milliseconds
      */
     public long getElapsedTime() {
-        // TODO: implement
-        return 0;
+
+        if (startTime == 0) return 0;
+        return System.currentTimeMillis() - startTime;
+
     }
 
     /**

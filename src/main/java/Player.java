@@ -12,7 +12,14 @@ public class Player {
 
     public Player(String name, String email, String username,
                   String avatar, ExperienceLevel experienceLevel) {
-        // TODO: implement — also initialize a new PlayerStats
+
+        this.name = name;
+        this.email = email;
+        this.username = username;
+        this.avatar = avatar;
+        this.experienceLevel = experienceLevel;
+
+        this.stats = new PlayerStats();
     }
 
     public String getName() {
@@ -40,6 +47,7 @@ public class Player {
     }
 
     public void setStats(PlayerStats stats) {
-        // TODO: implement
+
+        this.stats = stats;
     }
 }

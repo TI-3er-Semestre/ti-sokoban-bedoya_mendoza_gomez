@@ -11,7 +11,11 @@ public class GameResult implements Comparable<GameResult> {
     private long timeMillis;
 
     public GameResult(Player player, int levelId, int moves, int pushes, long timeMillis) {
-        // TODO: implement
+        this.player = player;
+        this.levelId = levelId;
+        this.moves = moves;
+        this.pushes = pushes;
+        this.timeMillis = timeMillis;
     }
 
     /**
@@ -21,8 +25,15 @@ public class GameResult implements Comparable<GameResult> {
      */
     @Override
     public int compareTo(GameResult r) {
-        // TODO: implement
-        return 0;
+
+        //se compara por movimeintos
+        if (this.moves != r.moves) {
+            return this.moves - r.moves;
+        }
+
+        //si son iguales en movimientos entonces porel tiempo
+        return Long.compare(this.timeMillis, r.timeMillis);
+
     }
 
     public Player getPlayer() {
