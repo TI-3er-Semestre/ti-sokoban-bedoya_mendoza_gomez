@@ -9,13 +9,12 @@ public class PlayerOnGoalCell extends Cell {
 
     @Override
     public boolean isWalkable() {
-        // TODO: implement — false (occupied by player)
         return false;
     }
 
     @Override
     public char getSymbol() {
-        // TODO: implement — return '+'
         return '+';
     }
 }
+ 
