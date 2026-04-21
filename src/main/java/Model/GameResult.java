@@ -1,3 +1,5 @@
+package Model;
+
 /**
  * Stores the result of a completed game session for a player on a specific level.
  * Implements Comparable to allow sorting in the leaderboard.

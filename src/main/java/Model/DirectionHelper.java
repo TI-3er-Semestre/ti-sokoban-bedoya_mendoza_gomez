@@ -1,3 +1,5 @@
+package Model;
+
 /**
  * Utility class providing helper methods for Direction calculations.
  * Avoids polluting the Direction enum with too many responsibilities.

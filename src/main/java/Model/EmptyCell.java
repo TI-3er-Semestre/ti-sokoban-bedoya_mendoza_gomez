@@ -1,3 +1,5 @@
+package Model;
+
 /** Represents an empty, walkable cell with no special content. */
 public class EmptyCell extends Cell {
 

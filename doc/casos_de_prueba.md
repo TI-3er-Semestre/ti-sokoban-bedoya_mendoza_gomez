@@ -72,7 +72,7 @@
 
 ### Prueba 5: Verificación de victoria
 
-**Objetivo de la prueba:** Verificar que `isVictory()` en `GameState` e `isCompleted()` en `Board` detecten correctamente el estado de victoria cuando todas las cajas están sobre los objetivos.
+**Objetivo de la prueba:** Verificar que `isVictory()` en `GameState` e `isCompleted()` en `Model.Board` detecten correctamente el estado de victoria cuando todas las cajas están sobre los objetivos.
 
 | Clase | Método | Escenario | Valores de entrada | Resultado esperado |
 |-------|--------|-----------|-------------------|-------------------|

@@ -1,3 +1,5 @@
+package Model;
+
 /**
  * Responsible for loading Sokoban levels from JSON files using Gson.
  * Follows the Repository pattern to separate persistence from business logic.

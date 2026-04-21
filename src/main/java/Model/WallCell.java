@@ -1,3 +1,5 @@
+package Model;
+
 /** Represents an impassable wall cell. */
 public class WallCell extends Cell {
 

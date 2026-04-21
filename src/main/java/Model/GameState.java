@@ -1,3 +1,4 @@
+package Model;
 
 /**
  * Represents a complete snapshot of the game at a given moment.
@@ -23,7 +24,7 @@ public class GameState {
 
     /**
      * Returns true if all boxes are on goal positions (victory condition).
-     * Delegates to Board.isCompleted().
+     * Delegates to Model.Board.isCompleted().
      * @return true if the level is won
      */
     public boolean isVictory() {

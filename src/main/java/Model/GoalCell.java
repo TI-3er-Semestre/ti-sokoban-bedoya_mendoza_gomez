@@ -1,3 +1,5 @@
+package Model;
+
 /** Represents a goal position (target) with no box on it. */
 public class GoalCell extends Cell {
 

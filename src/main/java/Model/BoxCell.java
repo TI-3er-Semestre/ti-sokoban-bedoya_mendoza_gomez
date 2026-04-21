@@ -1,3 +1,5 @@
+package Model;
+
 /** Represents a cell occupied by a box (not on a goal). */
 public class BoxCell extends Cell {
 

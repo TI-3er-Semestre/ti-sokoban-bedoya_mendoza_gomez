@@ -1,3 +1,5 @@
+package Model;
+
 /**
  * Abstract base class for all cell types on the board.
  * Each cell knows whether it is a goal position, whether it can be walked on,

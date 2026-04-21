@@ -1,3 +1,5 @@
+package Model;
+
 /**
  * Tracks all game results for a player across sessions.
  * Uses a custom array structure (not ArrayList) as required by the project.

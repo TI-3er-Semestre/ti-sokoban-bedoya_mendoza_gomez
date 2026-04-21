@@ -1,3 +1,5 @@
+package Model;
+
 /** Represents a cell where a box is sitting on a goal position. */
 public class BoxOnGoalCell extends Cell {
 

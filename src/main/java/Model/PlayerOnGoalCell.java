@@ -1,3 +1,5 @@
+package Model;
+
 /** Represents a cell where the player is standing on a goal position. */
 public class PlayerOnGoalCell extends Cell {
 

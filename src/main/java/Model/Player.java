@@ -1,3 +1,5 @@
+package Model;
+
 /**
  * Represents a registered player with their profile and statistics.
  */

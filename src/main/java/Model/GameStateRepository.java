@@ -1,3 +1,5 @@
+package Model;
+
 /**
  * Handles saving and loading the current game state to disk.
  * Uses Java serialization to persist the GameState object.

@@ -1,3 +1,5 @@
+package Model;
+
 /**
  * Represents the 2D grid board of a Sokoban level.
  * Manages cell access, validity checks, and victory detection.
@@ -89,7 +91,7 @@ public class Board {
     /**
      * Returns a deep copy of this board.
      * Required for saving states (undo, transposition table).
-     * @return cloned Board
+     * @return cloned Model.Board
      */
     public Board clone() {
         Board copy = new Board(this.rows, this.cols);

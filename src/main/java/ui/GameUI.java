@@ -1,3 +1,9 @@
+package ui;
+
+import Model.GameController;
+import Model.Player;
+import Model.PlayerStats;
+
 /**
  * View layer of the Sokoban application (MVC - View).
  * Responsible for all user interaction and rendering.

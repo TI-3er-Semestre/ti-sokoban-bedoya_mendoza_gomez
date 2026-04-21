@@ -1,3 +1,5 @@
+package Model;
+
 /**
  * Represents a (row, col) position on the board grid.
  * Commit 1 (3 abril): implementación completa — base para todos los tests.

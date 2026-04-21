@@ -1,3 +1,5 @@
+package Model;
+
 /** Represents a cell occupied by the player (not on a goal). */
 public class PlayerCell extends Cell {
 

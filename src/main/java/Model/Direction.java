@@ -1,3 +1,5 @@
+package Model;
+
 /**
  * Represents the four possible movement directions in the game.
  */

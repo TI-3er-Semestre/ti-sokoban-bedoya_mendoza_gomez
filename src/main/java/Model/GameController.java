@@ -1,3 +1,5 @@
+package Model;
+
 /**
  * Central controller of the Sokoban game (MVC - Controller layer).
  * Manages game flow, player input, state transitions, and persistence.
@@ -288,7 +290,7 @@ public class GameController {
         return pushCount;
     }
 
-    void setStateForTesting(GameState state) {
+    public void setStateForTesting(GameState state) {
         this.currentState = state;
     }
 }

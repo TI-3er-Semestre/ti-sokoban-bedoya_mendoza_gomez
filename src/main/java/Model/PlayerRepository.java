@@ -1,3 +1,5 @@
+package Model;
+
 /**
  * Handles persistence of player profiles and statistics using Gson.
  */

@@ -1,3 +1,5 @@
+package Model;
+
 /**
  * Represents a Sokoban level loaded from a JSON file.
  * Stores the level metadata and the initial board state.
