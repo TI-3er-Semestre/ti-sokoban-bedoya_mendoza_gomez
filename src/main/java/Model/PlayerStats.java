@@ -10,7 +10,9 @@ public class PlayerStats {
     private int totalGames;
 
     public PlayerStats() {
-        // TODO: implement — initialize results array with an initial capacity
+
+        this.results = new GameResult[10]; // capacidad inicial
+        this.totalGames = 0;
     }
 
     /**
@@ -19,7 +21,20 @@ public class PlayerStats {
      * @param r result to add
      */
     public void addResult(GameResult r) {
-        // TODO: implement
+
+        if (totalGames == results.length) {
+        GameResult[] newArray = new GameResult[results.length * 2];
+
+        for (int i = 0; i < results.length; i++) {
+            newArray[i] = results[i];
+        }
+
+        results = newArray;
+    }
+
+        results[totalGames] = r;
+        totalGames++;
+
     }
 
     /**
@@ -28,8 +43,21 @@ public class PlayerStats {
      * @return best GameResult or null if no results for that level
      */
     public GameResult getBestByMoves(int levelId) {
-        // TODO: implement
-        return null;
+
+        GameResult best = null;
+
+        for (int i = 0; i < totalGames; i++) {
+            GameResult r = results[i];
+
+            if (r.getLevelId() == levelId) {
+                if (best == null || r.getMoves() < best.getMoves()) {
+                    best = r;
+                }
+            }
+        }
+
+        return best;
+
     }
 
     /**
@@ -38,8 +66,19 @@ public class PlayerStats {
      * @return best GameResult or null if no results for that level
      */
     public GameResult getBestByTime(int levelId) {
-        // TODO: implement
-        return null;
+        GameResult best = null;
+
+        for (int i = 0; i < totalGames; i++) {
+            GameResult r = results[i];
+
+            if (r.getLevelId() == levelId) {
+                if (best == null || r.getTimeMillis() < best.getTimeMillis()) {
+                    best = r;
+                }
+            }
+        }
+
+        return best;
     }
 
     /**
@@ -47,8 +86,25 @@ public class PlayerStats {
      * @return sorted array of GameResult
      */
     public GameResult[] getSortedResults() {
-        // TODO: implement — use a sorting algorithm (no Arrays.sort)
-        return null;
+
+        GameResult[] copy = new GameResult[totalGames];
+
+        for (int i = 0; i < totalGames; i++) {
+            copy[i] = results[i];
+        }
+
+        for (int i = 0; i < totalGames - 1; i++) {
+            for (int j = 0; j < totalGames - i - 1; j++) {
+
+                if (copy[j].compareTo(copy[j + 1]) > 0) {
+                    GameResult temp = copy[j];
+                    copy[j] = copy[j + 1];
+                    copy[j + 1] = temp;
+                }
+            }
+        }
+
+        return copy;
     }
 
     /**
@@ -57,8 +113,25 @@ public class PlayerStats {
      * @return array of matching GameResult
      */
     public GameResult[] getResultsByLevel(int levelId) {
-        // TODO: implement
-        return null;
+
+        int count = 0;
+
+        for (int i = 0; i < totalGames; i++) {
+            if (results[i].getLevelId() == levelId) {
+                count++;
+            }
+        }
+
+        GameResult[] filtered = new GameResult[count];
+        int index = 0;
+
+        for (int i = 0; i < totalGames; i++) {
+            if (results[i].getLevelId() == levelId) {
+                filtered[index++] = results[i];
+            }
+        }
+
+        return filtered;
     }
 
     public int getTotalGames() {

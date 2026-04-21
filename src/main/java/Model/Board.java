@@ -72,20 +72,15 @@ public class Board {
      * @return true if level is completed
      */
     public boolean isCompleted() {
-        if (goalPositions == null || goalPositions.length == 0) {
-            return false;
-        }
+        if (goalPositions == null || goalPositions.length == 0) return false;
 
         for (Position pos : goalPositions) {
             Cell cell = getCell(pos.getRow(), pos.getCol());
-
             if (!(cell instanceof BoxOnGoalCell)) {
                 return false;
             }
         }
-
         return true;
-
     }
 
     /**
@@ -98,7 +93,6 @@ public class Board {
 
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-
                 Cell cell = this.grid[i][j];
 
                 if (cell instanceof WallCell) {
@@ -119,17 +113,39 @@ public class Board {
             }
         }
 
-        //copiar goals
         if (this.goalPositions != null) {
             Position[] goalsCopy = new Position[this.goalPositions.length];
             for (int i = 0; i < this.goalPositions.length; i++) {
                 Position p = this.goalPositions[i];
+                // Creamos un nuevo objeto Position para que sea una copia real
                 goalsCopy[i] = new Position(p.getRow(), p.getCol());
             }
             copy.setGoalPositions(goalsCopy);
         }
 
         return copy;
+    }
+
+    /**
+     * Actualiza las celdas en el tablero para reflejar el movimiento de una caja.
+     * @param from posición actual de la caja
+     * @param to posición destino de la caja
+     */
+    public void moveBox(Position from, Position to) {
+        Cell boxCell = getCell(from.getRow(), from.getCol());
+        Cell destCell = getCell(to.getRow(), to.getCol());
+
+        if (destCell.isGoal()) {
+            setCell(to.getRow(), to.getCol(), new BoxOnGoalCell());
+        } else {
+            setCell(to.getRow(), to.getCol(), new BoxCell());
+        }
+
+        if (boxCell instanceof BoxOnGoalCell) {
+            setCell(from.getRow(), from.getCol(), new GoalCell());
+        } else {
+            setCell(from.getRow(), from.getCol(), new EmptyCell());
+        }
     }
 
     public int getRows() {

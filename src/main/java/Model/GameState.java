@@ -39,6 +39,10 @@ public class GameState {
      */
     public GameState clone() {
 
+        if (this.board == null || this.playerPosition == null) {
+            return null;
+        }
+
         Board boardCopy = this.board.clone();
 
         Position positionCopy = new Position(

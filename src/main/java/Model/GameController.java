@@ -244,7 +244,7 @@ public class GameController {
      * Records the start time of the current game session.
      */
     public void startTimer() {
-        // TODO: implement
+        this.startTime = System.currentTimeMillis();
     }
 
     /**
@@ -252,8 +252,10 @@ public class GameController {
      * @return elapsed milliseconds
      */
     public long getElapsedTime() {
-        // TODO: implement
-        return 0;
+
+        if (startTime == 0) return 0;
+        return System.currentTimeMillis() - startTime;
+
     }
 
     /**
@@ -292,5 +294,9 @@ public class GameController {
 
     public void setStateForTesting(GameState state) {
         this.currentState = state;
+        if (state != null) {
+            this.moveCount = state.getMoveCount();
+            this.pushCount = state.getPushCount();
+        }
     }
 }
