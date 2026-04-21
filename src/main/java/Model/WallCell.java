@@ -9,13 +9,12 @@ public class WallCell extends Cell {
 
     @Override
     public boolean isWalkable() {
-        // TODO: implement — always false
         return false;
     }
 
     @Override
     public char getSymbol() {
-        // TODO: implement — return '#'
         return '#';
     }
 }
+ 
