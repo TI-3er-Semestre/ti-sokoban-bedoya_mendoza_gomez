@@ -36,7 +36,30 @@ public enum Direction {
      * @return corresponding Direction, or null if not mapped
      */
     public static Direction fromKey(String k) {
-        // TODO: implement
+
+        if (k == null) return null;
+
+        k = k.toUpperCase();
+
+        switch (k) {
+            case "W":
+            case "UP":
+                return UP;
+
+            case "S":
+            case "DOWN":
+                return DOWN;
+
+            case "A":
+            case "LEFT":
+                return LEFT;
+
+            case "D":
+            case "RIGHT":
+                return RIGHT;
+        }
+
+
         return null;
     }
 
@@ -45,7 +68,13 @@ public enum Direction {
      * @return opposite Direction
      */
     public Direction opposite() {
-        // TODO: implement
+
+        switch (this) {
+            case UP: return DOWN;
+            case DOWN: return UP;
+            case LEFT: return RIGHT;
+            case RIGHT: return LEFT;
+        }
         return null;
     }
 }

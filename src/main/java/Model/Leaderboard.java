@@ -9,10 +9,13 @@ public class Leaderboard {
     private int levelId;
     private int topK;
     private GameResult[] entries;
+    private int size;
 
     public Leaderboard(int levelId, int topK) {
-        // TODO: implement — initialize entries array with capacity topK
-    }
+        this.levelId = levelId;
+        this.topK = topK;
+        this.entries = new GameResult[topK];
+        this.size = 0;    }
 
     /**
      * Adds a new entry if it qualifies for the top-K.
@@ -21,7 +24,28 @@ public class Leaderboard {
      * @param r new GameResult to evaluate
      */
     public void addEntry(GameResult r) {
-        // TODO: implement
+
+        if (r == null) return;
+
+        // si hay espacio
+        if (size < topK) {
+            entries[size++] = r;
+        } else {
+
+            // buscar el peor
+            int worstIndex = 0;
+
+            for (int i = 1; i < size; i++) {
+                if (entries[i].compareTo(entries[worstIndex]) > 0) {
+                    worstIndex = i;
+                }
+            }
+
+            // si el nuevo es mejor lo reemplaza
+            if (r.compareTo(entries[worstIndex]) < 0) {
+                entries[worstIndex] = r;
+            }
+        }
     }
 
     /**
@@ -29,8 +53,26 @@ public class Leaderboard {
      * @return sorted array of top entries
      */
     public GameResult[] getTopK() {
-        // TODO: implement
-        return null;
+
+        GameResult[] copy = new GameResult[size];
+
+        for (int i = 0; i < size; i++) {
+            copy[i] = entries[i];
+        }
+
+        // ordenar (burbuja simple)
+        for (int i = 0; i < size - 1; i++) {
+            for (int j = 0; j < size - i - 1; j++) {
+
+                if (copy[j].compareTo(copy[j + 1]) > 0) {
+                    GameResult temp = copy[j];
+                    copy[j] = copy[j + 1];
+                    copy[j + 1] = temp;
+                }
+            }
+        }
+
+        return copy;
     }
 
     /**
@@ -39,7 +81,15 @@ public class Leaderboard {
      * @return true if it should be included
      */
     public boolean isTopK(GameResult r) {
-        // TODO: implement
+
+        if (size < topK) return true;
+
+        for (int i = 0; i < size; i++) {
+            if (r.compareTo(entries[i]) < 0) {
+                return true;
+            }
+        }
+
         return false;
     }
 
@@ -48,7 +98,6 @@ public class Leaderboard {
     }
 
     public int getCurrentSize() {
-        // TODO: implement — return actual number of entries stored
-        return 0;
+        return size;
     }
 }

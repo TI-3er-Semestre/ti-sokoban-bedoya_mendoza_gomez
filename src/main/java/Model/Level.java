@@ -12,7 +12,10 @@ public class Level {
     private Board initialBoard;
 
     public Level(int levelId, String name, ExperienceLevel difficulty, Board initialBoard) {
-        // TODO: implement
+        this.levelId = levelId;
+        this.name = name;
+        this.difficulty = difficulty;
+        this.initialBoard = initialBoard;
     }
 
     /**
@@ -20,8 +23,25 @@ public class Level {
      * @return a fresh GameState ready to play
      */
     public GameState getInitialState() {
-        // TODO: implement — clone the board, find player position, return new GameState
-        return null;
+
+        if (initialBoard == null) return null;
+
+        Board boardCopy = initialBoard.clone();
+
+        Position playerPos = null;
+
+        for (int i = 0; i < boardCopy.getRows(); i++) {
+            for (int j = 0; j < boardCopy.getCols(); j++) {
+
+                Cell c = boardCopy.getCell(i, j);
+
+                if (c instanceof PlayerCell || c instanceof PlayerOnGoalCell) {
+                    playerPos = new Position(i, j);
+                }
+            }
+        }
+
+        return new GameState(boardCopy, playerPos, levelId);
     }
 
     public int getId() {
