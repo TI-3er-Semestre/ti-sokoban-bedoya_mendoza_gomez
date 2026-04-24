@@ -148,6 +148,39 @@ public class Board {
         }
     }
 
+    /**
+     * Returns all positions where boxes exist on the board.
+     * @return array of box positions
+     */
+    public Position[] getBoxPositions() {
+        int count = 0;
+
+        // contar cajas
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                Cell c = grid[i][j];
+                if (c instanceof BoxCell || c instanceof BoxOnGoalCell) {
+                    count++;
+                }
+            }
+        }
+
+        Position[] result = new Position[count];
+        int index = 0;
+
+        // guardar posiciones
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                Cell c = grid[i][j];
+                if (c instanceof BoxCell || c instanceof BoxOnGoalCell) {
+                    result[index++] = new Position(i, j);
+                }
+            }
+        }
+
+        return result;
+    }
+
     public int getRows() {
         return rows;
     }
