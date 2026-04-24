@@ -25,7 +25,19 @@ public class GameController {
     private PlayerRepository playerRepo;
 
     public GameController(String levelsPath, String savePath, String playersPath) {
-        // TODO: implement — initialize repositories
+    this.moveCount = 0;
+    this.pushCount = 0;
+    this.gameOver = false;
+    this.startTime = 0;
+    if (levelsPath != null) {
+        this.levelRepo = new LevelRepository(levelsPath);
+    }
+    if (savePath != null) {
+        this.stateRepo = new GameStateRepository(savePath);
+    }
+    if (playersPath != null) {
+        this.playerRepo = new PlayerRepository(playersPath);
+    }
     }
 
     public boolean move(Direction direction) {
