@@ -1,6 +1,6 @@
 package Model;
 
-/**
+/**<
  * Represents the 2D grid board of a Sokoban level.
  * Manages cell access, validity checks, and victory detection.
  */
