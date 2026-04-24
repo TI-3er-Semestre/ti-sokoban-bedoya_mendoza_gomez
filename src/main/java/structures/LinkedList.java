@@ -199,13 +199,16 @@ public class LinkedList<T extends Comparable<T>> implements Iterable<T> {
      * @return Nodo encontrado o null
      */
     private Node<T> findNode(T data) {
+        if (first == null) return null;
+
         Node<T> current = first;
-        while (current != null) {
+        do {
             if (current.getData().compareTo(data) == 0) {
                 return current;
             }
             current = current.getNext();
-        }
+        } while (current != first); // se detiene cuando da la vuelta completa
+
         return null;
     }
 
