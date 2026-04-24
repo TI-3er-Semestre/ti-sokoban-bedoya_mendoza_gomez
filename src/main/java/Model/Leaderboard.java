@@ -98,6 +98,7 @@ public class Leaderboard {
     }
 
     public int getCurrentSize() {
+
         return size;
     }
 }

@@ -59,7 +59,6 @@ public enum Direction {
                 return RIGHT;
         }
 
-
         return null;
     }
 
