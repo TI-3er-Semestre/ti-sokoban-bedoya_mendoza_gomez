@@ -24,6 +24,15 @@ public class Player {
         this.stats = new PlayerStats();
     }
 
+    public Player(String username) {
+        this.username = username;
+        this.name = username;
+        this.email = "";
+        this.avatar = "";
+        this.experienceLevel = ExperienceLevel.BEGINNER;
+        this.stats = new PlayerStats();
+    }
+
     public String getName() {
         return name;
     }
