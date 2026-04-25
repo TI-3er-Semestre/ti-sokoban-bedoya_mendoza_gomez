@@ -17,8 +17,13 @@ public class DirectionHelper {
      * @return row offset
      */
     public static int getDRow(Direction d) {
-        // TODO: implement
-        return 0;
+        if (d == null) return 0;
+
+        switch (d) {
+            case UP: return -1;
+            case DOWN: return 1;
+            default: return 0;
+        }
     }
 
     /**
@@ -28,8 +33,13 @@ public class DirectionHelper {
      * @return column offset
      */
     public static int getDCol(Direction d) {
-        // TODO: implement
-        return 0;
+        if (d == null) return 0;
+
+        switch (d) {
+            case LEFT: return -1;
+            case RIGHT: return 1;
+            default: return 0;
+        }
     }
 
     /**
@@ -40,7 +50,28 @@ public class DirectionHelper {
      * @return corresponding Direction, or null if unmapped
      */
     public static Direction fromKey(String key) {
-        // TODO: implement
+        if (key == null) return null;
+
+        key = key.toUpperCase();
+
+        switch (key) {
+            case "W":
+            case "UP":
+                return Direction.UP;
+
+            case "S":
+            case "DOWN":
+                return Direction.DOWN;
+
+            case "A":
+            case "LEFT":
+                return Direction.LEFT;
+
+            case "D":
+            case "RIGHT":
+                return Direction.RIGHT;
+        }
+
         return null;
     }
 
@@ -50,7 +81,15 @@ public class DirectionHelper {
      * @return opposite Direction
      */
     public static Direction opposite(Direction d) {
-        // TODO: implement
+        if (d == null) return null;
+
+        switch (d) {
+            case UP: return Direction.DOWN;
+            case DOWN: return Direction.UP;
+            case LEFT: return Direction.RIGHT;
+            case RIGHT: return Direction.LEFT;
+        }
+
         return null;
     }
 
@@ -60,7 +99,6 @@ public class DirectionHelper {
      * @return int array {dRow, dCol}
      */
     public static int[] toVector(Direction d) {
-        // TODO: implement
-        return new int[]{0, 0};
+        return new int[]{ getDRow(d), getDCol(d) };
     }
 }
