@@ -12,12 +12,19 @@ public class PriorityQueue<T extends Comparable<T>> {
         this.size = 0;
     }
 
-    // verifica si esta vacia
+    /**
+     * Checks if the queue is empty.
+     * @return true if the queue has no elements, false otherwise
+     */
     public boolean isEmpty() {
         return size == 0;
     }
 
-    // agrega elemento
+    /**
+     * Inserts a new element into the queue.
+     * Elements are automatically ordered by priority.
+     * @param element the element to insert
+     */
     public void enqueue(T element) {
         if (size == capacity) {
             return;
@@ -26,7 +33,6 @@ public class PriorityQueue<T extends Comparable<T>> {
         data[size] = element;
         size++;
 
-        // ordenar
         int i = size - 1;
 
         while (i > 0 && data[i].compareTo(data[i - 1]) < 0) {
@@ -37,7 +43,10 @@ public class PriorityQueue<T extends Comparable<T>> {
         }
     }
 
-    // elimina el de mayor prioridad
+    /**
+     * Removes and returns the element with highest priority.
+     * @return the element with highest priority, or null if empty
+     */
     public T dequeue() {
         if (isEmpty()) {
             return null;
@@ -45,7 +54,6 @@ public class PriorityQueue<T extends Comparable<T>> {
 
         T element = data[0];
 
-        // mover todos hacia la izquierda
         for (int i = 1; i < size; i++) {
             data[i - 1] = data[i];
         }
@@ -54,11 +62,19 @@ public class PriorityQueue<T extends Comparable<T>> {
         return element;
     }
 
+    /**
+     * Returns the element with highest priority without removing it.
+     * @return the first element, or null if empty
+     */
     public T front() {
         if (isEmpty()) return null;
         return data[0];
     }
 
+    /**
+     * Returns the number of elements in the queue.
+     * @return current size of the queue
+     */
     public int size() {
         return size;
     }

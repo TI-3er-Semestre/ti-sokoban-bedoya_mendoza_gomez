@@ -15,14 +15,12 @@ public class StateKey {
     public StateKey(Position playerPosition, Position[] boxPositions) {
         this.playerPosition = playerPosition;
 
-        // Copia defensiva para evitar referencias externas
         this.boxPositions = new Position[boxPositions.length];
         for (int i = 0; i < boxPositions.length; i++) {
             Position p = boxPositions[i];
             this.boxPositions[i] = new Position(p.getRow(), p.getCol());
         }
 
-        // IMPORTANTE: ordenar para que el estado sea consistente
         Arrays.sort(this.boxPositions, (a, b) -> {
             if (a.getRow() != b.getRow()) return a.getRow() - b.getRow();
             return a.getCol() - b.getCol();

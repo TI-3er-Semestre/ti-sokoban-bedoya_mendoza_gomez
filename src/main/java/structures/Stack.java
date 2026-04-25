@@ -12,8 +12,11 @@ public class Stack <T>{
         size = 0;
     }
 
+    /**
+     * Adds an element to the top of the stack.
+     * @param element the element to add
+     */
     public void push(T element) {
-        // si se llena se agrando
         if (size == elements.length) {
             resize();
         }
@@ -22,8 +25,11 @@ public class Stack <T>{
         size++;
     }
 
+    /**
+     * Removes and returns the top element of the stack.
+     * @return the top element, or null if the stack is empty
+     */
     public T pop() {
-        // si esta vacia no hay nada
         if (isEmpty()) {
             return null;
         }
@@ -35,8 +41,11 @@ public class Stack <T>{
         return top;
     }
 
+    /**
+     * Returns the top element without removing it.
+     * @return the top element, or null if the stack is empty
+     */
     public T top() {
-        // devuelve el de arriba sin sacarlo
         if (isEmpty()) {
             return null;
         }
@@ -44,14 +53,25 @@ public class Stack <T>{
         return elements[size - 1];
     }
 
+    /**
+     * Checks if the stack is empty.
+     * @return true if empty, false otherwise
+     */
     public boolean isEmpty() {
         return size == 0;
     }
 
+    /**
+     * Returns the number of elements in the stack.
+     * @return current size of the stack
+     */
     public int size() {
         return size;
     }
 
+    /**
+     * Resizes the internal array when capacity is reached.
+     */
     private void resize() {
         // duplico el tamaño
         T[] newArray = (T[]) new Object[elements.length * 2];
