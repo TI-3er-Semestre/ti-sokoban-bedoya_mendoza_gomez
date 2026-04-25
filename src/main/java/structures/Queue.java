@@ -16,6 +16,10 @@ public class Queue<T> {
         rear = 0;
     }
 
+    /**
+     * Adds an element to the end of the queue.
+     * @param element the element to add
+     */
     public void enqueue(T element) {
         // si se llena lo agrando
         if (size == elements.length) {
@@ -27,6 +31,10 @@ public class Queue<T> {
         size++;
     }
 
+    /**
+     * Removes and returns the first element of the queue.
+     * @return the first element, or null if the queue is empty
+     */
     public T dequeue() {
         // si esta vacia no hay nada
         if (isEmpty()) {
@@ -41,6 +49,10 @@ public class Queue<T> {
         return value;
     }
 
+    /**
+     * Returns the first element without removing it.
+     * @return the first element, or null if the queue is empty
+     */
     public T front() {
         // devuelve el primero sin sacarlo
         if (isEmpty()) {
@@ -50,14 +62,25 @@ public class Queue<T> {
         return elements[front];
     }
 
+    /**
+     * Checks if the queue is empty.
+     * @return true if empty, false otherwise
+     */
     public boolean isEmpty() {
         return size == 0;
     }
 
+    /**
+     * Returns the number of elements in the queue.
+     * @return current size of the queue
+     */
     public int size() {
         return size;
     }
 
+    /**
+     * Resizes the internal array when capacity is reached.
+     */
     private void resize() {
         // creo uno mas grande
         T[] newArray = (T[]) new Object[elements.length * 2];

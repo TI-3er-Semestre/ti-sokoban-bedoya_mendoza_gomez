@@ -14,13 +14,18 @@ public class TranspositionTable {
         this.table = new StateKey[capacity];
     }
 
+    /**
+     * Calculates the index for a given key.
+     * @param key the state key to hash
+     * @return index position in the table
+     */
     private int hash(StateKey key) {
         return Math.abs(key.hashCode()) % capacity;
     }
 
     /**
-     * Adds a state key to the table.
-     * Avoids duplicates and handles collisions.
+     * Creates a new hash table with a fixed capacity.
+     * @param capacity maximum number of elements the table can store
      */
     public void add(StateKey key) {
         int index = hash(key);
@@ -42,7 +47,9 @@ public class TranspositionTable {
     }
 
     /**
-     * Checks if a state key already exists.
+     * Checks if a key exists in the table.
+     * @param key the state key to search
+     * @return true if the key is found, false otherwise
      */
     public boolean contains(StateKey key) {
         int index = hash(key);
