@@ -1,5 +1,8 @@
 package Model;
 
+import java.io.*;
+
+
 /**
  * Handles saving and loading the current game state to disk.
  * Uses Java serialization to persist the GameState object.
@@ -9,7 +12,7 @@ public class GameStateRepository {
     private String savePath;
 
     public GameStateRepository(String savePath) {
-        // TODO: implement
+        this.savePath = savePath;
     }
 
     /**
@@ -17,7 +20,14 @@ public class GameStateRepository {
      * @param state current GameState to persist
      */
     public void save(GameState state) {
-        // TODO: implement using Java Serializable
+        try (ObjectOutputStream out = new ObjectOutputStream(
+                new FileOutputStream(savePath))) {
+
+            out.writeObject(state);
+
+        } catch (IOException e) {
+            System.err.println("Error al guardad el juego: " + e.getMessage());
+        }
     }
 
     /**
@@ -25,8 +35,19 @@ public class GameStateRepository {
      * @return saved GameState, or null if no save exists
      */
     public GameState load() {
-        // TODO: implement
+        File file = new File(savePath);
+
+        if (!file.exists()) return null;
+
+        try (ObjectInputStream in = new ObjectInputStream(
+                new FileInputStream(file))) {
+
+            return (GameState) in.readObject();
+
+        } catch (IOException | ClassNotFoundException e) {
+            System.err.println("Error loading game: " + e.getMessage());
         return null;
+        }
     }
 
     /**
@@ -34,14 +55,17 @@ public class GameStateRepository {
      * @return true if save file is present
      */
     public boolean hasSavedGame() {
-        // TODO: implement
-        return false;
+        return new File(savePath).exists();
     }
 
     /**
      * Deletes the saved game file from disk.
      */
     public void deleteSave() {
-        // TODO: implement
+        File file = new File(savePath);
+
+        if (file.exists()) {
+            file.delete();
+        }
     }
 }
