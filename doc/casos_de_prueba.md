@@ -82,3 +82,139 @@
 | `BoardTest` | `isCompleted()` | `setupStage5` | — (una `goalPosition` sin caja) | `false` — Al menos una `GoalCell` sin caja encima. |
 | `GameControllerTest` | `checkVictory()` | `setupStage6` | — (estado ganador) | `true` — El controlador detecta la victoria y activa la pantalla de victoria. |
 | `GameControllerTest` | `checkVictory()` | `setupStage5` | — (estado no ganador) | `false` — No todas las cajas en objetivos. No se activa victoria. |
+
+
+#  Diseño de Casos de Prueba — Estructuras de Datos
+
+## 📌 Introducción
+
+Este documento presenta los casos de prueba diseñados para validar el correcto funcionamiento de las estructuras de datos implementadas en el proyecto.
+
+Cada operación incluye:
+- Caso estándar
+- Caso límite
+- Caso interesante
+
+---
+
+## Prueba 1: Eliminación (delete)
+
+**Objetivo:** Validar la eliminación en distintos escenarios.
+
+| Clase | Método | Escenario | Valores de entrada | Resultado esperado |
+|------|--------|----------|-------------------|-------------------|
+| BinarySearchTreeTest | delete() | Nodo hoja | eliminar 10 en [20,10,30] | Nodo eliminado, tamaño = 2 |
+| BinarySearchTreeTest | delete() | Elemento inexistente | eliminar 99 | Árbol sin cambios |
+| BinarySearchTreeTest | delete() | Eliminar raíz | eliminar 20 | Nueva raíz válida |
+
+---
+
+## Prueba 2: Búsqueda (search)
+
+**Objetivo:** Verificar el comportamiento del método `search()`.
+
+| Clase | Método | Escenario | Valores de entrada | Resultado esperado |
+|------|--------|----------|-------------------|-------------------|
+| BinarySearchTreeTest | search() | Elemento existente | buscar 10 | Retorna nodo |
+| BinarySearchTreeTest | search() | Elemento inexistente | buscar 99 | Retorna null |
+| BinarySearchTreeTest | search() | Árbol vacío | buscar 10 | Retorna null |
+
+---
+
+#  Queue
+
+## Prueba 3: Operaciones FIFO
+
+**Objetivo:** Validar comportamiento de cola (FIFO).
+
+| Clase | Método | Escenario | Valores de entrada | Resultado esperado |
+|------|--------|----------|-------------------|-------------------|
+| QueueTest | enqueue() | Inserción normal | 5 | Tamaño = 1 |
+| QueueTest | dequeue() | Extracción normal | [1,2] | Retorna 1 |
+| QueueTest | dequeue() | Cola vacía | — | Retorna null |
+
+---
+
+# Stack
+
+## Prueba 4: Operaciones LIFO
+
+**Objetivo:** Validar comportamiento de pila (LIFO).
+
+| Clase | Método | Escenario | Valores de entrada | Resultado esperado |
+|------|--------|----------|-------------------|-------------------|
+| StackTest | push() | Inserción normal | 10 | Tamaño = 1 |
+| StackTest | pop() | Extracción normal | [1,2] | Retorna 2 |
+| StackTest | pop() | Pila vacía | — | Retorna null |
+
+---
+
+#  PriorityQueue
+
+## Prueba 5: Orden por prioridad
+
+**Objetivo:** Verificar orden automático de elementos.
+
+| Clase | Método | Escenario | Valores de entrada | Resultado esperado |
+|------|--------|----------|-------------------|-------------------|
+| PriorityQueueTest | enqueue() | Inserción desordenada | 5,1,3 | Frente = 1 |
+| PriorityQueueTest | dequeue() | Extracción | [5,1,3] | Retorna 1 |
+| PriorityQueueTest | dequeue() | Cola vacía | — | Retorna null |
+
+---
+
+#  TranspositionTable (Hash Table)
+
+## Prueba 6: Inserción y búsqueda
+
+**Objetivo:** Validar almacenamiento y consulta de estados.
+
+| Clase | Método | Escenario | Valores de entrada | Resultado esperado |
+|------|--------|----------|-------------------|-------------------|
+| TranspositionTableTest | add() | Inserción normal | key(1,1) | Se almacena correctamente |
+| TranspositionTableTest | contains() | Búsqueda existente | key(1,1) | true |
+| TranspositionTableTest | contains() | Búsqueda inexistente | key(2,2) | false |
+
+---
+
+#  StateKey
+
+## Prueba 7: Igualdad y hashing
+
+**Objetivo:** Verificar consistencia de equals y hashCode.
+
+| Clase | Método | Escenario | Valores de entrada | Resultado esperado |
+|------|--------|----------|-------------------|-------------------|
+| StateKeyTest | equals() | Mismos datos | (1,1) vs (1,1) | true |
+| StateKeyTest | equals() | Datos diferentes | (1,1) vs (2,2) | false |
+| StateKeyTest | hashCode() | Consistencia | mismos datos | Hash iguales |
+
+---
+
+# Iterator
+
+## Prueba 8: hasNext()
+
+**Objetivo:** Verificar si el iterador detecta correctamente elementos restantes.
+
+| Clase | Método | Escenario | Valores de entrada | Resultado esperado |
+|------|--------|----------|-------------------|-------------------|
+| IteratorTest | hasNext() | Lista con elementos | [1,2,3] | true |
+| IteratorTest | hasNext() | Lista vacía | [] | false |
+| IteratorTest | hasNext() | Un elemento | [5] | true → false |
+
+---
+
+## Prueba 9: next()
+
+**Objetivo:** Validar que el iterador retorne los elementos en orden.
+
+| Clase | Método | Escenario | Valores de entrada | Resultado esperado |
+|------|--------|----------|-------------------|-------------------|
+| IteratorTest | next() | Recorrido completo | [1,2,3] | 1 → 2 → 3 |
+| IteratorTest | next() | Lista vacía | [] | No retorna elementos |
+| IteratorTest | next() | Un elemento | [5] | Retorna 5 |
+
+---
+
+
