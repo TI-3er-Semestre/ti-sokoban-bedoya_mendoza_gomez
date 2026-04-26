@@ -1,18 +1,19 @@
 package Model;
 
+import structures.*;
+
 /**
  * Tracks all game results for a player across sessions.
  * Uses a custom array structure (not ArrayList) as required by the project.
  */
 public class PlayerStats {
 
-    private GameResult[] results;
-    private int totalGames;
+    private LinkedList<GameResult> results;
+    private BinarySearchTree<Achievement> achievements;
 
     public PlayerStats() {
-
-        this.results = new GameResult[10]; // capacidad inicial
-        this.totalGames = 0;
+        this.results = new LinkedList<>();
+        this.achievements = new BinarySearchTree<>();
     }
 
     /**
@@ -21,20 +22,9 @@ public class PlayerStats {
      * @param r result to add
      */
     public void addResult(GameResult r) {
-
-        if (totalGames == results.length) {
-        GameResult[] newArray = new GameResult[results.length * 2];
-
-        for (int i = 0; i < results.length; i++) {
-            newArray[i] = results[i];
+        if (r != null) {
+            results.add(r);
         }
-
-        results = newArray;
-    }
-
-        results[totalGames] = r;
-        totalGames++;
-
     }
 
     /**
@@ -46,8 +36,10 @@ public class PlayerStats {
 
         GameResult best = null;
 
-        for (int i = 0; i < totalGames; i++) {
-            GameResult r = results[i];
+        Iterator<GameResult> it = results.iterator();
+
+        while (it.hasNext()) {
+            GameResult r = it.next();
 
             if (r.getLevelId() == levelId) {
                 if (best == null || r.getMoves() < best.getMoves()) {
@@ -57,7 +49,31 @@ public class PlayerStats {
         }
 
         return best;
+    }
 
+    public GameResult binarySearchByMoves(int moves) {
+
+        GameResult[] arr = getSortedResults();
+
+        int left = 0;
+        int right = arr.length - 1;
+
+        while (left <= right) {
+
+            int mid = (left + right) / 2;
+
+            if (arr[mid].getMoves() == moves) {
+                return arr[mid];
+            }
+
+            if (arr[mid].getMoves() < moves) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+
+        return null;
     }
 
     /**
@@ -68,8 +84,10 @@ public class PlayerStats {
     public GameResult getBestByTime(int levelId) {
         GameResult best = null;
 
-        for (int i = 0; i < totalGames; i++) {
-            GameResult r = results[i];
+        Iterator<GameResult> it = results.iterator();
+
+        while (it.hasNext()) {
+            GameResult r = it.next();
 
             if (r.getLevelId() == levelId) {
                 if (best == null || r.getTimeMillis() < best.getTimeMillis()) {
@@ -81,25 +99,52 @@ public class PlayerStats {
         return best;
     }
 
+    public GameResult binarySearchByTime(long time) {
+
+        GameResult[] arr = getSortedResults();
+
+        int left = 0;
+        int right = arr.length - 1;
+
+        while (left <= right) {
+
+            int mid = (left + right) / 2;
+
+            if (arr[mid].getTimeMillis() == time) {
+                return arr[mid];
+            }
+
+            if (arr[mid].getTimeMillis() < time) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+
+        return null;
+    }
+
     /**
      * Returns all results sorted by compareTo (moves, then time).
      * @return sorted array of GameResult
      */
     public GameResult[] getSortedResults() {
+        int size = results.getLength();
+        GameResult[] copy = new GameResult[size];
 
-        GameResult[] copy = new GameResult[totalGames];
+        Iterator<GameResult> it = results.iterator();
 
-        for (int i = 0; i < totalGames; i++) {
-            copy[i] = results[i];
+        int i = 0;
+        while (it.hasNext()) {
+            copy[i++] = it.next();
         }
 
-        for (int i = 0; i < totalGames - 1; i++) {
-            for (int j = 0; j < totalGames - i - 1; j++) {
-
-                if (copy[j].compareTo(copy[j + 1]) > 0) {
-                    GameResult temp = copy[j];
-                    copy[j] = copy[j + 1];
-                    copy[j + 1] = temp;
+        for (int a = 0; a < size - 1; a++) {
+            for (int b = 0; b < size - a - 1; b++) {
+                if (copy[b].compareTo(copy[b + 1]) > 0) {
+                    GameResult temp = copy[b];
+                    copy[b] = copy[b + 1];
+                    copy[b + 1] = temp;
                 }
             }
         }
@@ -116,18 +161,23 @@ public class PlayerStats {
 
         int count = 0;
 
-        for (int i = 0; i < totalGames; i++) {
-            if (results[i].getLevelId() == levelId) {
+        Iterator<GameResult> it = results.iterator();
+
+        while (it.hasNext()) {
+            if (it.next().getLevelId() == levelId) {
                 count++;
             }
         }
 
         GameResult[] filtered = new GameResult[count];
+
+        it = results.iterator();
         int index = 0;
 
-        for (int i = 0; i < totalGames; i++) {
-            if (results[i].getLevelId() == levelId) {
-                filtered[index++] = results[i];
+        while (it.hasNext()) {
+            GameResult r = it.next();
+            if (r.getLevelId() == levelId) {
+                filtered[index++] = r;
             }
         }
 
@@ -135,6 +185,24 @@ public class PlayerStats {
     }
 
     public int getTotalGames() {
-        return totalGames;
+        return results.getLength();
     }
+
+    public void addAchievement(Achievement a) {
+        achievements.add(a);
+    }
+
+    public Achievement findAchievement(Achievement a) {
+        TreeNode<Achievement> node = achievements.search(a);
+
+        if (node != null) {
+            return node.getData();
+        }
+        return null;
+    }
+
+    public void removeAchievement(Achievement a) {
+        achievements.delete(a);
+    }
+
 }

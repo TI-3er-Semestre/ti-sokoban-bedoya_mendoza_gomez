@@ -1,7 +1,6 @@
 package Model;
 
-import structures.StateKey;
-import structures.TranspositionTable;
+import structures.*;
 
 /**
  * Central controller of the Sokoban game (MVC - Controller layer).
@@ -14,6 +13,8 @@ public class GameController {
     private Level currentLevel;
     private Player currentPlayer;
     private TranspositionTable visitedStates = new TranspositionTable(1000);
+    private Stack<GameState> undoStack;
+    private Queue<String> moveQueue;
 
     private int moveCount;
     private int pushCount;
@@ -29,6 +30,8 @@ public class GameController {
     this.pushCount = 0;
     this.gameOver = false;
     this.startTime = 0;
+    this.undoStack = new Stack<>();
+    this.moveQueue = new Queue<>();
     if (levelsPath != null) {
         this.levelRepo = new LevelRepository(levelsPath);
     }
@@ -61,12 +64,14 @@ public class GameController {
 
         if (!isValidMove(direction)) return false;
 
+        undoStack.push(cloneState(currentState));
+
         visitedStates.add(key);
 
         Position nextPos = getNextPosition(currentPos, direction);
         Cell targetCell = board.getCell(nextPos.getRow(), nextPos.getCol());
 
-        // 🔹 EMPUJAR CAJA
+        //EMPUJAR CAJA
         if (targetCell instanceof BoxCell || targetCell instanceof BoxOnGoalCell) {
 
             Position boxDest = getNextPosition(nextPos, direction);
@@ -87,7 +92,7 @@ public class GameController {
             pushCount++;
         }
 
-        // 🔹 LIMPIAR POSICIÓN ANTERIOR
+        //LIMPIAR POSICIÓN ANTERIOR
         Cell currentCell = board.getCell(currentPos.getRow(), currentPos.getCol());
 
         board.setCell(
@@ -96,7 +101,7 @@ public class GameController {
                 (currentCell instanceof PlayerOnGoalCell) ? new GoalCell() : new EmptyCell()
         );
 
-        // 🔹 MOVER JUGADOR
+        //MOVER JUGADOR
         Cell destCell = board.getCell(nextPos.getRow(), nextPos.getCol());
 
         board.setCell(
@@ -109,6 +114,23 @@ public class GameController {
         moveCount++;
 
         return true;
+    }
+
+    private GameState cloneState(GameState state) {
+
+        if (state == null) return null;
+
+        Board originalBoard = state.getBoard();
+        Board newBoard = originalBoard.clone(); // debes tener clone en Board
+
+        Position pos = state.getPlayerPosition();
+        Position newPos = new Position(pos.getRow(), pos.getCol());
+
+        GameState newState = new GameState(newBoard, newPos, state.getCurrentLevel());
+        newState.setMoveCount(state.getMoveCount());
+        newState.setPushCount(state.getPushCount());
+
+        return newState;
     }
 
     /**
@@ -426,6 +448,50 @@ public class GameController {
             board.setCell(pos.getRow(), pos.getCol(), new PlayerOnGoalCell());
         } else {
             board.setCell(pos.getRow(), pos.getCol(), new PlayerCell());
+        }
+    }
+
+    public void undo() {
+
+        if (undoStack.isEmpty()) return;
+
+        GameState prev = undoStack.pop();
+
+        if (prev != null) {
+            this.currentState = prev;
+            this.moveCount = prev.getMoveCount();
+            this.pushCount = prev.getPushCount();
+        }
+    }
+
+    public void enqueueMove(String move) {
+        moveQueue.enqueue(move);
+    }
+
+    public void processMoves() {
+
+        while (!moveQueue.isEmpty()) {
+
+            String move = moveQueue.dequeue();
+
+            Direction dir = parseDirection(move);
+
+            if (dir != null) {
+                move(dir);
+            }
+        }
+    }
+
+    private Direction parseDirection(String move) {
+
+        if (move == null) return null;
+
+        switch (move.toUpperCase()) {
+            case "W": return Direction.UP;
+            case "S": return Direction.DOWN;
+            case "A": return Direction.LEFT;
+            case "D": return Direction.RIGHT;
+            default: return null;
         }
     }
 

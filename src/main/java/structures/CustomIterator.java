@@ -8,8 +8,10 @@ package structures;
  */
 public class CustomIterator<E> implements Iterator<E> {
 
-    // Nodo actual (cursor interno del iterador)
+    // Nodo actual
     private Node<E> current;
+    private Node<E> start;
+    private boolean firstPass;
 
     /**
      * Constructor: el cursor se posiciona en el primer nodo de la lista.
@@ -18,6 +20,8 @@ public class CustomIterator<E> implements Iterator<E> {
      */
     public CustomIterator(Node<E> first) {
         this.current = first;
+        this.start = first;
+        this.firstPass = true;
     }
 
     /**
@@ -25,7 +29,7 @@ public class CustomIterator<E> implements Iterator<E> {
      */
     @Override
     public boolean hasNext() {
-        return current.getNext() != null;
+        return current != null && (firstPass || current != start);
     }
 
 
@@ -33,8 +37,8 @@ public class CustomIterator<E> implements Iterator<E> {
     public E next() {
         E data = current.getData();
         current = current.getNext();
-        return data;
-    }
+        firstPass = false;
+        return data;    }
 
     // ── Getter ────────────────────────────────────────────────────────────────
 
