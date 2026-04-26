@@ -76,3 +76,16 @@ ti-sokoban-bedoya_mendoza_gomez created by GitHub Classroom
 - Densidad de errores-fallos = 0.12
 - Confiabilidad = 0.88
 - Completitud = 1.47
+
+- ### Iteracion 13: 03ad6501
+
+- Densidad de errores = 0.25
+- Confiabilidad  = 0.75
+- Completitud = 3.06
+
+
+- ### Iteracion 14:f99ce45222382d23ab75199a9c4ae3992b0efe1b 
+
+- Densidad de errores = 0.00
+- Confiabilidad  = 1.00
+- Completitud  = 3.06
