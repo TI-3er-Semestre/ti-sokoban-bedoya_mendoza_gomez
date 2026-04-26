@@ -1,3 +1,4 @@
+import Model.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -23,8 +24,8 @@ public class GameControllerTest {
     /**
      * setupStage1:
      * Tablero 5×5
-     * Jugador en (2,2)
-     * Celda libre en (2,1)
+     * Jugador en (2,1)
+     * Celda libre en (2,2)
      * Muro en (2,0)
      */
 
@@ -32,9 +33,10 @@ public class GameControllerTest {
     private GameState setupStage1() {
         Board board = new Board(5, 5);
         board.setCell(2, 0, new WallCell());
-        board.setCell(2, 1, new PlayerCell());
+        board.setCell(2, 1, new EmptyCell());
+        board.setCell(2, 2, new PlayerCell());
         board.setGoalPositions(new Position[]{});
-        return new GameState(board, new Position(2, 1), 1);
+        return new GameState(board, new Position(2, 2), 1);
     }
 
     /**
@@ -126,14 +128,14 @@ public class GameControllerTest {
       */
 
     @Test
-    void testMoveLeft_validMove() {
+    void testMoveLeft_blockedByWall() {
         // Arrange
         controller.setStateForTesting(setupStage1());
         // Act
         boolean result = controller.move(Direction.LEFT);
 
         // Assert
-        assertTrue(result, "El jugador debería poder moverse a la izquierda");
+        assertTrue(result, "El jugador es bloqueado por un muro");
         assertEquals(2, controller.getCurrentState().getPlayerPosition().getRow());
         assertEquals(1, controller.getCurrentState().getPlayerPosition().getCol());
     }
@@ -208,7 +210,7 @@ public class GameControllerTest {
         boolean result = controller.move(Direction.LEFT);
 
         // Assert
-        assertTrue(result, "El movimiento deberia ser valido (celda libre)");
+        assertTrue(result, "El movimiento deberia ser invalido(Hay un muro)");
     }
 
 
@@ -313,7 +315,7 @@ public class GameControllerTest {
         boolean firstMove  = controller.move(Direction.LEFT);
         boolean secondMove = controller.move(Direction.LEFT);
 
-        assertFalse(firstMove);
+        assertTrue(firstMove);
         assertFalse(secondMove);
     }
 

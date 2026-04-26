@@ -1,9 +1,10 @@
+import Model.*;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Prueba 5: Verificación de victoria — Board.
+ * Prueba 5: Verificación de victoria — Model.Board.
  * Verifica que isCompleted() detecte correctamente
  * cuando todas las cajas están sobre los objetivos.
  */
