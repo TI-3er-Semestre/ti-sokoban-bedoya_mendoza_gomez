@@ -97,33 +97,9 @@ Cada operación incluye:
 
 ---
 
-## Prueba 1: Eliminación (delete)
-
-**Objetivo:** Validar la eliminación en distintos escenarios.
-
-| Clase | Método | Escenario | Valores de entrada | Resultado esperado |
-|------|--------|----------|-------------------|-------------------|
-| BinarySearchTreeTest | delete() | Nodo hoja | eliminar 10 en [20,10,30] | Nodo eliminado, tamaño = 2 |
-| BinarySearchTreeTest | delete() | Elemento inexistente | eliminar 99 | Árbol sin cambios |
-| BinarySearchTreeTest | delete() | Eliminar raíz | eliminar 20 | Nueva raíz válida |
-
----
-
-## Prueba 2: Búsqueda (search)
-
-**Objetivo:** Verificar el comportamiento del método `search()`.
-
-| Clase | Método | Escenario | Valores de entrada | Resultado esperado |
-|------|--------|----------|-------------------|-------------------|
-| BinarySearchTreeTest | search() | Elemento existente | buscar 10 | Retorna nodo |
-| BinarySearchTreeTest | search() | Elemento inexistente | buscar 99 | Retorna null |
-| BinarySearchTreeTest | search() | Árbol vacío | buscar 10 | Retorna null |
-
----
-
 #  Queue
 
-## Prueba 3: Operaciones FIFO
+## Prueba 1: Operaciones FIFO
 
 **Objetivo:** Validar comportamiento de cola (FIFO).
 
@@ -137,7 +113,7 @@ Cada operación incluye:
 
 # Stack
 
-## Prueba 4: Operaciones LIFO
+## Prueba 2: Operaciones LIFO
 
 **Objetivo:** Validar comportamiento de pila (LIFO).
 
@@ -151,7 +127,7 @@ Cada operación incluye:
 
 #  PriorityQueue
 
-## Prueba 5: Orden por prioridad
+## Prueba 3: Orden por prioridad
 
 **Objetivo:** Verificar orden automático de elementos.
 
@@ -165,7 +141,7 @@ Cada operación incluye:
 
 #  TranspositionTable (Hash Table)
 
-## Prueba 6: Inserción y búsqueda
+## Prueba 4: Inserción y búsqueda
 
 **Objetivo:** Validar almacenamiento y consulta de estados.
 
@@ -179,7 +155,7 @@ Cada operación incluye:
 
 #  StateKey
 
-## Prueba 7: Igualdad y hashing
+## Prueba 5: Igualdad y hashing
 
 **Objetivo:** Verificar consistencia de equals y hashCode.
 
@@ -193,7 +169,7 @@ Cada operación incluye:
 
 # Iterator
 
-## Prueba 8: hasNext()
+## Prueba 6: hasNext()
 
 **Objetivo:** Verificar si el iterador detecta correctamente elementos restantes.
 
@@ -205,7 +181,7 @@ Cada operación incluye:
 
 ---
 
-## Prueba 9: next()
+## Prueba 7: next()
 
 **Objetivo:** Validar que el iterador retorne los elementos en orden.
 
