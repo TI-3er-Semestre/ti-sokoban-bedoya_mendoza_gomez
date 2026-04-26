@@ -1,10 +1,12 @@
 package Model;
 
+import java.io.Serializable;
+
 /**
  * Represents a (row, col) position on the board grid.
  * Commit 1 (3 abril): implementación completa — base para todos los tests.
  */
-public class Position {
+public class Position implements Serializable {
 
     private int row;
     private int col;

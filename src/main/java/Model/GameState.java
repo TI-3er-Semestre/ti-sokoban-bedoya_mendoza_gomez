@@ -1,10 +1,12 @@
 package Model;
 
+import java.io.Serializable;
+
 /**
  * Represents a complete snapshot of the game at a given moment.
  * Used for undo (stack), transposition table (hash), and save/load.
  */
-public class GameState {
+public class GameState implements Serializable {
 
     private Board board;
     private Position playerPosition;

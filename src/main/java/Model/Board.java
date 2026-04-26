@@ -1,10 +1,12 @@
 package Model;
 
+import java.io.Serializable;
+
 /**<
  * Represents the 2D grid board of a Sokoban level.
  * Manages cell access, validity checks, and victory detection.
  */
-public class Board {
+public class Board implements Serializable {
 
     private Cell[][] grid;
     private int rows;
