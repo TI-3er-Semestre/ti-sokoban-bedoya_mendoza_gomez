@@ -2,6 +2,9 @@ package structures.Graph;
 
 import structures.LinkedList;
 import structures.Iterator;
+import structures.Queue;
+import structures.Stack;
+
 
 public class AdjacencyListGraph<T extends Comparable<T>> implements Graph<T> {
 
@@ -92,5 +95,84 @@ public class AdjacencyListGraph<T extends Comparable<T>> implements Graph<T> {
 
     public LinkedList<Vertex<T>> getVertices() {
         return vertices;
+    }
+
+    public LinkedList<T> bfs(T start) {
+
+        Vertex<T> startVertex = findVertex(start);
+
+        if (startVertex == null) {
+            return null;
+        }
+
+        Queue<Vertex<T>> queue = new Queue<>();
+        LinkedList<T> visited = new LinkedList<>();
+        LinkedList<T> result = new LinkedList<>();
+
+        queue.enqueue(startVertex);
+        visited.add(startVertex.getData());
+
+        while (queue.isEmpty() == false) {
+
+            Vertex<T> current = queue.dequeue();
+
+            result.add(current.getData());
+
+            Iterator<Edge<T>> iterator = current.getEdges().iterator();
+
+            while (iterator.hasNext()) {
+
+                Edge<T> edge = iterator.next();
+
+                Vertex<T> neighbor = edge.getDestination();
+
+                if (visited.containsVisited(neighbor.getData()) == false) {
+
+                    visited.add(neighbor.getData());
+
+                    queue.enqueue(neighbor);
+                }
+            }
+        }
+
+        return result;
+    }
+
+    public LinkedList<T> dfs(T start) {
+
+        Vertex<T> startVertex = findVertex(start);
+
+        if (startVertex == null) {
+            return null;
+        }
+
+        Stack<Vertex<T>> stack = new Stack<>();
+        LinkedList<T> visited = new LinkedList<>();
+        LinkedList<T> result = new LinkedList<>();
+
+        stack.push(startVertex);
+
+        while (stack.isEmpty() == false) {
+
+            Vertex<T> current = stack.pop();
+
+            if (visited.containsVisited(current.getData()) == false) {
+
+                visited.add(current.getData());
+
+                result.add(current.getData());
+
+                Iterator<Edge<T>> iterator = current.getEdges().iterator();
+
+                while (iterator.hasNext()) {
+
+                    Edge<T> edge = iterator.next();
+
+                    stack.push(edge.getDestination());
+                }
+            }
+        }
+
+        return result;
     }
 }

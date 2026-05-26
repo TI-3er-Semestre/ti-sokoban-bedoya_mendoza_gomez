@@ -32,73 +32,103 @@ public class LinkedList<T extends Comparable<T>> implements Iterable<T> {
     // ── add ───────────────────────────────────────────────────────────────────
 
     /**
-     * Inserta un nuevo nodo de forma <b>ordenada ascendente</b>.
+     * inserta un nuevo nodo en la lista de forma ordenada ascendente
      *
      * Casos contemplados:
-     *   1. Lista vacía                  → el nuevo nodo es primero y último.
-     *   2. El dato es menor que first   → inserción al inicio.
-     *   3. El dato es mayor que last    → inserción al final.
-     *   4. Inserción en el medio        → se busca la posición correcta.
+     *   1. Lista vacía:
+     *      el nuevo nodo se convierte en first y last
      *
-     * @param data Dato a insertar (no nulo)
-     * @return El nodo recién creado
+     *   2. Insercion al inicio:
+     *      el nuevo dato es menor o igual al primero
+     *
+     *   3. Insercion al final:
+     *      el nuevo dato es mayor o igual al ultimo
+     *
+     *   4. Insercion intermedia:
+     *      el nodo se ubica entre dos nodos existentes
+     *
+     * @param data Dato a insertar
+     * @return Nodo creado e insertado en la lista
      */
     public Node<T> add(T data) {
         Node<T> newNode = new Node<>(data);
 
         // Caso 1: lista vacía
         if (first == null) {
+
             first = newNode;
-            last  = newNode;
-            newNode.setNext(first);
-            newNode.setPrev(last);
+            last = newNode;
+        }
 
             // Caso 2: insertar antes del primero
-        } else if (data.compareTo(first.getData()) <= 0) {
+        else if (data.compareTo(first.getData()) <= 0) {
+
             newNode.setNext(first);
+
             first.setPrev(newNode);
+
             first = newNode;
-            first.setPrev(last);
+        }
 
             // Caso 3: insertar después del último
-        } else if (data.compareTo(last.getData()) >= 0) {
-            newNode.setPrev(last);
+        else if (data.compareTo(last.getData()) >= 0) {
+
             last.setNext(newNode);
+
+            newNode.setPrev(last);
+
             last = newNode;
-            last.setNext(first);
+        }
+
 
             // Caso 4: buscar posición intermedia
-        } else {
+        else {
+
             Node<T> current = first;
-            while (current != null && data.compareTo(current.getData()) > 0) {
+
+            while (current != null &&
+                    data.compareTo(current.getData()) > 0) {
+
                 current = current.getNext();
             }
 
             newNode.setNext(current);
+
             newNode.setPrev(current.getPrev());
+
             current.getPrev().setNext(newNode);
+
             current.setPrev(newNode);
         }
 
         length++;
+
         return newNode;
     }
 
     // ── delete ────────────────────────────────────────────────────────────────
 
     /**
-     * Elimina el nodo cuyo dato sea <em>igual</em> al parámetro recibido
-     * (comparado con {@code compareTo} == 0).
+     * elimina un nodo de la lista según el dato recibido.
      *
-     * Casos contemplados:
-     *   1. Lista vacía / dato no encontrado → retorna null.
-     *   2. El nodo a eliminar es el único   → lista queda vacía.
-     *   3. El nodo a eliminar es el primero → first avanza.
-     *   4. El nodo a eliminar es el último  → last retrocede.
-     *   5. El nodo está en el medio         → se reconectan vecinos.
+     * Casos:
+     *   1. Lista vacía o dato inexistente:
+     *      retorna null
+     *
+     *   2. Eliminacion del unico nodo:
+     *      la lista queda vacía
+     *
+     *   3. Eliminacion del primer nodo:
+     *      first avanza al siguiente nodo
+     *
+     *   4. Eliminacion del último nodo:
+     *      last retrocede al nodo anterior
+     *
+     *   5. Eliminacion intermedia:
+     *      se reconectan los nodos vecinos
      *
      * @param data Dato del nodo a eliminar
-     * @return El nodo eliminado, o null si no se encontró
+     * @return Nodo eliminado o null si no existe
      */
     public Node<T> delete(T data) {
         Node<T> target = findNode(data);
@@ -110,31 +140,46 @@ public class LinkedList<T extends Comparable<T>> implements Iterable<T> {
         // Caso 2: único nodo
         if (target == first && target == last) {
             first = null;
-            last  = null;
+            last = null;
+        }
 
             // Caso 3: es el primero
-        } else if (target == first) {
-            first = first.getNext();
-            first.setPrev(last);
+        else if (target == first) {
+
+                first = first.getNext();
+
+                if (first != null) {
+                    first.setPrev(null);
+                }
+            }
 
             // Caso 4: es el último
-        } else if (target == last) {
+        else if (target == last) {
+
             last = last.getPrev();
-            last.setNext(first);
+
+            if (last != null) {
+                last.setNext(null);
+            }
+        }
 
             // Caso 5: nodo intermedio
-        } else {
+        else {
+
             Node<T> prev = target.getPrev();
+
             Node<T> next = target.getNext();
+
             prev.setNext(next);
+
             next.setPrev(prev);
         }
 
-        // Limpiar referencias del nodo eliminado
         target.setNext(null);
         target.setPrev(null);
 
         length--;
+
         return target;
     }
 
@@ -199,17 +244,34 @@ public class LinkedList<T extends Comparable<T>> implements Iterable<T> {
      * @return Nodo encontrado o null
      */
     private Node<T> findNode(T data) {
-        if (first == null) return null;
-
         Node<T> current = first;
-        do {
+
+        while (current != null) {
+
             if (current.getData().compareTo(data) == 0) {
                 return current;
             }
+
             current = current.getNext();
-        } while (current != first); // se detiene cuando da la vuelta completa
+        }
 
         return null;
+    }
+
+    public boolean containsVisited(T data) {
+
+        Node<T> current = first;
+
+        while (current != null) {
+
+            if (current.getData().equals(data)) {
+                return true;
+            }
+
+            current = current.getNext();
+        }
+
+        return false;
     }
 
     // ── getters ───────────────────────────────────────────────────────────────
