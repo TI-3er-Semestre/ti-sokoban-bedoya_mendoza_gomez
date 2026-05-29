@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Represents a (row, col) position on the board grid.
  * Commit 1 (3 abril): implementación completa — base para todos los tests.
  */
-public class Position implements Serializable {
+public class Position implements Serializable, Comparable<Position> {
 
     private int row;
     private int col;
@@ -35,6 +35,14 @@ public class Position implements Serializable {
     @Override
     public int hashCode() {
         return 31 * row + col;
+    }
+
+    @Override
+    public int compareTo(Position other) {
+        if (this.row != other.row) {
+            return Integer.compare(this.row, other.row);
+        }
+        return Integer.compare(this.col, other.col);
     }
 
     @Override
