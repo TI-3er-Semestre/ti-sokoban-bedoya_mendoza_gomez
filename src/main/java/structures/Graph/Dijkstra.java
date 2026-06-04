@@ -42,7 +42,7 @@ public class Dijkstra<T extends Comparable<T>> {
     }
 
     public void findShortestPath(AdjacencyListGraph<T> graph, T start) {
-        // Usamos tu cola de prioridad con capacidad suficiente
+        // Usamos cola de prioridad con capacidad suficiente
         PriorityQueue<NodeDistance> queue = new PriorityQueue<>(1000);
         LinkedList<DistanceEntry> distances = new LinkedList<>();
         LinkedList<T> visited = new LinkedList<>();
@@ -64,12 +64,6 @@ public class Dijkstra<T extends Comparable<T>> {
             NodeDistance current = queue.dequeue();
             T currentData = current.getVertexData();
 
-            // --------------------------------------------------------------------
-            // LÍNEAS CLAVE PARA EL VIDEO:
-            // Aquí es donde Dijkstra falla con pesos negativos (baldosas de energía -2).
-            // Al marcar el nodo como visitado y saltarlo si ya estaba en la lista,
-            // asume de forma "avara" (greedy) que ya encontró la ruta definitiva,
-            // ignorando si más adelante había un camino más barato.
             if (contains(visited, currentData)) {
                 continue;
             }
