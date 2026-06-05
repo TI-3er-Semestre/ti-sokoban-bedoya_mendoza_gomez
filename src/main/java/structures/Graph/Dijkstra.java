@@ -4,99 +4,98 @@ import structures.PriorityQueue;
 import structures.LinkedList;
 import structures.Iterator;
 
+/**
+ * implementacion dijkstra que busca el camino mas corto desde un nodo inicial
+ */
 public class Dijkstra<T extends Comparable<T>> {
 
-    // Clase auxiliar para guardar en la cola de prioridad
+    /**
+     * clase auxiliar para la cola de prioridad
+     */
     public class NodeDistance implements Comparable<NodeDistance> {
-        private T vertexData;
-        private int distance;
+        public Vertex<T> vertex;
+        public int distance;
 
-        public NodeDistance(T vertexData, int distance) {
-            this.vertexData = vertexData;
+        public NodeDistance(Vertex<T> vertex, int distance) {
+            this.vertex = vertex;
             this.distance = distance;
         }
-
-        public T getVertexData() { return vertexData; }
-        public int getDistance() { return distance; }
 
         @Override
         public int compareTo(NodeDistance other) {
-            return Integer.compare(this.distance, other.distance); // Ordena de menor a mayor distancia
+            return Integer.compare(this.distance, other.distance);
         }
     }
 
-    // Clase auxiliar para la tabla de distancias usando tu LinkedList
-    public class DistanceEntry implements Comparable<DistanceEntry> {
-        private T vertexData;
-        public int distance; // public para poder actualizarla fácilmente
+    /**
+     * guardar las distancias finales
+     */
+    public class PathResult implements Comparable<PathResult> {
+        public T data;
+        public int distance;
 
-        public DistanceEntry(T vertexData, int distance) {
-            this.vertexData = vertexData;
+        public PathResult(T data, int distance) {
+            this.data = data;
             this.distance = distance;
         }
 
         @Override
-        public int compareTo(DistanceEntry other) {
-            return this.vertexData.compareTo(other.vertexData);
+        public int compareTo(PathResult other) {
+            return this.data.compareTo(other.data);
         }
     }
 
-    public void findShortestPath(AdjacencyListGraph<T> graph, T start) {
-        // Usamos cola de prioridad con capacidad suficiente
+    public LinkedList<PathResult> shortestpaths(AdjacencyListGraph<T> graph, T start) {
+        LinkedList<PathResult> results = new LinkedList<>();
         PriorityQueue<NodeDistance> queue = new PriorityQueue<>(1000);
-        LinkedList<DistanceEntry> distances = new LinkedList<>();
         LinkedList<T> visited = new LinkedList<>();
 
-        // Inicializar distancias a infinito (Integer.MAX_VALUE)
+        Vertex<T> startVertex = findvertex(graph, start);
+        if (startVertex == null) {
+            return results;
+        }
+
+
         Iterator<Vertex<T>> it = graph.getVertices().iterator();
         while (it.hasNext()) {
-            T data = it.next().getData();
-            if (data.equals(start)) {
-                distances.add(new DistanceEntry(data, 0));
+            Vertex<T> v = it.next();
+            if (v.getData().equals(start)) {
+                results.add(new PathResult(v.getData(), 0));
+                queue.enqueue(new NodeDistance(v, 0));
             } else {
-                distances.add(new DistanceEntry(data, Integer.MAX_VALUE));
+                results.add(new PathResult(v.getData(), 999999));
             }
         }
 
-        queue.enqueue(new NodeDistance(start, 0));
 
         while (!queue.isEmpty()) {
             NodeDistance current = queue.dequeue();
-            T currentData = current.getVertexData();
+            Vertex<T> u = current.vertex;
 
-            if (contains(visited, currentData)) {
+            if (contains(visited, u.getData())) {
                 continue;
             }
-            visited.add(currentData);
-            // --------------------------------------------------------------------
+            visited.add(u.getData());
 
-            Vertex<T> currentVertex = findVertex(graph, currentData);
-            if (currentVertex != null) {
-                Iterator<Edge<T>> edgeIt = currentVertex.getEdges().iterator();
-                while (edgeIt.hasNext()) {
-                    Edge<T> edge = edgeIt.next();
-                    T neighborData = edge.getDestination().getData();
-                    int weight = edge.getWeight();
+            Iterator<Edge<T>> edgeIt = u.getEdges().iterator();
+            while (edgeIt.hasNext()) {
+                Edge<T> edge = edgeIt.next();
+                Vertex<T> v = edge.getDestination();
+                int weight = edge.getWeight();
 
-                    DistanceEntry currentDistEntry = findDistanceEntry(distances, currentData);
-                    DistanceEntry neighborDistEntry = findDistanceEntry(distances, neighborData);
+                int uDist = getdistance(results, u.getData());
+                int vDist = getdistance(results, v.getData());
 
-                    if (currentDistEntry != null && neighborDistEntry != null) {
-                        int currentDist = currentDistEntry.distance;
-                        int neighborDist = neighborDistEntry.distance;
-
-                        // Relajación de aristas
-                        if (currentDist != Integer.MAX_VALUE && currentDist + weight < neighborDist) {
-                            neighborDistEntry.distance = currentDist + weight;
-                            queue.enqueue(new NodeDistance(neighborData, currentDist + weight));
-                        }
-                    }
+                if (uDist + weight < vDist) {
+                    updatedistance(results, v.getData(), uDist + weight);
+                    queue.enqueue(new NodeDistance(v, uDist + weight));
                 }
             }
         }
+        return results;
     }
 
-    private Vertex<T> findVertex(AdjacencyListGraph<T> graph, T data) {
+    private Vertex<T> findvertex(AdjacencyListGraph<T> graph, T data) {
         Iterator<Vertex<T>> iterator = graph.getVertices().iterator();
         while (iterator.hasNext()) {
             Vertex<T> vertex = iterator.next();
@@ -107,15 +106,26 @@ public class Dijkstra<T extends Comparable<T>> {
         return null;
     }
 
-    private DistanceEntry findDistanceEntry(LinkedList<DistanceEntry> list, T data) {
-        Iterator<DistanceEntry> iterator = list.iterator();
-        while (iterator.hasNext()) {
-            DistanceEntry entry = iterator.next();
-            if (entry.vertexData.equals(data)) {
-                return entry;
+    private int getdistance(LinkedList<PathResult> results, T data) {
+        Iterator<PathResult> it = results.iterator();
+        while (it.hasNext()) {
+            PathResult pr = it.next();
+            if (pr.data.equals(data)) {
+                return pr.distance;
             }
         }
-        return null;
+        return 999999;
+    }
+
+    private void updatedistance(LinkedList<PathResult> results, T data, int newDist) {
+        Iterator<PathResult> it = results.iterator();
+        while (it.hasNext()) {
+            PathResult pr = it.next();
+            if (pr.data.equals(data)) {
+                pr.distance = newDist;
+                return;
+            }
+        }
     }
 
     private boolean contains(LinkedList<T> list, T data) {

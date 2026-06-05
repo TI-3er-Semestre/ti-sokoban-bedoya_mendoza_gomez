@@ -179,4 +179,12 @@ public class AdjacencyMatrixGraph<T extends Comparable<T>> implements Graph<T> {
 
         return result;
     }
+
+    public int[][] getmatrix() {
+        return matrix;
+    }
+
+    public int getsize() {
+        return size;
+    }
 }
