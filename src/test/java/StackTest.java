@@ -1,5 +1,5 @@
 import org.junit.jupiter.api.Test;
-import structures.Stack;
+import Model.structures.Stack;
 
 import static org.junit.jupiter.api.Assertions.*;
 

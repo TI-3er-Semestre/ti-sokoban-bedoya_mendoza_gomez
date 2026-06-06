@@ -1,4 +1,4 @@
-package structures;
+package Model.structures;
 
 /**
  * Implementación concreta de Iterator para la lista doblemente enlazada.

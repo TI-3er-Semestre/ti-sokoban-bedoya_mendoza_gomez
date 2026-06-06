@@ -1,8 +1,8 @@
 import org.junit.jupiter.api.Test;
-import structures.Graph.AdjacencyListGraph;
-import structures.Graph.Dijkstra;
-import structures.LinkedList;
-import structures.Iterator;
+import Model.structures.Graph.AdjacencyListGraph;
+import Model.structures.Graph.Dijkstra;
+import Model.structures.LinkedList;
+import Model.structures.Iterator;
 
 import static org.junit.jupiter.api.Assertions.*;
 

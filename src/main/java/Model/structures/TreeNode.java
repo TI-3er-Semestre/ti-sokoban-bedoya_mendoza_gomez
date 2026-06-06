@@ -1,4 +1,4 @@
-package structures;
+package Model.structures;
 
 public class TreeNode<T extends Comparable<T>> {
     private T data;

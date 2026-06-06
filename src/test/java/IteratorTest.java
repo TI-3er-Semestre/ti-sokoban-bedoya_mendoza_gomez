@@ -1,6 +1,6 @@
 import org.junit.jupiter.api.Test;
-import structures.LinkedList;
-import structures.Iterator;
+import Model.structures.LinkedList;
+import Model.structures.Iterator;
 
 import static org.junit.jupiter.api.Assertions.*;
 

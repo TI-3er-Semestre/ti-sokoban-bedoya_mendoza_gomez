@@ -1,6 +1,6 @@
 import org.junit.jupiter.api.Test;
-import structures.Graph.AdjacencyMatrixGraph;
-import structures.Graph.FloydWarshall;
+import Model.structures.Graph.AdjacencyMatrixGraph;
+import Model.structures.Graph.FloydWarshall;
 
 import static org.junit.jupiter.api.Assertions.*;
 

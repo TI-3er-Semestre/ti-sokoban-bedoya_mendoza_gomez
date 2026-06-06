@@ -1,8 +1,8 @@
-package structures.Graph;
+package Model.structures.Graph;
 
-import structures.Stack;
-import structures.LinkedList;
-import structures.Iterator;
+import Model.structures.Stack;
+import Model.structures.LinkedList;
+import Model.structures.Iterator;
 
 public class DFS<T extends Comparable<T>> {
 

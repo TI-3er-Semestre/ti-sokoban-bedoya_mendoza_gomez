@@ -1,4 +1,4 @@
-package structures.Graph;
+package Model.structures.Graph;
 
 public class Edge<T extends Comparable<T>>
         implements Comparable<Edge<T>> {

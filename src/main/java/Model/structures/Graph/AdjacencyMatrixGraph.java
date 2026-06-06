@@ -1,9 +1,9 @@
-package structures.Graph;
+package Model.structures.Graph;
 
-import structures.LinkedList;
-import structures.Iterator;
-import structures.Queue;
-import structures.Stack;
+import Model.structures.LinkedList;
+import Model.structures.Iterator;
+import Model.structures.Queue;
+import Model.structures.Stack;
 
 public class AdjacencyMatrixGraph<T extends Comparable<T>> implements Graph<T> {
 

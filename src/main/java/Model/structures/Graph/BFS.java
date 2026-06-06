@@ -1,8 +1,8 @@
-package structures.Graph;
+package Model.structures.Graph;
 
-import structures.Queue;
-import structures.LinkedList;
-import structures.Iterator;
+import Model.structures.Queue;
+import Model.structures.LinkedList;
+import Model.structures.Iterator;
 
 public class BFS<T extends Comparable<T>> {
 

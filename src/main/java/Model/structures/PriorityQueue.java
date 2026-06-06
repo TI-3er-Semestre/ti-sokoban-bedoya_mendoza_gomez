@@ -1,4 +1,4 @@
-package structures;
+package Model.structures;
 
 public class PriorityQueue<T extends Comparable<T>> {
 

@@ -1,4 +1,4 @@
-package structures;
+package Model.structures;
 
 /**
  * Lista doblemente enlazada genérica.

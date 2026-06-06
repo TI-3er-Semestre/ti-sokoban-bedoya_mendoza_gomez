@@ -1,6 +1,6 @@
 import org.junit.jupiter.api.Test;
-import structures.Graph.AdjacencyMatrixGraph;
-import structures.LinkedList;
+import Model.structures.Graph.AdjacencyMatrixGraph;
+import Model.structures.LinkedList;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class AdjacencyMatrixGraphTest {

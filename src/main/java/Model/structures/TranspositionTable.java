@@ -1,4 +1,4 @@
-package structures;
+package Model.structures;
 
 /**
  * Hash table for storing visited game states.

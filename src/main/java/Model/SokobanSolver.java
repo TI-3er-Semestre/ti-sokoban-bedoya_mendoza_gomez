@@ -1,9 +1,9 @@
 package Model;
 
-import structures.Queue;
-import structures.Stack;
-import structures.TranspositionTable;
-import structures.StateKey;
+import Model.structures.Queue;
+import Model.structures.Stack;
+import Model.structures.TranspositionTable;
+import Model.structures.StateKey;
 
 /**
  * solucionador para los niveles de sokoban

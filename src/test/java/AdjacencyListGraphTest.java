@@ -1,7 +1,7 @@
 import org.junit.jupiter.api.Test;
 
-import structures.Graph.AdjacencyListGraph;
-import structures.LinkedList;
+import Model.structures.Graph.AdjacencyListGraph;
+import Model.structures.LinkedList;
 
 import static org.junit.jupiter.api.Assertions.*;
 

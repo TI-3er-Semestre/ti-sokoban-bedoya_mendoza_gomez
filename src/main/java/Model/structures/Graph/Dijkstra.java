@@ -1,8 +1,8 @@
-package structures.Graph;
+package Model.structures.Graph;
 
-import structures.PriorityQueue;
-import structures.LinkedList;
-import structures.Iterator;
+import Model.structures.PriorityQueue;
+import Model.structures.LinkedList;
+import Model.structures.Iterator;
 
 /**
  * implementacion dijkstra que busca el camino mas corto desde un nodo inicial

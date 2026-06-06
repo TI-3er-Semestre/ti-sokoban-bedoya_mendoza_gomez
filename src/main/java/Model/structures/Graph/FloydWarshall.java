@@ -1,4 +1,4 @@
-package structures.Graph;
+package Model.structures.Graph;
 
 /**
  * implementacion de floyd-warshall que calcula los caminos mas cortos entre todos los pares de nodos en una matriz

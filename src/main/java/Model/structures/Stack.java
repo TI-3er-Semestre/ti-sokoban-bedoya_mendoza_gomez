@@ -1,4 +1,4 @@
-package structures;
+package Model.structures;
 
 public class Stack <T>{
 

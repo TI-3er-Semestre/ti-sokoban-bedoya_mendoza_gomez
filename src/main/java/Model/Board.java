@@ -1,5 +1,7 @@
 package Model;
 
+import Model.structures.Graph.AdjacencyListGraph;
+
 import java.io.Serializable;
 
 /**<
@@ -204,8 +206,8 @@ public class Board implements Serializable {
      * Vertices are walkable positions, and Edges connect adjacent valid cells.
      * @return AdjacencyListGraph of Position
      */
-    public structures.Graph.AdjacencyListGraph<Position> toGraph() {
-        structures.Graph.AdjacencyListGraph<Position> graph = new structures.Graph.AdjacencyListGraph<>();
+    public AdjacencyListGraph<Position> toGraph() {
+        AdjacencyListGraph<Position> graph = new AdjacencyListGraph<>();
 
         // 1. Add all non-wall cells as vertices
         for (int i = 0; i < this.rows; i++) {
