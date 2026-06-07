@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="CENTER" prefHeight="600.0" prefWidth="800.0" spacing="15.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RegisterController">
+    <padding>
+        <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
+    </padding>
+
+    <Label text="registro de jugador">
+        <font>
+            <Font name="System Bold" size="24.0" />
+        </font>
+    </Label>
+
+    <VBox maxWidth="400.0" spacing="5.0">
+        <Label text="nombre completo:" />
+        <TextField fx:id="nameField" promptText="ej. juan jose valencia" />
+    </VBox>
+
+    <VBox maxWidth="400.0" spacing="5.0">
+        <Label text="correo electronico:" />
+        <TextField fx:id="emailField" promptText="ej. juan@correo.com" />
+    </VBox>
+
+    <VBox maxWidth="400.0" spacing="5.0">
+        <Label text="username:" />
+        <TextField fx:id="usernameField" promptText="ej. juanjose" />
+    </VBox>
+
+    <VBox maxWidth="400.0" spacing="5.0">
+        <Label text="avatar (url o nombre):" />
+        <TextField fx:id="avatarField" promptText="ej. avatar1.png" />
+    </VBox>
+
+    <VBox maxWidth="400.0" spacing="10.0">
+        <Label text="nivel de experiencia:" />
+        <HBox spacing="20.0">
+            <RadioButton fx:id="radioBeginner" selected="true" text="principiante">
+                <toggleGroup>
+                    <ToggleGroup fx:id="experienceGroup" />
+                </toggleGroup>
+            </RadioButton>
+            <RadioButton fx:id="radioAdvanced" text="avanzado" toggleGroup="$experienceGroup" />
+            <RadioButton fx:id="radioExpert" text="experto" toggleGroup="$experienceGroup" />
+        </HBox>
+    </VBox>
+
+    <Button mnemonicParsing="false" onAction="#handleRegister" prefHeight="40.0" prefWidth="200.0" text="registrar y jugar" />
+
+    <Label fx:id="errorLabel" textFill="red" />
+</VBox>

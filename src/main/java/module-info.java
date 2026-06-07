@@ -10,9 +10,10 @@ module ti.sokoban.bedoya.mendoza.gomez {
     opens controller to javafx.fxml;
     exports controller;
 
-    opens Model to javafx.fxml;
+    opens Model to javafx.fxml, com.google.gson;
     exports Model;
 
+    opens Model.structures to com.google.gson;
     exports Model.structures;
     exports Model.structures.Graph;
 
