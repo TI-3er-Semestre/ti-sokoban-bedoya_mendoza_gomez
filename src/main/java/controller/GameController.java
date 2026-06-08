@@ -1,7 +1,6 @@
 package controller;
 
 import Model.*;
-import structures.*;
 import Model.structures.Queue;
 import Model.structures.Stack;
 import Model.structures.StateKey;

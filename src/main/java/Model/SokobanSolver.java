@@ -4,6 +4,7 @@ import Model.structures.Queue;
 import Model.structures.Stack;
 import Model.structures.TranspositionTable;
 import Model.structures.StateKey;
+import controller.GameController;
 
 /**
  * solucionador para los niveles de sokoban
