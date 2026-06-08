@@ -1,0 +1,32 @@
+{
+  "name": "ada",
+  "email": "gdsahg@gams.com",
+  "username": "sasa23",
+  "avatar": "🧑",
+  "experienceLevel": "ADVANCED",
+  "stats": {
+    "results": {
+      "first": {
+        "data": {
+          "levelId": 2,
+          "moves": 48,
+          "pushes": 17,
+          "timeMillis": 20161
+        }
+      },
+      "last": {
+        "data": {
+          "levelId": 2,
+          "moves": 48,
+          "pushes": 17,
+          "timeMillis": 20161
+        }
+      },
+      "length": 1
+    },
+    "achievements": {
+      "size": 0
+    }
+  },
+  "currentDirection": "LEFT"
+}

@@ -54,6 +54,10 @@ public class GameController {
             return false;
         }
 
+        if (this.currentPlayer != null) {
+            this.currentPlayer.setCurrentDirection(direction);
+        }
+
         Board board = currentState.getBoard();
         Position currentPos = currentState.getPlayerPosition();
 
@@ -106,6 +110,9 @@ public class GameController {
 
         currentState.setPlayerPosition(nextPos);
         moveCount++;
+
+        currentState.setMoveCount(this.moveCount);
+        currentState.setPushCount(this.pushCount);
 
         return true;
     }

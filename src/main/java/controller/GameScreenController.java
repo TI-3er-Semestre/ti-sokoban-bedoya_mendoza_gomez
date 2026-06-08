@@ -48,6 +48,7 @@ public class GameScreenController {
     private static final int[] BOX_2      = {16, 64};  // fila 5, col 2
 
     private Image tileset;
+    private Image playerSprites;
     private GameController gameController;
 
     // Hilo del temporizador
@@ -63,6 +64,9 @@ public class GameScreenController {
                 getClass().getResourceAsStream("/images/tileset.png")
         );
 
+
+        playerSprites = new Image(getClass().getResourceAsStream("/images/PlayerSprites.png"));
+
         System.out.println("Tileset cargado: " + !tileset.isError());
         System.out.println("Tileset ancho: " + tileset.getWidth());
         System.out.println("Tileset alto: " + tileset.getHeight());
@@ -70,17 +74,35 @@ public class GameScreenController {
 
         Platform.runLater(() -> {
             // Solo cargar nivel nuevo si no estamos retomando partida
+            int levelToLoad = 1;
             if (!gameController.isResumingGame()) {
-                gameController.loadLevel(1);
+                Player p = gameController.getCurrentPlayer();
+                if (p != null && p.getExperienceLevel() != null) {
+                    switch (p.getExperienceLevel()) {
+                        case BEGINNER: levelToLoad = 1; break;
+                        case ADVANCED: levelToLoad = 2; break;
+                        case EXPERT:   levelToLoad = 3; break;
+                    }
+                }
+                gameController.loadLevel(levelToLoad);
             } else {
-                gameController.setResumingGame(false); // resetear bandera
+                gameController.setResumingGame(false);
             }
+
             gameController.startTimer();
             drawBoard();
             updateCounters();
             startTimerThread();
-            rootPane.getScene().setOnKeyPressed(this::handleKeyPress);
-            rootPane.requestFocus();
+
+            // dificultad
+            if (levelToLoad == 3 && !gameController.isResumingGame()) {
+                // automatico:el jugador NO puede usar el teclado
+                solveAndAnimate();
+            } else {
+                // normal: jugador usa el teclado
+                rootPane.getScene().setOnKeyPressed(this::handleKeyPress);
+                rootPane.requestFocus();
+            }
         });
         gameController.startTimer();
 
@@ -153,15 +175,13 @@ public class GameScreenController {
             drawTile(gc, BOX_2,   destX, destY);
 
         } else if (cell instanceof PlayerCell) {
-            // Terreno debajo + jugador (círculo naranja sobre el tile)
             drawTile(gc, FLOOR_1, destX, destY);
-            drawPlayer(gc, destX, destY, false);
+            drawPlayerSprite(gc, destX, destY); // Llamado nuevo
 
         } else if (cell instanceof PlayerOnGoalCell) {
-            // Terreno + objetivo + jugador
             drawTile(gc, FLOOR_1, destX, destY);
             drawTile(gc, GOAL,    destX, destY);
-            drawPlayer(gc, destX, destY, true);
+            drawPlayerSprite(gc, destX, destY); // Llamado nuevo
         }
     }
 
@@ -191,33 +211,47 @@ public class GameScreenController {
     }
 
     /**
-     * Draws the player as a colored circle overlay on the current tile.
-     * @param onGoal true if player is standing on a goal (changes color)
+     * Dibuja el sprite del jugador calculando su posicion en la cuadrícula
      */
-    private void drawPlayer(GraphicsContext gc, double destX, double destY, boolean onGoal) {
-        int padding = 6;
-        gc.setFill(onGoal ? Color.web("#16c79a") : Color.web("#f5a623"));
-        gc.fillOval(
-                destX + padding,
-                destY + padding,
-                CELL_SIZE - padding * 2,
-                CELL_SIZE - padding * 2
+    private void drawPlayerSprite(GraphicsContext gc, double destX, double destY) {
+        Player player = gameController.getCurrentPlayer();
+        Direction dir = (player != null && player.getCurrentDirection() != null)
+                ? player.getCurrentDirection() : Direction.DOWN;
+
+        double spriteWidth = playerSprites.getWidth() / 2;
+        double spriteHeight = playerSprites.getHeight() / 2;
+
+        double sx = 0;
+        double sy = 0;
+
+        // en la cuadricula
+        // Fila 1 [abajo] [arriba]
+        // Fila 2 [izquierda] [derecha]
+        switch (dir) {
+            case DOWN:
+                sx = 0;
+                sy = 0;
+                break;
+            case UP:
+                sx = spriteWidth;
+                sy = 0;
+                break;
+            case LEFT:
+                sx = spriteWidth;
+                sy = spriteHeight;
+                break;
+            case RIGHT:
+                sx = 0;
+                sy = spriteHeight;
+                break;
+        }
+
+        // dibujamos el recorte en la imagen
+        gc.drawImage(
+                playerSprites,
+                sx, sy, spriteWidth, spriteHeight,
+                destX, destY, CELL_SIZE, CELL_SIZE
         );
-        // Contorno
-        gc.setStroke(Color.web("#1a1a2e"));
-        gc.setLineWidth(2);
-        gc.strokeOval(
-                destX + padding,
-                destY + padding,
-                CELL_SIZE - padding * 2,
-                CELL_SIZE - padding * 2
-        );
-        // Cara simple
-        gc.setFill(Color.web("#1a1a2e"));
-        gc.fillOval(destX + 16, destY + 16, 5, 5); // ojo izquierdo
-        gc.fillOval(destX + 27, destY + 16, 5, 5); // ojo derecho
-        gc.strokeArc(destX + 16, destY + 24, 16, 8, 0, -180,
-                javafx.scene.shape.ArcType.OPEN);  // boca
     }
 
     // ---------------------------------------------------------------
@@ -351,5 +385,59 @@ public class GameScreenController {
         a.setTitle("Información");
         a.setContentText(msg);
         a.showAndWait();
+    }
+
+    /**
+     * resuelve  nivel 3 usando el BFS y hace los movimientos automáticamente
+     */
+    private void solveAndAnimate() {
+        // algoritmo del Model
+        Model.SokobanSolver solver = new Model.SokobanSolver(50000);
+        Model.structures.Queue<String> solution = solver.solvebfs(gameController.getCurrentState());
+
+        if (solution == null || solution.isEmpty()) {
+            showError("El algoritmo no encontró solución.");
+            return;
+        }
+
+        // animar paso a paso
+        javafx.animation.Timeline timeline = new javafx.animation.Timeline();
+        int step = 1;
+
+        while (!solution.isEmpty()) {
+            String move = solution.dequeue();
+
+
+            Direction dir = null;
+            switch (move) {
+                case "w": dir = Direction.UP; break;
+                case "s": dir = Direction.DOWN; break;
+                case "a": dir = Direction.LEFT; break;
+                case "d": dir = Direction.RIGHT; break;
+            }
+
+            if (dir != null) {
+                final Direction finalDir = dir;
+                //cada movimiento se hara con diferencia
+                javafx.animation.KeyFrame kf = new javafx.animation.KeyFrame(
+                        javafx.util.Duration.millis(300 * step),
+                        e -> {
+                            gameController.move(finalDir);
+                            drawBoard();
+                            updateCounters();
+                            // Si ya gano se muestra la pantalla de victoria
+                            if (gameController.checkVictory()) {
+                                stopTimerThread();
+                                showVictory();
+                            }
+                        }
+                );
+                timeline.getKeyFrames().add(kf);
+                step++;
+            }
+        }
+
+
+        timeline.play();
     }
 }
