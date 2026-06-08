@@ -20,8 +20,17 @@
         </VBox.margin>
     </Label>
 
+    <VBox spacing="5.0" style="-fx-background-color: #34495e; -fx-padding: 20; -fx-background-radius: 10;">
+        <Label text="¿De qué trata el juego?" textFill="#3498db">
+            <font><Font name="System Bold" size="20.0" /></font>
+        </Label>
+        <Label text="Sokoban es un juego de rompecabezas clasico, en el que eres un trabajador y tu objetivo es empujar todas las cajas" textFill="WHITE" wrapText="true"/>
+        <Label text="hasta las zonas de meta, pero ¡Cuidado! Las cajas solo se pueden empujar, no jalar" textFill="WHITE" wrapText="true"/>
+        <Label text="Y si las arrinconas contra un muro perderas el nivel" textFill="WHITE" wrapText="true"/>
+    </VBox>
+
     <VBox spacing="10.0" style="-fx-background-color: #34495e; -fx-padding: 20; -fx-background-radius: 10;">
-        <Label text="🎮 Controles de Movimiento:" textFill="#16c79a">
+        <Label text="Controles de Movimiento:" textFill="#16c79a">
             <font><Font name="System Bold" size="20.0" /></font>
         </Label>
         <Label text="• W o Flecha Arriba: Mover hacia arriba" textFill="WHITE" />

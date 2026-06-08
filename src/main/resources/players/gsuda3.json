@@ -1,0 +1,64 @@
+{
+  "name": "dsdass",
+  "email": "da@dsa.com",
+  "username": "gsuda3",
+  "avatar": "🧑",
+  "experienceLevel": "EXPERT",
+  "stats": {
+    "results": {
+      "first": {
+        "data": {
+          "levelId": 3,
+          "moves": 12,
+          "pushes": 6,
+          "timeMillis": 6196
+        },
+        "next": {
+          "data": {
+            "levelId": 3,
+            "moves": 12,
+            "pushes": 6,
+            "timeMillis": 6382
+          },
+          "next": {
+            "data": {
+              "levelId": 3,
+              "moves": 12,
+              "pushes": 6,
+              "timeMillis": 6559
+            },
+            "next": {
+              "data": {
+                "levelId": 3,
+                "moves": 27,
+                "pushes": 10,
+                "timeMillis": 11983
+              },
+              "next": {
+                "data": {
+                  "levelId": 3,
+                  "moves": 27,
+                  "pushes": 10,
+                  "timeMillis": 49652
+                }
+              }
+            }
+          }
+        }
+      },
+      "last": {
+        "data": {
+          "levelId": 3,
+          "moves": 27,
+          "pushes": 10,
+          "timeMillis": 49652
+        }
+      },
+      "length": 5
+    },
+    "achievements": {
+      "size": 0
+    }
+  },
+  "currentDirection": "LEFT"
+}

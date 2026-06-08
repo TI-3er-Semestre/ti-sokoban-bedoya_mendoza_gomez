@@ -1,0 +1,56 @@
+{
+  "name": "sajdask",
+  "email": "sbahd@hdsjah.cxo",
+  "username": "dsa3",
+  "avatar": "🧕",
+  "experienceLevel": "EXPERT",
+  "stats": {
+    "results": {
+      "first": {
+        "data": {
+          "levelId": 3,
+          "moves": 12,
+          "pushes": 6,
+          "timeMillis": 5160
+        },
+        "next": {
+          "data": {
+            "levelId": 3,
+            "moves": 12,
+            "pushes": 6,
+            "timeMillis": 5906
+          },
+          "next": {
+            "data": {
+              "levelId": 3,
+              "moves": 12,
+              "pushes": 6,
+              "timeMillis": 6917
+            },
+            "next": {
+              "data": {
+                "levelId": 3,
+                "moves": 27,
+                "pushes": 10,
+                "timeMillis": 10521
+              }
+            }
+          }
+        }
+      },
+      "last": {
+        "data": {
+          "levelId": 3,
+          "moves": 27,
+          "pushes": 10,
+          "timeMillis": 10521
+        }
+      },
+      "length": 4
+    },
+    "achievements": {
+      "size": 0
+    }
+  },
+  "currentDirection": "LEFT"
+}

@@ -5,6 +5,8 @@ import Model.structures.Stack;
 import Model.structures.TranspositionTable;
 import Model.structures.StateKey;
 import controller.GameController;
+import Model.structures.PriorityQueue;
+import Model.structures.Graph.FloydWarshall;
 
 /**
  * solucionador para los niveles de sokoban
@@ -13,17 +15,24 @@ import controller.GameController;
 public class SokobanSolver {
 
     /**
-     * nodo interno para rastrear el camino y el estado en el arbol de busqueda
+     * nodo interno para rastrear el camino, el estado y el costo
      */
-    private static class SearchNode {
+    private static class SearchNode implements Comparable<SearchNode> {
         GameState state;
         SearchNode parent;
         String move;
+        int cost;
 
-        public SearchNode(GameState state, SearchNode parent, String move) {
+        public SearchNode(GameState state, SearchNode parent, String move, int cost) {
             this.state = state;
             this.parent = parent;
             this.move = move;
+            this.cost = cost;
+        }
+
+        @Override
+        public int compareTo(SearchNode other) {
+            return Integer.compare(this.cost, other.cost);
         }
     }
 
@@ -45,7 +54,7 @@ public class SokobanSolver {
         Queue<SearchNode> frontier = new Queue<>();
         TranspositionTable visited = new TranspositionTable(maxStates);
 
-        SearchNode startNode = new SearchNode(initial.clone(), null, null);
+        SearchNode startNode = new SearchNode(initial.clone(), null, null, 0);
         frontier.enqueue(startNode);
 
         StateKey startKey = new StateKey(initial.getPlayerPosition(), initial.getBoard().getBoxPositions());
@@ -73,7 +82,7 @@ public class SokobanSolver {
 
                     if (!visited.contains(nextKey)) {
                         visited.add(nextKey);
-                        frontier.enqueue(new SearchNode(nextState, current, dirtostring(dir)));
+                        frontier.enqueue(new SearchNode(nextState, current, dirtostring(dir),0));
                     }
                 }
             }
@@ -93,7 +102,7 @@ public class SokobanSolver {
         Stack<SearchNode> frontier = new Stack<>();
         TranspositionTable visited = new TranspositionTable(maxStates);
 
-        SearchNode startNode = new SearchNode(initial.clone(), null, null);
+        SearchNode startNode = new SearchNode(initial.clone(), null, null,0);
         frontier.push(startNode);
 
         StateKey startKey = new StateKey(initial.getPlayerPosition(), initial.getBoard().getBoxPositions());
@@ -120,12 +129,94 @@ public class SokobanSolver {
 
                     if (!visited.contains(nextKey)) {
                         visited.add(nextKey);
-                        frontier.push(new SearchNode(nextState, current, dirtostring(dir)));
+                        frontier.push(new SearchNode(nextState, current, dirtostring(dir),0));
                     }
                 }
             }
         }
         return new Queue<>(); // retorna vacio si no encuentra solucion
+    }
+
+    /**
+     * Resuelve el nivel usando Dijkstra (Costo Uniforme) sobre el grafo implícito.
+     * Utiliza la PriorityQueue personalizada de las estructuras discretas.
+     */
+    public Queue<String> solvedijkstra(GameState initial) {
+        if (initial == null) return new Queue<>();
+
+        PriorityQueue<SearchNode> frontier = new PriorityQueue<>(maxStates);
+        TranspositionTable visited = new TranspositionTable(maxStates);
+
+        SearchNode startNode = new SearchNode(initial.clone(), null, null, 0);
+        frontier.enqueue(startNode);
+
+        StateKey startKey = new StateKey(initial.getPlayerPosition(), initial.getBoard().getBoxPositions());
+        visited.add(startKey);
+
+        Direction[] directions = {Direction.UP, Direction.DOWN, Direction.LEFT, Direction.RIGHT};
+
+        while (!frontier.isEmpty()) {
+            SearchNode current = frontier.dequeue(); //saca siempre el camino mas barato/corto
+
+            if (current.state.isVictory()) {
+                return buildPath(current);
+            }
+
+            for (int i = 0; i < 4; i++) {
+                Direction dir = directions[i];
+
+                GameController simulator = new GameController(null, null, null);
+                simulator.setStateForTesting(current.state.clone());
+
+                if (simulator.move(dir)) {
+                    GameState nextState = simulator.getCurrentState();
+                    StateKey nextKey = new StateKey(nextState.getPlayerPosition(), nextState.getBoard().getBoxPositions());
+
+                    if (!visited.contains(nextKey)) {
+                        visited.add(nextKey);
+
+                        frontier.enqueue(new SearchNode(nextState, current, dirtostring(dir), current.cost + 1));
+                    }
+                }
+            }
+        }
+        return new Queue<>();
+    }
+
+    /**
+     * Implementación demostrativa de Floyd-Warshall.
+     * Aplica FW al mapa físico para probar la clase explícita y luego retorna la ruta óptima.
+     */
+    public Queue<String> solvefloyd(GameState initial) {
+        if (initial == null) return new Queue<>();
+
+
+        //dimensiones del mapa
+        int rows = initial.getBoard().getRows();
+        int cols = initial.getBoard().getCols();
+        int size = rows * cols;
+        int[][] adjMatrix = new int[size][size];
+
+        //mapeo de  celdas físicas adyacentes para armar el grafo explicito
+        for (int r = 0; r < rows; r++) {
+            for (int c = 0; c < cols; c++) {
+                int u = r * cols + c;
+                if (!initial.getBoard().getCell(r, c).isWalkable()) continue;
+
+                //vecinos válidos
+                if (r > 0 && initial.getBoard().getCell(r-1, c).isWalkable()) adjMatrix[u][(r-1)*cols + c] = 1;
+                if (r < rows-1 && initial.getBoard().getCell(r+1, c).isWalkable()) adjMatrix[u][(r+1)*cols + c] = 1;
+                if (c > 0 && initial.getBoard().getCell(r, c-1).isWalkable()) adjMatrix[u][r*cols + (c-1)] = 1;
+                if (c < cols-1 && initial.getBoard().getCell(r, c+1).isWalkable()) adjMatrix[u][r*cols + (c+1)] = 1;
+            }
+        }
+
+        FloydWarshall fw = new FloydWarshall();
+        int[][] shortestPhysicalPaths = fw.calculate(adjMatrix, size);
+        
+
+
+        return solvedijkstra(initial);
     }
 
     /**

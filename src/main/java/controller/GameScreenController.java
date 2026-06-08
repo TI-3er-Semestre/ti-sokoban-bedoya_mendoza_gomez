@@ -15,6 +15,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 
 
+
 public class GameScreenController {
     @FXML private BorderPane rootPane;
     @FXML private Canvas gameCanvas;
@@ -26,6 +27,9 @@ public class GameScreenController {
     @FXML private Button btnReset;
     @FXML private Button btnSave;
     @FXML private Button btnMenu;
+    @FXML private javafx.scene.layout.HBox aiControls;
+    @FXML private javafx.scene.control.ChoiceBox<String> algoChooser;
+    @FXML private javafx.scene.control.Button btnStartAI;
 
     // Tamaño de cada celda renderizada en pantalla (escala x3 sobre los 16px originales)
     private static final int CELL_SIZE   = 48;
@@ -96,10 +100,19 @@ public class GameScreenController {
 
             // dificultad
             if (levelToLoad == 3 && !gameController.isResumingGame()) {
-                // automatico:el jugador NO puede usar el teclado
-                solveAndAnimate();
+                aiControls.setVisible(true);
+                aiControls.setManaged(true);
+
+                if (algoChooser.getItems().isEmpty()) {
+                    algoChooser.getItems().addAll("BFS (Cola)", "DFS (Pila)", "Dijkstra", "Floyd-Warshall");
+                    algoChooser.setValue("BFS (Cola)");
+                }
+
+                rootPane.getScene().setOnKeyPressed(null);
             } else {
-                // normal: jugador usa el teclado
+                //nivel 1 y 2 ocultar menu IA y dar control al teclado
+                aiControls.setVisible(false);
+                aiControls.setManaged(false);
                 rootPane.getScene().setOnKeyPressed(this::handleKeyPress);
                 rootPane.requestFocus();
             }
@@ -111,7 +124,7 @@ public class GameScreenController {
             updateCounters();
             startTimerThread();
             rootPane.getScene().setOnKeyPressed(this::handleKeyPress);
-            rootPane.requestFocus();  // ← verifica que esta línea esté
+            rootPane.requestFocus();
         });
     }
 
@@ -387,57 +400,95 @@ public class GameScreenController {
         a.showAndWait();
     }
 
+    @FXML
+    void handleStartAI() {
+        if (algoChooser.getValue() == null) return;
+
+        btnStartAI.setDisable(true);
+        algoChooser.setDisable(true);
+        btnUndo.setDisable(true);
+
+        solveAndAnimate(algoChooser.getValue());
+    }
+
+
     /**
-     * resuelve  nivel 3 usando el BFS y hace los movimientos automáticamente
+     * Resuelve el nivel 3 usando el algoritmo seleccionado en un hilo de fondo
+     * y reproduce los movimientos en la pantalla
      */
-    private void solveAndAnimate() {
-        // algoritmo del Model
-        Model.SokobanSolver solver = new Model.SokobanSolver(50000);
-        Model.structures.Queue<String> solution = solver.solvebfs(gameController.getCurrentState());
 
-        if (solution == null || solution.isEmpty()) {
-            showError("El algoritmo no encontró solución.");
-            return;
-        }
+    private void solveAndAnimate(String algoritmo) {
+        System.out.println("Calculando ruta con " + algoritmo + "...");
 
-        // animar paso a paso
-        javafx.animation.Timeline timeline = new javafx.animation.Timeline();
-        int step = 1;
+        Thread solverThread = new Thread(() -> {
+            Model.SokobanSolver solver = new Model.SokobanSolver(50000);
+            Model.structures.Queue<String> solution = null;
 
-        while (!solution.isEmpty()) {
-            String move = solution.dequeue();
-
-
-            Direction dir = null;
-            switch (move) {
-                case "w": dir = Direction.UP; break;
-                case "s": dir = Direction.DOWN; break;
-                case "a": dir = Direction.LEFT; break;
-                case "d": dir = Direction.RIGHT; break;
+            //selector inteligente
+            switch (algoritmo) {
+                case "BFS (Cola)":
+                    solution = solver.solvebfs(gameController.getCurrentState().clone());
+                    break;
+                case "DFS (Pila)":
+                    solution = solver.solvedfs(gameController.getCurrentState().clone());
+                    break;
+                case "Dijkstra":
+                    solution = solver.solvedijkstra(gameController.getCurrentState().clone());
+                    break;
+                case "Floyd-Warshall":
+                    solution = solver.solvefloyd(gameController.getCurrentState().clone());
+                    break;
+                default:
+                    solution = solver.solvebfs(gameController.getCurrentState().clone());
+                    break;
             }
 
-            if (dir != null) {
-                final Direction finalDir = dir;
-                //cada movimiento se hara con diferencia
-                javafx.animation.KeyFrame kf = new javafx.animation.KeyFrame(
-                        javafx.util.Duration.millis(300 * step),
-                        e -> {
-                            gameController.move(finalDir);
-                            drawBoard();
-                            updateCounters();
-                            // Si ya gano se muestra la pantalla de victoria
-                            if (gameController.checkVictory()) {
-                                stopTimerThread();
-                                showVictory();
-                            }
-                        }
-                );
-                timeline.getKeyFrames().add(kf);
-                step++;
-            }
-        }
+            final Model.structures.Queue<String> finalSolution = solution;
+            Platform.runLater(() -> {
+                if (finalSolution == null || finalSolution.isEmpty()) {
+                    showError("El algoritmo " + algoritmo + " no encontro solucion o es un nivel sin salida");
+                    btnStartAI.setDisable(false);
+                    algoChooser.setDisable(false);
+                    return;
+                }
 
+                System.out.println("Ruta encontrada, Animando...");
+                javafx.animation.Timeline timeline = new javafx.animation.Timeline();
+                int step = 1;
 
-        timeline.play();
+                while (!finalSolution.isEmpty()) {
+                    String move = finalSolution.dequeue();
+                    Direction dir = null;
+                    switch (move) {
+                        case "w": dir = Direction.UP; break;
+                        case "s": dir = Direction.DOWN; break;
+                        case "a": dir = Direction.LEFT; break;
+                        case "d": dir = Direction.RIGHT; break;
+                    }
+
+                    if (dir != null) {
+                        final Direction finalDir = dir;
+                        javafx.animation.KeyFrame kf = new javafx.animation.KeyFrame(
+                                javafx.util.Duration.millis(300 * step),
+                                e -> {
+                                    gameController.move(finalDir);
+                                    drawBoard();
+                                    updateCounters();
+                                    if (gameController.checkVictory()) {
+                                        stopTimerThread();
+                                        showVictory();
+                                    }
+                                }
+                        );
+                        timeline.getKeyFrames().add(kf);
+                        step++;
+                    }
+                }
+                timeline.play();
+            });
+        });
+
+        solverThread.setDaemon(true);
+        solverThread.start();
     }
 }

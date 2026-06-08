@@ -1,0 +1,32 @@
+{
+  "name": "dsadasd",
+  "email": "asd@hsa.com",
+  "username": "dasdz",
+  "avatar": "🧔",
+  "experienceLevel": "ADVANCED",
+  "stats": {
+    "results": {
+      "first": {
+        "data": {
+          "levelId": 2,
+          "moves": 44,
+          "pushes": 17,
+          "timeMillis": 22414
+        }
+      },
+      "last": {
+        "data": {
+          "levelId": 2,
+          "moves": 44,
+          "pushes": 17,
+          "timeMillis": 22414
+        }
+      },
+      "length": 1
+    },
+    "achievements": {
+      "size": 0
+    }
+  },
+  "currentDirection": "LEFT"
+}
