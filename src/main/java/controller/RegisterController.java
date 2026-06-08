@@ -2,88 +2,87 @@ package controller;
 
 import Model.ExperienceLevel;
 import Model.Player;
-import gui.SokobanApplication;
+import Model.PlayerRepository;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 
+/**
+ * controlador para registro
+ */
 public class RegisterController {
-    @FXML private TextField txtName;
-    @FXML private TextField txtEmail;
-    @FXML private TextField txtUsername;
-    @FXML private ComboBox<String> cmbAvatar;
-    @FXML private ComboBox<ExperienceLevel> cmbExperience;
-    @FXML private Button btnRegister;
-    @FXML private Button btnBack;
-    @FXML private Label lblError;
 
     @FXML
-    void initialize() {
-        // Opciones de avatar
-        cmbAvatar.getItems().addAll("🧑", "👩", "🧔", "👱", "🧕", "🧒");
-        cmbAvatar.getSelectionModel().selectFirst();
-
-        // Niveles de experiencia
-        cmbExperience.getItems().addAll(ExperienceLevel.values());
-        cmbExperience.getSelectionModel().selectFirst();
-
-        lblError.setVisible(false);
-    }
+    private TextField nameField;
 
     @FXML
-    void handleRegister() {
-        String name       = txtName.getText().trim();
-        String email      = txtEmail.getText().trim();
-        String username   = txtUsername.getText().trim();
-        String avatar     = cmbAvatar.getValue();
-        ExperienceLevel level = cmbExperience.getValue();
+    private TextField emailField;
 
-        // Validaciones
+    @FXML
+    private TextField usernameField;
+
+    @FXML
+    private TextField avatarField;
+
+    @FXML
+    private ToggleGroup experienceGroup;
+
+    @FXML
+    private RadioButton radioBeginner;
+
+    @FXML
+    private RadioButton radioAdvanced;
+
+    @FXML
+    private RadioButton radioExpert;
+
+    @FXML
+    private Label errorLabel;
+
+
+    @FXML
+    public void handleRegister() {
+        String name = nameField.getText();
+        String email = emailField.getText();
+        String username = usernameField.getText();
+        String avatar = avatarField.getText();
+
+        //errores
         if (name.isEmpty() || email.isEmpty() || username.isEmpty()) {
-            showError("Todos los campos son obligatorios.");
+            errorLabel.setStyle("-fx-text-fill: red;");
+            errorLabel.setText("error: por favor llena todos los campos obligatorios");
             return;
         }
 
-        if (!email.contains("@") || !email.contains(".")) {
-            showError("El correo electrónico no es válido.");
-            return;
+        ExperienceLevel level = ExperienceLevel.BEGINNER;
+        if (radioAdvanced.isSelected()) {
+            level = ExperienceLevel.ADVANCED;
+        } else if (radioExpert.isSelected()) {
+            level = ExperienceLevel.EXPERT;
         }
 
-        if (username.length() < 3) {
-            showError("El username debe tener al menos 3 caracteres.");
-            return;
-        }
-
-        // Verificar si el username ya existe
-        controller.GameController gc = MainMenuController.getGameController();
-        if (gc.usernameExists(username)) {
-            showError("El username ya está en uso. Elige otro.");
-            return;
-        }
-
-        // Crear y registrar jugador
-        Player player = new Player(name, email, username, avatar, level);
-        gc.registerPlayer(player);
-
-        // Navegar al juego
         try {
-            SokobanApplication.navigateTo("Game");
-        } catch (Exception e) {
-            showError("Error al cargar la pantalla de juego.");
-        }
-    }
+            // creacion y guardado del jugador
+            Player newPlayer = new Player(name, email, username, avatar, level);
+            PlayerRepository repo = new PlayerRepository("data/players");
+            repo.save(newPlayer);
 
-    @FXML
-    void handleBack() {
-        try {
-            SokobanApplication.navigateTo("MainMenu");
-        } catch (Exception e) {
-            showError("Error al volver al menú.");
-        }
-    }
+            // mensaje de confirmacion
+            errorLabel.setStyle("-fx-text-fill: green; -fx-font-weight: bold;");
+            errorLabel.setText("¡jugador " + username + " creado con exito!");
 
-    private void showError(String message) {
-        lblError.setText(message);
-        lblError.setVisible(true);
+
+            nameField.clear();
+            emailField.clear();
+            usernameField.clear();
+            avatarField.clear();
+
+        } catch (Exception e) {
+            // por si ocurre algun error al guardar el archivo json
+            errorLabel.setStyle("-fx-text-fill: red;");
+            errorLabel.setText("hubo un problema al guardar los datos del jugador");
+        }
     }
 }
-

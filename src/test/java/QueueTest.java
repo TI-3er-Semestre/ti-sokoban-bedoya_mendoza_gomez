@@ -1,5 +1,5 @@
 import org.junit.jupiter.api.Test;
-import structures.Queue;
+import Model.structures.Queue;
 
 import static org.junit.jupiter.api.Assertions.*;
 

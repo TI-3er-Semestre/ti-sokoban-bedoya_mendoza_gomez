@@ -1,6 +1,6 @@
-package structures.Graph;
+package Model.structures.Graph;
 
-import structures.LinkedList;
+import Model.structures.LinkedList;
 
 public class Vertex<T extends Comparable<T>>
         implements Comparable<Vertex<T>> {

@@ -2,6 +2,10 @@ package controller;
 
 import Model.*;
 import structures.*;
+import Model.structures.Queue;
+import Model.structures.Stack;
+import Model.structures.StateKey;
+import Model.structures.TranspositionTable;
 
 /**
  * Central controller of the Sokoban game (MVC - Controller layer).

@@ -1,4 +1,4 @@
-package structures.Graph;
+package Model.structures.Graph;
 
 public interface Graph<T extends Comparable <T>>{
 

@@ -3,9 +3,16 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.StackPane;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
-public class    SokobanApplication extends Application{
+import java.net.URL;
+
+/**
+ * clase principal de javafx que cargara las pantallas
+ */
+public class SokobanApplication extends Application {
 
     private static Stage primaryStage;
 

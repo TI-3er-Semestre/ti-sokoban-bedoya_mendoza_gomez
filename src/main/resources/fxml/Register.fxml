@@ -1,124 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<StackPane xmlns="http://javafx.com/javafx"
-           xmlns:fx="http://javafx.com/fxml"
-           fx:controller="controller.RegisterController"
-           prefWidth="500" prefHeight="620"
-           style="-fx-background-color: #1a1a2e;">
+<VBox alignment="CENTER" prefHeight="600.0" prefWidth="800.0" spacing="15.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RegisterController">
+    <padding>
+        <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
+    </padding>
 
-    <VBox alignment="CENTER" spacing="16">
-        <padding>
-            <Insets top="40" bottom="40" left="70" right="70"/>
-        </padding>
+    <Label text="registro de jugador">
+        <font>
+            <Font name="System Bold" size="24.0" />
+        </font>
+    </Label>
 
-        <!-- Título -->
-        <Label text="Registro de Jugador"
-               style="-fx-font-size: 28px;
-                      -fx-font-weight: bold;
-                      -fx-text-fill: #e0e0e0;"/>
-
-        <Label text="Crea tu perfil para comenzar"
-               style="-fx-font-size: 13px;
-                      -fx-text-fill: #888888;"/>
-
-        <VBox prefHeight="10"/>
-
-        <!-- Nombre -->
-        <VBox spacing="5">
-            <Label text="Nombre completo"
-                   style="-fx-text-fill: #aaaaaa; -fx-font-size: 13px;"/>
-            <TextField fx:id="txtName"
-                       promptText="Ej: Juan Pérez"
-                       style="-fx-background-color: #16213e;
-                              -fx-text-fill: #e0e0e0;
-                              -fx-border-color: #0f3460;
-                              -fx-border-width: 1;
-                              -fx-font-size: 14px;
-                              -fx-pref-height: 40px;"/>
-        </VBox>
-
-        <!-- Correo -->
-        <VBox spacing="5">
-            <Label text="Correo electrónico"
-                   style="-fx-text-fill: #aaaaaa; -fx-font-size: 13px;"/>
-            <TextField fx:id="txtEmail"
-                       promptText="Ej: juan@correo.com"
-                       style="-fx-background-color: #16213e;
-                              -fx-text-fill: #e0e0e0;
-                              -fx-border-color: #0f3460;
-                              -fx-border-width: 1;
-                              -fx-font-size: 14px;
-                              -fx-pref-height: 40px;"/>
-        </VBox>
-
-        <!-- Username -->
-        <VBox spacing="5">
-            <Label text="Username"
-                   style="-fx-text-fill: #aaaaaa; -fx-font-size: 13px;"/>
-            <TextField fx:id="txtUsername"
-                       promptText="Ej: juan123"
-                       style="-fx-background-color: #16213e;
-                              -fx-text-fill: #e0e0e0;
-                              -fx-border-color: #0f3460;
-                              -fx-border-width: 1;
-                              -fx-font-size: 14px;
-                              -fx-pref-height: 40px;"/>
-        </VBox>
-
-        <!-- Avatar -->
-        <VBox spacing="5">
-            <Label text="Avatar"
-                   style="-fx-text-fill: #aaaaaa; -fx-font-size: 13px;"/>
-            <ComboBox fx:id="cmbAvatar"
-                      prefWidth="360" prefHeight="40"
-                      style="-fx-background-color: #16213e;
-                             -fx-border-color: #0f3460;
-                             -fx-border-width: 1;"/>
-        </VBox>
-
-        <!-- Nivel de experiencia -->
-        <VBox spacing="5">
-            <Label text="Nivel de experiencia"
-                   style="-fx-text-fill: #aaaaaa; -fx-font-size: 13px;"/>
-            <ComboBox fx:id="cmbExperience"
-                      prefWidth="360" prefHeight="40"
-                      style="-fx-background-color: #16213e;
-                             -fx-border-color: #0f3460;
-                             -fx-border-width: 1;"/>
-        </VBox>
-
-        <!-- Error -->
-        <Label fx:id="lblError"
-               text=""
-               style="-fx-text-fill: #e94560;
-                      -fx-font-size: 12px;"/>
-
-        <VBox prefHeight="5"/>
-
-        <!-- Botones -->
-        <Button fx:id="btnRegister"
-                text="Registrarse y Jugar"
-                onAction="#handleRegister"
-                prefWidth="360" prefHeight="48"
-                style="-fx-background-color: #0f3460;
-                       -fx-text-fill: #e0e0e0;
-                       -fx-font-size: 15px;
-                       -fx-font-weight: bold;
-                       -fx-cursor: hand;"/>
-
-        <Button fx:id="btnBack"
-                text="← Volver"
-                onAction="#handleBack"
-                prefWidth="360" prefHeight="40"
-                style="-fx-background-color: transparent;
-                       -fx-text-fill: #888888;
-                       -fx-font-size: 13px;
-                       -fx-cursor: hand;
-                       -fx-border-color: #444444;
-                       -fx-border-width: 1;"/>
+    <VBox maxWidth="400.0" spacing="5.0">
+        <Label text="nombre completo:" />
+        <TextField fx:id="nameField" promptText="ej. juan jose valencia" />
     </VBox>
-</StackPane>
+
+    <VBox maxWidth="400.0" spacing="5.0">
+        <Label text="correo electronico:" />
+        <TextField fx:id="emailField" promptText="ej. juan@correo.com" />
+    </VBox>
+
+    <VBox maxWidth="400.0" spacing="5.0">
+        <Label text="username:" />
+        <TextField fx:id="usernameField" promptText="ej. juanjose" />
+    </VBox>
+
+    <VBox maxWidth="400.0" spacing="5.0">
+        <Label text="avatar (url o nombre):" />
+        <TextField fx:id="avatarField" promptText="ej. avatar1.png" />
+    </VBox>
+
+    <VBox maxWidth="400.0" spacing="10.0">
+        <Label text="nivel de experiencia:" />
+        <HBox spacing="20.0">
+            <RadioButton fx:id="radioBeginner" selected="true" text="principiante">
+                <toggleGroup>
+                    <ToggleGroup fx:id="experienceGroup" />
+                </toggleGroup>
+            </RadioButton>
+            <RadioButton fx:id="radioAdvanced" text="avanzado" toggleGroup="$experienceGroup" />
+            <RadioButton fx:id="radioExpert" text="experto" toggleGroup="$experienceGroup" />
+        </HBox>
+    </VBox>
+
+    <Button mnemonicParsing="false" onAction="#handleRegister" prefHeight="40.0" prefWidth="200.0" text="registrar y jugar" />
+
+    <Label fx:id="errorLabel" textFill="red" />
+</VBox>

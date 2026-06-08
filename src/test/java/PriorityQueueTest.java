@@ -1,5 +1,5 @@
 import org.junit.jupiter.api.Test;
-import structures.PriorityQueue;
+import Model.structures.PriorityQueue;
 
 import static org.junit.jupiter.api.Assertions.*;
 

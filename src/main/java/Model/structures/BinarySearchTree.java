@@ -1,4 +1,4 @@
-package structures;
+package Model.structures;
 
 public class BinarySearchTree<T extends Comparable<T>> {
     private TreeNode<T> root;

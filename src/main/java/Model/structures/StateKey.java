@@ -1,4 +1,4 @@
-package structures;
+package Model.structures;
 
 import Model.Position;
 import java.util.Arrays;
