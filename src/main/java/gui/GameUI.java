@@ -1,6 +1,6 @@
-package ui;
+package gui;
 
-import Model.GameController;
+import controller.GameController;
 import Model.Player;
 import Model.PlayerStats;
 

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controller.GameScreenController"
+            fx:id="rootPane"
+            prefWidth="800" prefHeight="680"
+            style="-fx-background-color: #1a1a2e;">
+
+    <!-- Panel superior — info del nivel -->
+    <top>
+        <HBox spacing="30" alignment="CENTER"
+              style="-fx-background-color: #16213e; -fx-padding: 12px;">
+            <Label fx:id="lblLevel"
+                   text="Nivel: 1"
+                   style="-fx-text-fill: #e0e0e0; -fx-font-size: 14px; -fx-font-weight: bold;"/>
+            <Label fx:id="lblMoves"
+                   text="Movimientos: 0"
+                   style="-fx-text-fill: #e0e0e0; -fx-font-size: 14px;"/>
+            <Label fx:id="lblPushes"
+                   text="Empujes: 0"
+                   style="-fx-text-fill: #e0e0e0; -fx-font-size: 14px;"/>
+            <Label fx:id="lblTime"
+                   text="⏱ 00:00"
+                   style="-fx-text-fill: #f5a623; -fx-font-size: 14px; -fx-font-weight: bold;"/>
+        </HBox>
+    </top>
+
+    <!-- Centro — tablero de juego -->
+    <center>
+        <StackPane style="-fx-background-color: #1a1a2e; -fx-padding: 20px;"
+                   alignment="CENTER">
+            <Canvas fx:id="gameCanvas"/>
+        </StackPane>
+    </center>
+
+    <!-- Panel inferior — botones de acción -->
+    <bottom>
+        <HBox spacing="15" alignment="CENTER"
+              style="-fx-background-color: #16213e; -fx-padding: 15px;">
+
+            <Button fx:id="btnUndo"
+                    text="↩ Deshacer"
+                    onAction="#handleUndo"
+                    prefWidth="130" prefHeight="42"
+                    style="-fx-background-color: #0f3460;
+                           -fx-text-fill: #e0e0e0;
+                           -fx-font-size: 13px;
+                           -fx-cursor: hand;"/>
+
+            <Button fx:id="btnReset"
+                    text="🔄 Reiniciar"
+                    onAction="#handleReset"
+                    prefWidth="130" prefHeight="42"
+                    style="-fx-background-color: #0f3460;
+                           -fx-text-fill: #e0e0e0;
+                           -fx-font-size: 13px;
+                           -fx-cursor: hand;"/>
+
+            <Button fx:id="btnSave"
+                    text="💾 Guardar"
+                    onAction="#handleSave"
+                    prefWidth="130" prefHeight="42"
+                    style="-fx-background-color: #0f3460;
+                           -fx-text-fill: #e0e0e0;
+                           -fx-font-size: 13px;
+                           -fx-cursor: hand;"/>
+
+            <Button fx:id="btnMenu"
+                    text="🏠 Menú"
+                    onAction="#handleMenu"
+                    prefWidth="130" prefHeight="42"
+                    style="-fx-background-color: #e94560;
+                           -fx-text-fill: #ffffff;
+                           -fx-font-size: 13px;
+                           -fx-cursor: hand;"/>
+        </HBox>
+    </bottom>
+</BorderPane>

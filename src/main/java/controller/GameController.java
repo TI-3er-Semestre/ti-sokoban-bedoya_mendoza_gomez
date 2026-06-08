@@ -1,5 +1,6 @@
-package Model;
+package controller;
 
+import Model.*;
 import structures.*;
 
 /**
@@ -24,6 +25,7 @@ public class GameController {
     private LevelRepository levelRepo;
     private GameStateRepository stateRepo;
     private PlayerRepository playerRepo;
+    private boolean resumingGame = false;
 
     public GameController(String levelsPath, String savePath, String playersPath) {
     this.moveCount = 0;
@@ -52,21 +54,10 @@ public class GameController {
         Board board = currentState.getBoard();
         Position currentPos = currentState.getPlayerPosition();
 
-        // CREAR CLAVE DEL ESTADO ACTUAL
-        StateKey key = new StateKey(
-                currentPos,
-                board.getBoxPositions()
-        );
-
-        if (visitedStates.contains(key)) {
-            return false; // evitar ciclos
-        }
-
         if (!isValidMove(direction)) return false;
 
         undoStack.push(cloneState(currentState));
 
-        visitedStates.add(key);
 
         Position nextPos = getNextPosition(currentPos, direction);
         Cell targetCell = board.getCell(nextPos.getRow(), nextPos.getCol());
@@ -377,6 +368,13 @@ public class GameController {
         return false;
     }
 
+    public boolean hasSavedGame() {
+        return stateRepo != null && stateRepo.hasSavedGame();
+    }
+
+    public boolean usernameExists(String username) {
+        return playerRepo != null && playerRepo.exists(username);
+    }
 
     /**
      * Checks if a cell contains a box.
@@ -525,6 +523,14 @@ public class GameController {
             this.moveCount = state.getMoveCount();
             this.pushCount = state.getPushCount();
         }
+    }
+
+    public void setResumingGame(boolean resuming) {
+        this.resumingGame = resuming;
+    }
+
+    public boolean isResumingGame() {
+        return resumingGame;
     }
 
 }
