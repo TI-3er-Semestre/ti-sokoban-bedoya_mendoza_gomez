@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<StackPane xmlns="http://javafx.com/javafx"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="controller.RegisterController"
+           prefWidth="500" prefHeight="620"
+           style="-fx-background-color: #1a1a2e;">
+
+    <VBox alignment="CENTER" spacing="16">
+        <padding>
+            <Insets top="40" bottom="40" left="70" right="70"/>
+        </padding>
+
+        <!-- Título -->
+        <Label text="Registro de Jugador"
+               style="-fx-font-size: 28px;
+                      -fx-font-weight: bold;
+                      -fx-text-fill: #e0e0e0;"/>
+
+        <Label text="Crea tu perfil para comenzar"
+               style="-fx-font-size: 13px;
+                      -fx-text-fill: #888888;"/>
+
+        <VBox prefHeight="10"/>
+
+        <!-- Nombre -->
+        <VBox spacing="5">
+            <Label text="Nombre completo"
+                   style="-fx-text-fill: #aaaaaa; -fx-font-size: 13px;"/>
+            <TextField fx:id="txtName"
+                       promptText="Ej: Juan Pérez"
+                       style="-fx-background-color: #16213e;
+                              -fx-text-fill: #e0e0e0;
+                              -fx-border-color: #0f3460;
+                              -fx-border-width: 1;
+                              -fx-font-size: 14px;
+                              -fx-pref-height: 40px;"/>
+        </VBox>
+
+        <!-- Correo -->
+        <VBox spacing="5">
+            <Label text="Correo electrónico"
+                   style="-fx-text-fill: #aaaaaa; -fx-font-size: 13px;"/>
+            <TextField fx:id="txtEmail"
+                       promptText="Ej: juan@correo.com"
+                       style="-fx-background-color: #16213e;
+                              -fx-text-fill: #e0e0e0;
+                              -fx-border-color: #0f3460;
+                              -fx-border-width: 1;
+                              -fx-font-size: 14px;
+                              -fx-pref-height: 40px;"/>
+        </VBox>
+
+        <!-- Username -->
+        <VBox spacing="5">
+            <Label text="Username"
+                   style="-fx-text-fill: #aaaaaa; -fx-font-size: 13px;"/>
+            <TextField fx:id="txtUsername"
+                       promptText="Ej: juan123"
+                       style="-fx-background-color: #16213e;
+                              -fx-text-fill: #e0e0e0;
+                              -fx-border-color: #0f3460;
+                              -fx-border-width: 1;
+                              -fx-font-size: 14px;
+                              -fx-pref-height: 40px;"/>
+        </VBox>
+
+        <!-- Avatar -->
+        <VBox spacing="5">
+            <Label text="Avatar"
+                   style="-fx-text-fill: #aaaaaa; -fx-font-size: 13px;"/>
+            <ComboBox fx:id="cmbAvatar"
+                      prefWidth="360" prefHeight="40"
+                      style="-fx-background-color: #16213e;
+                             -fx-border-color: #0f3460;
+                             -fx-border-width: 1;"/>
+        </VBox>
+
+        <!-- Nivel de experiencia -->
+        <VBox spacing="5">
+            <Label text="Nivel de experiencia"
+                   style="-fx-text-fill: #aaaaaa; -fx-font-size: 13px;"/>
+            <ComboBox fx:id="cmbExperience"
+                      prefWidth="360" prefHeight="40"
+                      style="-fx-background-color: #16213e;
+                             -fx-border-color: #0f3460;
+                             -fx-border-width: 1;"/>
+        </VBox>
+
+        <!-- Error -->
+        <Label fx:id="lblError"
+               text=""
+               style="-fx-text-fill: #e94560;
+                      -fx-font-size: 12px;"/>
+
+        <VBox prefHeight="5"/>
+
+        <!-- Botones -->
+        <Button fx:id="btnRegister"
+                text="Registrarse y Jugar"
+                onAction="#handleRegister"
+                prefWidth="360" prefHeight="48"
+                style="-fx-background-color: #0f3460;
+                       -fx-text-fill: #e0e0e0;
+                       -fx-font-size: 15px;
+                       -fx-font-weight: bold;
+                       -fx-cursor: hand;"/>
+
+        <Button fx:id="btnBack"
+                text="← Volver"
+                onAction="#handleBack"
+                prefWidth="360" prefHeight="40"
+                style="-fx-background-color: transparent;
+                       -fx-text-fill: #888888;
+                       -fx-font-size: 13px;
+                       -fx-cursor: hand;
+                       -fx-border-color: #444444;
+                       -fx-border-width: 1;"/>
+    </VBox>
+</StackPane>

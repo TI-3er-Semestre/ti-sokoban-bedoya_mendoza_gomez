@@ -1,0 +1,15 @@
+{
+  "levelId": 1,
+  "name": "Nivel Basico",
+  "difficulty": "BEGINNER",
+  "initialBoard": {
+    "rows": 5,
+    "cols": 5,
+    "goalPositions": [
+      {
+        "row": 2,
+        "col": 3
+      }
+    ]
+  }
+}

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<StackPane xmlns="http://javafx.com/javafx"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="controller.VictoryController"
+           prefWidth="500" prefHeight="620"
+           style="-fx-background-color: #1a1a2e;">
+
+    <VBox alignment="CENTER" spacing="18">
+        <padding>
+            <Insets top="40" bottom="40" left="60" right="60"/>
+        </padding>
+
+        <!-- Título -->
+        <Label text="¡Nivel Completado!"
+               style="-fx-font-size: 32px;
+                      -fx-font-weight: bold;
+                      -fx-text-fill: #16c79a;"/>
+
+        <Label fx:id="lblLevelName" text="Nivel 1"
+               style="-fx-font-size: 14px;
+                      -fx-text-fill: #888888;"/>
+
+        <VBox prefHeight="8"/>
+
+        <!-- Resultados de la partida -->
+        <VBox spacing="10"
+              style="-fx-background-color: #16213e;
+                     -fx-border-color: #0f3460;
+                     -fx-border-width: 1;
+                     -fx-padding: 20;">
+
+            <Label text="Resultados de la partida"
+                   style="-fx-font-size: 14px;
+                          -fx-font-weight: bold;
+                          -fx-text-fill: #aaaaaa;"/>
+
+            <HBox spacing="20" alignment="CENTER_LEFT">
+                <Label text="Movimientos:"
+                       prefWidth="160"
+                       style="-fx-text-fill: #888888; -fx-font-size: 13px;"/>
+                <Label fx:id="lblMoves" text="0"
+                       style="-fx-text-fill: #e0e0e0; -fx-font-size: 13px; -fx-font-weight: bold;"/>
+            </HBox>
+
+            <HBox spacing="20" alignment="CENTER_LEFT">
+                <Label text="Empujes:"
+                       prefWidth="160"
+                       style="-fx-text-fill: #888888; -fx-font-size: 13px;"/>
+                <Label fx:id="lblPushes" text="0"
+                       style="-fx-text-fill: #e0e0e0; -fx-font-size: 13px; -fx-font-weight: bold;"/>
+            </HBox>
+
+            <HBox spacing="20" alignment="CENTER_LEFT">
+                <Label text="Tiempo:"
+                       prefWidth="160"
+                       style="-fx-text-fill: #888888; -fx-font-size: 13px;"/>
+                <Label fx:id="lblTime" text="00:00"
+                       style="-fx-text-fill: #f5a623; -fx-font-size: 13px; -fx-font-weight: bold;"/>
+            </HBox>
+        </VBox>
+
+        <!-- Mejor marca personal -->
+        <VBox spacing="10"
+              style="-fx-background-color: #16213e;
+                     -fx-border-color: #0f3460;
+                     -fx-border-width: 1;
+                     -fx-padding: 20;">
+
+            <Label text="Mejor marca personal"
+                   style="-fx-font-size: 14px;
+                          -fx-font-weight: bold;
+                          -fx-text-fill: #aaaaaa;"/>
+
+            <HBox spacing="20" alignment="CENTER_LEFT">
+                <Label text="Mejor en movimientos:"
+                       prefWidth="160"
+                       style="-fx-text-fill: #888888; -fx-font-size: 13px;"/>
+                <Label fx:id="lblBestMoves" text="-"
+                       style="-fx-text-fill: #e0e0e0; -fx-font-size: 13px;"/>
+            </HBox>
+
+            <HBox spacing="20" alignment="CENTER_LEFT">
+                <Label text="Mejor en tiempo:"
+                       prefWidth="160"
+                       style="-fx-text-fill: #888888; -fx-font-size: 13px;"/>
+                <Label fx:id="lblBestTime" text="-"
+                       style="-fx-text-fill: #e0e0e0; -fx-font-size: 13px;"/>
+            </HBox>
+
+            <Label fx:id="lblNewRecord" text=""
+                   style="-fx-text-fill: #16c79a;
+                          -fx-font-size: 13px;
+                          -fx-font-weight: bold;"/>
+        </VBox>
+
+        <VBox prefHeight="4"/>
+
+        <!-- Botones -->
+        <Button fx:id="btnPlayAgain"
+                text="🔄  Jugar de Nuevo"
+                onAction="#handlePlayAgain"
+                prefWidth="360" prefHeight="46"
+                style="-fx-background-color: #0f3460;
+                       -fx-text-fill: #e0e0e0;
+                       -fx-font-size: 14px;
+                       -fx-font-weight: bold;
+                       -fx-cursor: hand;"/>
+
+        <Button fx:id="btnNextLevel"
+                text="▶  Siguiente Nivel"
+                onAction="#handleNextLevel"
+                prefWidth="360" prefHeight="46"
+                style="-fx-background-color: #16c79a;
+                       -fx-text-fill: #1a1a2e;
+                       -fx-font-size: 14px;
+                       -fx-font-weight: bold;
+                       -fx-cursor: hand;"/>
+
+        <Button fx:id="btnStats"
+                text="📊  Ver Estadísticas"
+                onAction="#handleViewStats"
+                prefWidth="360" prefHeight="40"
+                style="-fx-background-color: transparent;
+                       -fx-text-fill: #888888;
+                       -fx-font-size: 13px;
+                       -fx-cursor: hand;
+                       -fx-border-color: #444444;
+                       -fx-border-width: 1;"/>
+
+        <Button fx:id="btnMenu"
+                text="🏠  Menú Principal"
+                onAction="#handleMainMenu"
+                prefWidth="360" prefHeight="40"
+                style="-fx-background-color: transparent;
+                       -fx-text-fill: #e94560;
+                       -fx-font-size: 13px;
+                       -fx-cursor: hand;
+                       -fx-border-color: #e94560;
+                       -fx-border-width: 1;"/>
+    </VBox>
+</StackPane>

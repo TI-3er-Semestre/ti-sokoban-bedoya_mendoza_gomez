@@ -1,6 +1,9 @@
 package Model;
 
-import structures.*;
+import Model.structures.BinarySearchTree;
+import Model.structures.Iterator;
+import Model.structures.LinkedList;
+import Model.structures.TreeNode;
 
 /**
  * Tracks all game results for a player across sessions.

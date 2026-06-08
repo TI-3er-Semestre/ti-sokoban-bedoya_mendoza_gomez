@@ -6,7 +6,7 @@ package Model;
  */
 public class GameResult implements Comparable<GameResult> {
 
-    private Player player;
+    private transient Player player;
     private int levelId;
     private int moves;
     private int pushes;

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<StackPane xmlns="http://javafx.com/javafx"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="controller.StatsController"
+           prefWidth="500" prefHeight="620"
+           style="-fx-background-color: #1a1a2e;">
+
+    <VBox alignment="TOP_CENTER" spacing="14">
+        <padding>
+            <Insets top="35" bottom="35" left="50" right="50"/>
+        </padding>
+
+        <!-- Título -->
+        <Label text="Estadísticas"
+               style="-fx-font-size: 28px;
+                      -fx-font-weight: bold;
+                      -fx-text-fill: #e0e0e0;"/>
+
+        <Label fx:id="lblUsername" text="jugador: -"
+               style="-fx-font-size: 13px;
+                      -fx-text-fill: #888888;"/>
+
+        <VBox prefHeight="4"/>
+
+        <!-- Resumen general -->
+        <VBox spacing="8"
+              style="-fx-background-color: #16213e;
+                     -fx-border-color: #0f3460;
+                     -fx-border-width: 1;
+                     -fx-padding: 16;">
+
+            <Label text="Resumen general"
+                   style="-fx-font-size: 13px;
+                          -fx-font-weight: bold;
+                          -fx-text-fill: #aaaaaa;"/>
+
+            <HBox spacing="20" alignment="CENTER_LEFT">
+                <Label text="Partidas jugadas:" prefWidth="170"
+                       style="-fx-text-fill: #888888; -fx-font-size: 13px;"/>
+                <Label fx:id="lblTotalGames" text="0"
+                       style="-fx-text-fill: #e0e0e0; -fx-font-size: 13px; -fx-font-weight: bold;"/>
+            </HBox>
+
+            <HBox spacing="20" alignment="CENTER_LEFT">
+                <Label text="Nivel de experiencia:" prefWidth="170"
+                       style="-fx-text-fill: #888888; -fx-font-size: 13px;"/>
+                <Label fx:id="lblExperience" text="-"
+                       style="-fx-text-fill: #e0e0e0; -fx-font-size: 13px; -fx-font-weight: bold;"/>
+            </HBox>
+        </VBox>
+
+        <!-- Mejores marcas por nivel -->
+        <VBox spacing="6"
+              style="-fx-background-color: #16213e;
+                     -fx-border-color: #0f3460;
+                     -fx-border-width: 1;
+                     -fx-padding: 16;">
+
+            <Label text="Mejores marcas por nivel"
+                   style="-fx-font-size: 13px;
+                          -fx-font-weight: bold;
+                          -fx-text-fill: #aaaaaa;"/>
+
+            <!-- Nivel 1 -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Nivel 1 —" prefWidth="65"
+                       style="-fx-text-fill: #f5a623; -fx-font-size: 12px; -fx-font-weight: bold;"/>
+                <Label text="movs:" style="-fx-text-fill: #666666; -fx-font-size: 12px;"/>
+                <Label fx:id="lblBest1Moves" text="-"
+                       style="-fx-text-fill: #e0e0e0; -fx-font-size: 12px;"/>
+                <Label text="  tiempo:" style="-fx-text-fill: #666666; -fx-font-size: 12px;"/>
+                <Label fx:id="lblBest1Time" text="-"
+                       style="-fx-text-fill: #e0e0e0; -fx-font-size: 12px;"/>
+            </HBox>
+
+            <!-- Nivel 2 -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Nivel 2 —" prefWidth="65"
+                       style="-fx-text-fill: #f5a623; -fx-font-size: 12px; -fx-font-weight: bold;"/>
+                <Label text="movs:" style="-fx-text-fill: #666666; -fx-font-size: 12px;"/>
+                <Label fx:id="lblBest2Moves" text="-"
+                       style="-fx-text-fill: #e0e0e0; -fx-font-size: 12px;"/>
+                <Label text="  tiempo:" style="-fx-text-fill: #666666; -fx-font-size: 12px;"/>
+                <Label fx:id="lblBest2Time" text="-"
+                       style="-fx-text-fill: #e0e0e0; -fx-font-size: 12px;"/>
+            </HBox>
+
+            <!-- Nivel 3 -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Nivel 3 —" prefWidth="65"
+                       style="-fx-text-fill: #f5a623; -fx-font-size: 12px; -fx-font-weight: bold;"/>
+                <Label text="movs:" style="-fx-text-fill: #666666; -fx-font-size: 12px;"/>
+                <Label fx:id="lblBest3Moves" text="-"
+                       style="-fx-text-fill: #e0e0e0; -fx-font-size: 12px;"/>
+                <Label text="  tiempo:" style="-fx-text-fill: #666666; -fx-font-size: 12px;"/>
+                <Label fx:id="lblBest3Time" text="-"
+                       style="-fx-text-fill: #e0e0e0; -fx-font-size: 12px;"/>
+            </HBox>
+        </VBox>
+
+        <!-- Historial de partidas -->
+        <VBox spacing="8" VBox.vgrow="ALWAYS"
+              style="-fx-background-color: #16213e;
+                     -fx-border-color: #0f3460;
+                     -fx-border-width: 1;
+                     -fx-padding: 16;">
+
+            <Label text="Historial (ordenado por movimientos)"
+                   style="-fx-font-size: 13px;
+                          -fx-font-weight: bold;
+                          -fx-text-fill: #aaaaaa;"/>
+
+            <ListView fx:id="historyListView"
+                      prefHeight="140" prefWidth="400"
+                      style="-fx-background-color: #1a1a2e;
+                             -fx-border-color: #0f3460;
+                             -fx-border-width: 1;
+                             -fx-text-fill: #e0e0e0;"/>
+        </VBox>
+
+        <VBox prefHeight="4"/>
+
+        <!-- Botón volver -->
+        <Button text="← Volver al Menú"
+                onAction="#handleBack"
+                prefWidth="360" prefHeight="42"
+                style="-fx-background-color: #0f3460;
+                       -fx-text-fill: #e0e0e0;
+                       -fx-font-size: 14px;
+                       -fx-font-weight: bold;
+                       -fx-cursor: hand;"/>
+    </VBox>
+</StackPane>

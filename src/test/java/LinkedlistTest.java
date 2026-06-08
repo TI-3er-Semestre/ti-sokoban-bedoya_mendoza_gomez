@@ -1,4 +1,5 @@
-import structures.*;
+import Model.structures.LinkedList;
+import Model.structures.Node;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
