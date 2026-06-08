@@ -10,7 +10,7 @@ public class Node<E> {
 
     private E data;
     private Node<E> next;
-    private Node<E> prev;
+    private transient Node<E> prev;
 
     /**
      * Constructor que inicializa el nodo con un dato.

@@ -327,6 +327,12 @@ public class GameScreenController {
 
     private void showVictory() {
         try {
+            // Fijar los datos de la partida para que VictoryController los lea
+            VictoryController.VictoryData.levelId    = gameController.getCurrentState().getCurrentLevel();
+            VictoryController.VictoryData.moves      = gameController.getMoveCount();
+            VictoryController.VictoryData.pushes     = gameController.getPushCount();
+            VictoryController.VictoryData.timeMillis = gameController.getElapsedTime();
+
             SokobanApplication.navigateTo("Victory");
         } catch (Exception e) {
             showError("Error al cargar la pantalla de victoria.");
