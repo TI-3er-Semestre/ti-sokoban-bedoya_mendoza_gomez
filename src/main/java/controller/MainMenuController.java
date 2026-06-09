@@ -8,6 +8,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -26,7 +27,7 @@ public class MainMenuController {
 
     private static GameController gameController = new GameController(
             "src/main/resources/levels",
-            "src/main/resources/saves/save.dat",
+            "src/main/resources/saves",
             "src/main/resources/players"
             
 
@@ -43,24 +44,19 @@ public class MainMenuController {
     @FXML
     public void initialize() {
         try {
-            // 1. Recibimos el arreglo como lo devuelve tu repositorio
-            Model.Player[] players = playerRepository.loadAll();
+            Player[] playersArray = playerRepository.loadAll();
 
-            // 2. Verificamos si no es nulo y tiene elementos (usando .length para arreglos)
-            if (players != null && players.length > 0) {
+            if (playersArray != null && playersArray.length > 0) {
+                List<Player> players = Arrays.asList(playersArray);
 
-                // 3. Limpiamos y añadimos los jugadores al ChoiceBox
                 playerSelector.getItems().clear();
                 playerSelector.getItems().addAll(players);
 
-                // 4. Seleccionamos el primero
                 playerSelector.setValue(playerSelector.getItems().get(0));
 
-                // Habilitamos los botones
                 btnNewGame.setDisable(false);
                 btnContinue.setDisable(false);
             } else {
-                // Si no hay jugadores, deshabilitamos los botones
                 btnNewGame.setDisable(true);
                 btnContinue.setDisable(true);
             }
@@ -71,7 +67,6 @@ public class MainMenuController {
 
     @FXML
     void handleNewGame() {
-        // 1. Verificación controlada
         Player selected = playerSelector.getValue();
 
         if (selected == null) {
@@ -80,10 +75,9 @@ public class MainMenuController {
         }
 
         try {
-            // 2. Ejecución segura
             GameController gc = getGameController();
             gc.setCurrentPlayer(selected);
-            gc.setResumingGame(false); // Inicia desde cero
+            gc.setResumingGame(false);
 
             SokobanApplication.navigateTo("Game");
         } catch (Exception e) {
@@ -102,7 +96,6 @@ public class MainMenuController {
 
     @FXML
     void handleContinue() {
-        // 1. Verificación controlada
         Player selected = playerSelector.getValue();
         if (selected == null) {
             showError("Por favor, selecciona un jugador primero.");
@@ -114,7 +107,6 @@ public class MainMenuController {
             GameController gc = getGameController();
 
             if (gc.hasSavedGame(username)) {
-                // 2. Ejecución segura dentro del try-catch que ya tenías
                 gc.loadGame(username);
                 gc.setResumingGame(true);
                 gc.setCurrentPlayer(selected);

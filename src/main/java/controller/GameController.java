@@ -41,7 +41,7 @@ public class GameController {
         this.levelRepo = new LevelRepository(levelsPath);
     }
     if (savePath != null) {
-        this.stateRepo = new GameStateRepository(savePath);
+        this.stateRepo = new GameStateRepository("src/main/resources/saves");
     }
     if (playersPath != null) {
         this.playerRepo = new PlayerRepository(playersPath);

@@ -21,14 +21,17 @@ public class GameStateRepository {
      * @param state current GameState to persist
      */
     public void save(GameState state, String username) {
+        File folder = new File(saveFolder);
+        if (!folder.exists()) {
+            folder.mkdirs();
+        }
+
         String playerSavePath = saveFolder + File.separator + username + ".ser";
-        try (ObjectOutputStream out = new ObjectOutputStream(
-                new FileOutputStream(playerSavePath))) {
 
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(playerSavePath))) {
             out.writeObject(state);
-
         } catch (IOException e) {
-            System.err.println("Error saving game for player " + username + ": " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -38,7 +41,6 @@ public class GameStateRepository {
      * @return saved GameState, or null if no save exists or error occurs.
      */
     public GameState load(String username) {
-        // Construimos la ruta dinámica basada en el ID
         String playerSavePath = saveFolder + File.separator + username + ".ser";
         File file = new File(playerSavePath);
 
