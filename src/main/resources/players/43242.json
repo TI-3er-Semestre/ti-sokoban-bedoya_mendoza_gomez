@@ -11,30 +11,38 @@
           "levelId": 1,
           "moves": 17,
           "pushes": 8,
-          "timeMillis": 4782
+          "timeMillis": 4134
         },
         "next": {
           "data": {
             "levelId": 1,
             "moves": 17,
             "pushes": 8,
-            "timeMillis": 11101
+            "timeMillis": 4782
+          },
+          "next": {
+            "data": {
+              "levelId": 1,
+              "moves": 17,
+              "pushes": 8,
+              "timeMillis": 11101
+            }
           }
         }
       },
       "last": {
         "data": {
           "levelId": 1,
-          "moves": 17,
+          "moves": 19,
           "pushes": 8,
-          "timeMillis": 11101
+          "timeMillis": 1563
         }
       },
-      "length": 2
+      "length": 5
     },
     "achievements": {
       "size": 0
     }
   },
-  "currentDirection": "RIGHT"
+  "currentDirection": "UP"
 }

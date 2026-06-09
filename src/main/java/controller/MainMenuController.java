@@ -1,11 +1,14 @@
 package controller;
 
 import Model.Player;
+import Model.PlayerRepository;
 import gui.SokobanApplication;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+
+import java.util.List;
 
 /**
  * Controller for the Main Menu screen.
@@ -20,11 +23,15 @@ public class MainMenuController {
     @FXML private Button btnExit;
     @FXML private ChoiceBox<Player> playerSelector;
 
+
     private static GameController gameController = new GameController(
             "src/main/resources/levels",
             "src/main/resources/saves/save.dat",
             "src/main/resources/players"
+            
+
     );
+    private PlayerRepository playerRepository = MainMenuController.getGameController().getPlayerRepository();
 
     /**
      * Returns the shared GameController instance across all screens.
@@ -35,52 +42,85 @@ public class MainMenuController {
 
     @FXML
     public void initialize() {
-        // Al cargar el menú, leemos todos los jugadores existentes en "src/main/resources/players"
-        // Asegúrate de que esta ruta coincida con la que tienes en el constructor de GameController
-        Model.PlayerRepository repo = new Model.PlayerRepository("src/main/resources/players");
+        try {
+            // 1. Recibimos el arreglo como lo devuelve tu repositorio
+            Model.Player[] players = playerRepository.loadAll();
 
-        playerSelector.getItems().addAll(repo.loadAll());
+            // 2. Verificamos si no es nulo y tiene elementos (usando .length para arreglos)
+            if (players != null && players.length > 0) {
 
-        // Seleccionamos el primero si hay alguno, para que no esté vacío
-        if (!playerSelector.getItems().isEmpty()) {
-            playerSelector.setValue(playerSelector.getItems().get(0));
+                // 3. Limpiamos y añadimos los jugadores al ChoiceBox
+                playerSelector.getItems().clear();
+                playerSelector.getItems().addAll(players);
+
+                // 4. Seleccionamos el primero
+                playerSelector.setValue(playerSelector.getItems().get(0));
+
+                // Habilitamos los botones
+                btnNewGame.setDisable(false);
+                btnContinue.setDisable(false);
+            } else {
+                // Si no hay jugadores, deshabilitamos los botones
+                btnNewGame.setDisable(true);
+                btnContinue.setDisable(true);
+            }
+        } catch (Exception e) {
+            showError("Error al cargar los perfiles: " + e.getMessage());
         }
     }
 
     @FXML
     void handleNewGame() {
+        // 1. Verificación controlada
+        Player selected = playerSelector.getValue();
+
+        if (selected == null) {
+            showError("No hay un usuario seleccionado. Regístrate o selecciona un jugador.");
+            return; // Salida controlada
+        }
+
+        try {
+            // 2. Ejecución segura
+            GameController gc = getGameController();
+            gc.setCurrentPlayer(selected);
+            gc.setResumingGame(false); // Inicia desde cero
+
+            SokobanApplication.navigateTo("Game");
+        } catch (Exception e) {
+            showError("Error al iniciar nueva partida: " + e.getMessage());
+        }
+    }
+
+    @FXML
+    void handleRegister() {
         try {
             SokobanApplication.navigateTo("Register");
         } catch (Exception e) {
-            showError("Error al cargar la pantalla de registro.");
+            showError("No se pudo abrir la pantalla de registro.");
         }
     }
 
     @FXML
     void handleContinue() {
-        // 1. Obtenemos el jugador seleccionado en el menú
-        Player selectedPlayer = playerSelector.getValue();
-
-        if (selectedPlayer == null) {
+        // 1. Verificación controlada
+        Player selected = playerSelector.getValue();
+        if (selected == null) {
             showError("Por favor, selecciona un jugador primero.");
             return;
         }
 
         try {
-            // 2. Usamos el nombre de usuario para verificar y cargar la partida
-            String username = selectedPlayer.getUsername();
+            String username = selected.getUsername();
+            GameController gc = getGameController();
 
-            if (gameController.hasSavedGame(username)) {
-                // Pasamos el username al controlador para cargar su estado específico
-                gameController.loadGame(username);
-                gameController.setResumingGame(true);
-
-                // Importante: Asegúrate de guardar el jugador actual en el controlador
-                gameController.setCurrentPlayer(selectedPlayer);
-
+            if (gc.hasSavedGame(username)) {
+                // 2. Ejecución segura dentro del try-catch que ya tenías
+                gc.loadGame(username);
+                gc.setResumingGame(true);
+                gc.setCurrentPlayer(selected);
                 SokobanApplication.navigateTo("Game");
             } else {
-                showInfo("No hay partida guardada para " + username);
+                showInfo("No existe una partida guardada para " + username);
             }
         } catch (Exception e) {
             showError("Error al cargar la partida: " + e.getMessage());

@@ -252,13 +252,11 @@ public class GameController {
 
                 if (cell instanceof Model.BoxCell && !(cell instanceof Model.BoxOnGoalCell)) {
 
-                    //verificacion de muros o bordes
                     boolean wallUp = !board.isValidPosition(r-1, c) || board.getCell(r-1, c) instanceof Model.WallCell;
                     boolean wallDown = !board.isValidPosition(r+1, c) || board.getCell(r+1, c) instanceof Model.WallCell;
                     boolean wallLeft = !board.isValidPosition(r, c-1) || board.getCell(r, c-1) instanceof Model.WallCell;
                     boolean wallRight = !board.isValidPosition(r, c+1) || board.getCell(r, c+1) instanceof Model.WallCell;
 
-                    //si esta bloqueada es una esquina
                     if ((wallUp || wallDown) && (wallLeft || wallRight)) {
                         return true;
                     }
@@ -315,9 +313,6 @@ public class GameController {
     public void saveGame(String username) {
 
         if (stateRepo != null && currentState != null) {
-            // Actualizamos el nivel en el estado antes de guardar si es necesario
-            // currentState.setCurrentLevel(...);
-
             stateRepo.save(currentState, username);
             System.out.println("Partida guardada exitosamente para el jugador: " + username);
         }
@@ -330,13 +325,13 @@ public class GameController {
     public void loadGame(String username) {
         if (stateRepo == null) return;
 
-        // Pasamos el ID al repositorio para que busque el archivo correcto
         GameState loaded = stateRepo.load(username);
 
         if (loaded != null) {
             this.currentState = loaded.clone();
             this.moveCount = loaded.getMoveCount();
             this.pushCount = loaded.getPushCount();
+            this.currentLevel = levelRepo.loadLevel(loaded.getCurrentLevel());
             System.out.println("Game loaded successfully for player ID: " + username);
         } else {
             System.err.println("No saved game found for player ID: " + username);
@@ -348,9 +343,11 @@ public class GameController {
      * @param player player to register
      */
     public void registerPlayer(Player player) {
-
         if (player != null) {
             this.currentPlayer = player;
+            if (playerRepo != null) {
+                playerRepo.save(player);
+            }
         }
     }
 
@@ -573,6 +570,8 @@ public class GameController {
         return pushCount;
     }
 
+    public PlayerRepository getPlayerRepository() {return this.playerRepo;}
+
     public void setStateForTesting(GameState state) {
         this.currentState = state;
         if (state != null) {
@@ -589,7 +588,6 @@ public class GameController {
         return resumingGame;
     }
 
-    public void setCurrentPlayer(Player selectedPlayer) {
-    }
+    public void setCurrentPlayer(Player selectedPlayer) {this.currentPlayer = selectedPlayer;}
 }
 

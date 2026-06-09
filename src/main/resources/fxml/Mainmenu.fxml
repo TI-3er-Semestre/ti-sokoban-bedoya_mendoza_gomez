@@ -5,97 +5,70 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.geometry.Insets?>
-
 <?import javafx.scene.control.ChoiceBox?>
+
 <StackPane xmlns="http://javafx.com/javafx"
            xmlns:fx="http://javafx.com/fxml"
            fx:controller="controller.MainMenuController"
-           prefWidth="500" prefHeight="600"
+           prefWidth="500" prefHeight="650"
            style="-fx-background-color: #1a1a2e;">
 
-    <VBox alignment="CENTER" spacing="20">
-        <padding>
-            <Insets top="60" bottom="60" left="80" right="80"/>
-        </padding>
+    <VBox alignment="CENTER" spacing="15"> <padding>
+        <Insets top="40" bottom="40" left="80" right="80"/>
+    </padding>
 
-        <!-- Título -->
         <Label text="SOKOBAN"
-               style="-fx-font-size: 48px;
-                      -fx-font-weight: bold;
-                      -fx-text-fill: #e0e0e0;
-                      -fx-font-family: 'Monospace';"/>
-
+               style="-fx-font-size: 48px; -fx-font-weight: bold; -fx-text-fill: #e0e0e0; -fx-font-family: 'Monospace';"/>
         <Label text="Mueve las cajas a su destino"
-               style="-fx-font-size: 14px;
-                      -fx-text-fill: #888888;"/>
+               style="-fx-font-size: 14px; -fx-text-fill: #888888;"/>
 
+        <VBox prefHeight="20"/>
 
-        <VBox prefHeight="30"/>
-
-        <VBox alignment="CENTER" spacing="10">
+        <VBox alignment="CENTER" spacing="5">
             <Label text="Selecciona tu perfil:"
                    style="-fx-text-fill: #888888; -fx-font-size: 12px;"/>
             <ChoiceBox fx:id="playerSelector"
                        prefWidth="280"
-                       style="-fx-background-color: #16213e;
-                              -fx-text-fill: #e0e0e0;
-                              -fx-border-color: #0f3460;"/>
+                       style="-fx-background-color: #16213e; -fx-text-fill: #e0e0e0; -fx-border-color: #0f3460;"/>
         </VBox>
 
-        <!-- Botones -->
+        <Button fx:id="btnRegister"
+                text="➕  Registrar Usuario"
+                onAction="#handleRegister"
+                prefWidth="280" prefHeight="45"
+                style="-fx-background-color: #4CAF50;
+                       -fx-text-fill: white;
+                       -fx-font-size: 14px;
+                       -fx-cursor: hand;"/>
+
         <Button fx:id="btnNewGame"
                 text="▶  Nuevo Juego"
                 onAction="#handleNewGame"
-                prefWidth="280" prefHeight="50"
-                style="-fx-background-color: #16213e;
-                       -fx-text-fill: #e0e0e0;
-                       -fx-font-size: 16px;
-                       -fx-border-color: #0f3460;
-                       -fx-border-width: 2;
-                       -fx-cursor: hand;"/>
+                prefWidth="280" prefHeight="45"
+                style="-fx-background-color: #16213e; -fx-text-fill: #e0e0e0; -fx-font-size: 14px; -fx-border-color: #0f3460; -fx-border-width: 2; -fx-cursor: hand;"/>
 
         <Button fx:id="btnContinue"
                 text="⏸  Continuar Partida"
                 onAction="#handleContinue"
-                prefWidth="280" prefHeight="50"
-                style="-fx-background-color: #16213e;
-                       -fx-text-fill: #e0e0e0;
-                       -fx-font-size: 16px;
-                       -fx-border-color: #0f3460;
-                       -fx-border-width: 2;
-                       -fx-cursor: hand;"/>
+                prefWidth="280" prefHeight="45"
+                style="-fx-background-color: #16213e; -fx-text-fill: #e0e0e0; -fx-font-size: 14px; -fx-border-color: #0f3460; -fx-border-width: 2; -fx-cursor: hand;"/>
 
         <Button fx:id="btnStats"
                 text="📊  Estadísticas"
                 onAction="#handleStats"
-                prefWidth="280" prefHeight="50"
-                style="-fx-background-color: #16213e;
-                       -fx-text-fill: #e0e0e0;
-                       -fx-font-size: 16px;
-                       -fx-border-color: #0f3460;
-                       -fx-border-width: 2;
-                       -fx-cursor: hand;"/>
+                prefWidth="280" prefHeight="45"
+                style="-fx-background-color: #16213e; -fx-text-fill: #e0e0e0; -fx-font-size: 14px; -fx-border-color: #0f3460; -fx-border-width: 2; -fx-cursor: hand;"/>
 
         <Button fx:id="btnHelp"
                 text="❓  Ayuda"
                 onAction="#handleHelp"
-                prefWidth="280" prefHeight="50"
-                style="-fx-background-color: #16213e;
-                       -fx-text-fill: #e0e0e0;
-                       -fx-font-size: 16px;
-                       -fx-border-color: #0f3460;
-                       -fx-border-width: 2;
-                       -fx-cursor: hand;"/>
+                prefWidth="280" prefHeight="45"
+                style="-fx-background-color: #16213e; -fx-text-fill: #e0e0e0; -fx-font-size: 14px; -fx-border-color: #0f3460; -fx-border-width: 2; -fx-cursor: hand;"/>
 
         <Button fx:id="btnExit"
                 text="✖  Salir"
                 onAction="#handleExit"
-                prefWidth="280" prefHeight="50"
-                style="-fx-background-color: #16213e;
-                       -fx-text-fill: #e94560;
-                       -fx-font-size: 16px;
-                       -fx-border-color: #e94560;
-                       -fx-border-width: 2;
-                       -fx-cursor: hand;"/>
+                prefWidth="280" prefHeight="45"
+                style="-fx-background-color: #16213e; -fx-text-fill: #e94560; -fx-font-size: 14px; -fx-border-color: #e94560; -fx-border-width: 2; -fx-cursor: hand;"/>
     </VBox>
 </StackPane>

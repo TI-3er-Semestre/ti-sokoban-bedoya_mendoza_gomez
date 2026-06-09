@@ -70,9 +70,12 @@ public class RegisterController {
 
         // Navegar al juego
         try {
-            SokobanApplication.navigateTo("Game");
+            SokobanApplication.navigateTo("MainMenu");
+            // Opcional: mostrar un mensaje de éxito antes de navegar
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Registro exitoso. Selecciona tu perfil para jugar.");
+            alert.showAndWait();
         } catch (Exception e) {
-            showError("Error al cargar la pantalla de juego.");
+            showError("Error al volver al menú principal.");
         }
     }
 
