@@ -1,8 +1,12 @@
 package gui;
 
+
+import Model.Player;
+import Model.PlayerStats;
 import controller.GameController;
 import Model.Player;
 import Model.PlayerStats;
+import javafx.application.Platform;
 
 /**
  * View layer of the Sokoban application (MVC - View).
@@ -12,74 +16,126 @@ import Model.PlayerStats;
  */
 public class GameUI {
 
-    private GameController controller;
+    private controller.GameController controller;
 
-    public GameUI(GameController controller) {
-        // TODO: implement
-    }
-
-    /** Starts the application UI loop. */
-    public void start() {
-        // TODO: implement with JavaFX in Entrega 3
-    }
-
-    /** Stops the application and saves state. */
-    public void stop() {
-        // TODO: implement
-    }
-
-    /** Renders the current board to the screen. */
-    public void printBoard() {
-        // TODO: implement
+    public GameUI(controller.GameController controller) {
+        this.controller = controller;
     }
 
     /**
-     * Handles a keyboard input event and delegates to the controller.
-     * @param key key string from keyboard event
+     * Starts the JavaFX application.
+     */
+    public void start() {
+        SokobanApplication.main(new String[]{});
+    }
+
+    /**
+     * Stops the application and saves the current game state.
+     */
+    public void stop() {
+        controller.saveGame();
+        Platform.exit();
+    }
+
+    /**
+     * Navigates to the main menu screen.
+     */
+    public void showMainMenu() {
+        try {
+            SokobanApplication.navigateTo("MainMenu");
+        } catch (Exception e) {
+            System.err.println("Error showing main menu: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Navigates to the game screen and renders the current board.
+     */
+    public void printBoard() {
+        try {
+            SokobanApplication.navigateTo("Game");
+        } catch (Exception e) {
+            System.err.println("Error showing game board: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Handles a keyboard input and delegates to the controller.
+     * @param key key string from keyboard event (e.g. "UP", "W")
      */
     public void handleInput(String key) {
-        // TODO: implement — parse key, call controller.move(direction)
-    }
-
-    /** Displays the current move, push, and time counters. */
-    public void printCounters() {
-        // TODO: implement
-    }
-
-    /** Shows the victory screen when the level is completed. */
-    public void showVictoryScreen() {
-        // TODO: implement
-    }
-
-    /** Shows the game over screen. */
-    public void showGameOverScreen() {
-        // TODO: implement
+        controller.enqueueMove(key);
+        controller.processMoves();
     }
 
     /**
-     * Shows and processes the player registration form.
-     * @return registered Player object
+     * Displays the current move, push, and time counters.
+     * Delegates to the GameScreenController via the Game screen.
+     */
+    public void printCounters() {
+        try {
+            SokobanApplication.navigateTo("Game");
+        } catch (Exception e) {
+            System.err.println("Error showing counters: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Navigates to the victory screen.
+     */
+    public void showVictoryScreen() {
+        try {
+            SokobanApplication.navigateTo("Victory");
+        } catch (Exception e) {
+            System.err.println("Error showing victory screen: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Navigates to the game over screen.
+     */
+    public void showGameOverScreen() {
+        try {
+            SokobanApplication.navigateTo("GameOver");
+        } catch (Exception e) {
+            System.err.println("Error showing game over screen: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Navigates to the register screen and returns the registered player.
+     * Note: in JavaFX the result is handled asynchronously via the controller.
+     * @return null — registration result is handled by RegisterController
      */
     public Player promptRegister() {
-        // TODO: implement
+        try {
+            SokobanApplication.navigateTo("Register");
+        } catch (Exception e) {
+            System.err.println("Error showing register screen: " + e.getMessage());
+        }
         return null;
     }
 
-    /** Shows the main menu screen. */
-    public void showMainMenu() {
-        // TODO: implement
-    }
-
     /**
-     * Shows the statistics screen for a player.
+     * Navigates to the statistics screen.
      * @param stats player statistics to display
      */
     public void showStats(PlayerStats stats) {
-        // TODO: implement
+        try {
+            SokobanApplication.navigateTo("Stats");
+        } catch (Exception e) {
+            System.err.println("Error showing stats screen: " + e.getMessage());
+        }
     }
 
-    /** Shows the user manual / help screen. */
+    /**
+     * Navigates to the help screen.
+     */
     public void showHelp() {
-        // TODO: implement
+        try {
+            SokobanApplication.navigateTo("Help");
+        } catch (Exception e) {
+            System.err.println("Error showing help screen: " + e.getMessage());
+        }
     }
 }

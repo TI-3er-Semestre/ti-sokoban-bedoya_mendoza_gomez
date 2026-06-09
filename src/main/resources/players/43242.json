@@ -1,0 +1,40 @@
+{
+  "name": "D",
+  "email": "123@gmail.com",
+  "username": "43242",
+  "avatar": "🧑",
+  "experienceLevel": "BEGINNER",
+  "stats": {
+    "results": {
+      "first": {
+        "data": {
+          "levelId": 1,
+          "moves": 17,
+          "pushes": 8,
+          "timeMillis": 4782
+        },
+        "next": {
+          "data": {
+            "levelId": 1,
+            "moves": 17,
+            "pushes": 8,
+            "timeMillis": 11101
+          }
+        }
+      },
+      "last": {
+        "data": {
+          "levelId": 1,
+          "moves": 17,
+          "pushes": 8,
+          "timeMillis": 11101
+        }
+      },
+      "length": 2
+    },
+    "achievements": {
+      "size": 0
+    }
+  },
+  "currentDirection": "RIGHT"
+}
