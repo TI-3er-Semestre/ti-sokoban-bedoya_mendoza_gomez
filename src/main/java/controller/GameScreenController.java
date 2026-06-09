@@ -54,6 +54,8 @@ public class GameScreenController {
     private Image tileset;
     private Image playerSprites;
     private GameController gameController;
+    private Model.structures.Queue<Direction> inputBuffer = new Model.structures.Queue<>();
+    private javafx.animation.Timeline inputProcessor;
 
     // Hilo del temporizador
     private Thread timerThread;
@@ -316,9 +318,17 @@ public class GameScreenController {
         if (moved) {
             drawBoard();
             updateCounters();
+
             if (gameController.checkVictory()) {
+                if (inputProcessor != null) inputProcessor.stop();
                 stopTimerThread();
                 showVictory();
+            }
+            //gameover
+            else if (gameController.checkGameOver()) {
+                if (inputProcessor != null) inputProcessor.stop();
+                stopTimerThread();
+                showGameOver();
             }
         }
     }
@@ -386,6 +396,14 @@ public class GameScreenController {
             SokobanApplication.navigateTo("Victory");
         } catch (Exception e) {
             showError("Error al guardar progreso y cargar pantalla de victoria.");
+        }
+    }
+
+    private void showGameOver() {
+        try {
+            SokobanApplication.navigateTo("GameOver");
+        } catch (Exception e) {
+            showError("Error al cargar la pantalla de Game Over.");
         }
     }
 

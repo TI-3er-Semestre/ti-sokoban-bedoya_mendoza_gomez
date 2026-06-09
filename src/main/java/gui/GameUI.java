@@ -33,7 +33,7 @@ public class GameUI {
      * Stops the application and saves the current game state.
      */
     public void stop() {
-        controller.saveGame();
+        controller.saveGame("savegame.dat");
         Platform.exit();
     }
 

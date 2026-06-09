@@ -238,6 +238,37 @@ public class GameController {
     }
 
     /**
+     * Verifica la condicion de Game Over: ocurre si al menos una caja que no este en una meta queda atrapada en una esquina formada por muros
+     */
+    public boolean checkGameOver() {
+        if (currentState == null || currentState.getBoard() == null) return false;
+
+        Model.Board board = currentState.getBoard();
+
+        for (int r = 0; r < board.getRows(); r++) {
+            for (int c = 0; c < board.getCols(); c++) {
+                Model.Cell cell = board.getCell(r, c);
+
+
+                if (cell instanceof Model.BoxCell && !(cell instanceof Model.BoxOnGoalCell)) {
+
+                    //verificacion de muros o bordes
+                    boolean wallUp = !board.isValidPosition(r-1, c) || board.getCell(r-1, c) instanceof Model.WallCell;
+                    boolean wallDown = !board.isValidPosition(r+1, c) || board.getCell(r+1, c) instanceof Model.WallCell;
+                    boolean wallLeft = !board.isValidPosition(r, c-1) || board.getCell(r, c-1) instanceof Model.WallCell;
+                    boolean wallRight = !board.isValidPosition(r, c+1) || board.getCell(r, c+1) instanceof Model.WallCell;
+
+                    //si esta bloqueada es una esquina
+                    if ((wallUp || wallDown) && (wallLeft || wallRight)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
      * Loads a level by ID and initializes a fresh game state.
      * * @param id The level identifier.
      * @return true if the level was loaded successfully, false otherwise.
