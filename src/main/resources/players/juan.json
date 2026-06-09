@@ -1,0 +1,32 @@
+{
+  "name": "juan",
+  "email": "andres@gmail.com",
+  "username": "juan",
+  "avatar": "👩",
+  "experienceLevel": "ADVANCED",
+  "stats": {
+    "results": {
+      "first": {
+        "data": {
+          "levelId": 2,
+          "moves": 54,
+          "pushes": 17,
+          "timeMillis": 24186
+        }
+      },
+      "last": {
+        "data": {
+          "levelId": 2,
+          "moves": 54,
+          "pushes": 17,
+          "timeMillis": 24186
+        }
+      },
+      "length": 1
+    },
+    "achievements": {
+      "size": 0
+    }
+  },
+  "currentDirection": "LEFT"
+}

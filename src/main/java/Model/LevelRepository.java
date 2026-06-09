@@ -31,25 +31,28 @@ public class LevelRepository {
     }
 
     /**
-     * Loads a single level from its corresponding JSON file.
-     * @param id level identifier
-     * @return Level object, or null if not found
+     * Loads a single level from its corresponding JSON file in the resources folder.
+     * * @param id The level identifier.
+     * @return The Level object, or null if the file is not found or cannot be parsed.
      */
     public Level loadLevel(int id) {
-        String filePath = levelsPath + File.separator + "level" + id + ".json";
-        File file = new File(filePath);
+        // Assuming your files are named "level1.json", "level2.json", etc.
+        // inside the src/main/resources/levels/ directory.
+        String path = "/levels/level" + id + ".json";
 
-        if (!file.exists()) {
-            System.err.println("Level file not found: " + filePath);
-            return null;
-        }
+        try (InputStream is = getClass().getResourceAsStream(path)) {
+            if (is == null) {
+                System.err.println("File not found in resources: " + path);
+                return null;
+            }
 
-        try (Reader reader = new FileReader(file)) {
+            Reader reader = new InputStreamReader(is);
             Gson gson = new Gson();
             LevelData data = gson.fromJson(reader, LevelData.class);
             return buildLevel(data);
-        } catch (IOException e) {
-            System.err.println("Error loading level: " + e.getMessage());
+
+        } catch (Exception e) {
+            System.err.println("Error processing JSON for level " + id + ": " + e.getMessage());
             return null;
         }
     }
@@ -96,7 +99,7 @@ public class LevelRepository {
             }
         }
 
-        // Asignar goalPositions al board
+        //Asignar goalPositions al board
         board.setGoalPositions(goals.toArray(new Position[0]));
 
         ExperienceLevel difficulty = ExperienceLevel.valueOf(data.difficulty);

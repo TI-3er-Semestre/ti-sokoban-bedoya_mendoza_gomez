@@ -1,0 +1,104 @@
+{
+  "name": "andres",
+  "email": "andres@gmail.com",
+  "username": "juan1234",
+  "avatar": "👩",
+  "experienceLevel": "BEGINNER",
+  "stats": {
+    "results": {
+      "first": {
+        "data": {
+          "levelId": 3,
+          "moves": 12,
+          "pushes": 6,
+          "timeMillis": 5855
+        },
+        "next": {
+          "data": {
+            "levelId": 3,
+            "moves": 12,
+            "pushes": 6,
+            "timeMillis": 6364
+          },
+          "next": {
+            "data": {
+              "levelId": 3,
+              "moves": 12,
+              "pushes": 6,
+              "timeMillis": 10586
+            },
+            "next": {
+              "data": {
+                "levelId": 3,
+                "moves": 12,
+                "pushes": 6,
+                "timeMillis": 20062
+              },
+              "next": {
+                "data": {
+                  "levelId": 1,
+                  "moves": 17,
+                  "pushes": 8,
+                  "timeMillis": 3676
+                },
+                "next": {
+                  "data": {
+                    "levelId": 1,
+                    "moves": 19,
+                    "pushes": 8,
+                    "timeMillis": 3394
+                  },
+                  "next": {
+                    "data": {
+                      "levelId": 3,
+                      "moves": 27,
+                      "pushes": 10,
+                      "timeMillis": 9526
+                    },
+                    "next": {
+                      "data": {
+                        "levelId": 3,
+                        "moves": 27,
+                        "pushes": 10,
+                        "timeMillis": 12610
+                      },
+                      "next": {
+                        "data": {
+                          "levelId": 2,
+                          "moves": 50,
+                          "pushes": 17,
+                          "timeMillis": 15950
+                        },
+                        "next": {
+                          "data": {
+                            "levelId": 2,
+                            "moves": 52,
+                            "pushes": 17,
+                            "timeMillis": 14971
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "last": {
+        "data": {
+          "levelId": 2,
+          "moves": 52,
+          "pushes": 17,
+          "timeMillis": 14971
+        }
+      },
+      "length": 10
+    },
+    "achievements": {
+      "size": 0
+    }
+  },
+  "currentDirection": "LEFT"
+}

@@ -31,10 +31,10 @@ public class VictoryController {
 
     /** Datos de la última partida completada, fijados por GameScreenController antes de navegar. */
     public static class VictoryData {
-        public static int    levelId     = 1;
-        public static int    moves       = 0;
-        public static int    pushes      = 0;
-        public static long   timeMillis  = 0;
+        public static int levelId;
+        public static int moves;
+        public static int pushes;
+        public static long timeMillis;
     }
 
     // ---------------------------------------------------------------
@@ -111,15 +111,34 @@ public class VictoryController {
         }
     }
 
+    /**
+     * Handles the "Next Level" button action.
+     * Updates the global level ID and triggers the loading process.
+     */
     @FXML
     void handleNextLevel() {
         try {
-            int next = VictoryData.levelId + 1;
+            // 1. Calculate the next level ID
+            int nextLevelId = VictoryData.levelId + 1;
             GameController gc = MainMenuController.getGameController();
-            gc.loadLevel(next);
-            SokobanApplication.navigateTo("Game");
+
+            System.out.println("Attempting to load level: " + nextLevelId);
+
+            // 2. Load the level. If it fails, the controller returns false
+            if (gc.loadLevel(nextLevelId)) {
+                // Update the static data so the game knows it's now at the new level
+                VictoryData.levelId = nextLevelId;
+
+                // Navigate to the game screen.
+                // The initialize() method in GameScreenController will handle the render
+                SokobanApplication.navigateTo("Game");
+            } else {
+                System.out.println("No more levels found. Returning to Main Menu.");
+                SokobanApplication.navigateTo("MainMenu");
+            }
         } catch (Exception e) {
-            System.err.println("Error al cargar siguiente nivel: " + e.getMessage());
+            System.err.println("Error loading next level: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 

@@ -1,0 +1,88 @@
+{
+  "name": "Juan",
+  "email": "asdaw@gmail.com",
+  "username": "AndresW",
+  "avatar": "👩",
+  "experienceLevel": "BEGINNER",
+  "stats": {
+    "results": {
+      "first": {
+        "data": {
+          "levelId": 1,
+          "moves": 17,
+          "pushes": 8,
+          "timeMillis": 3448
+        },
+        "next": {
+          "data": {
+            "levelId": 1,
+            "moves": 17,
+            "pushes": 8,
+            "timeMillis": 3906
+          },
+          "next": {
+            "data": {
+              "levelId": 1,
+              "moves": 17,
+              "pushes": 8,
+              "timeMillis": 3936
+            },
+            "next": {
+              "data": {
+                "levelId": 1,
+                "moves": 17,
+                "pushes": 8,
+                "timeMillis": 5030
+              },
+              "next": {
+                "data": {
+                  "levelId": 1,
+                  "moves": 19,
+                  "pushes": 8,
+                  "timeMillis": 2482
+                },
+                "next": {
+                  "data": {
+                    "levelId": 1,
+                    "moves": 19,
+                    "pushes": 8,
+                    "timeMillis": 3176
+                  },
+                  "next": {
+                    "data": {
+                      "levelId": 1,
+                      "moves": 19,
+                      "pushes": 8,
+                      "timeMillis": 3414
+                    },
+                    "next": {
+                      "data": {
+                        "levelId": 1,
+                        "moves": 19,
+                        "pushes": 8,
+                        "timeMillis": 3681
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "last": {
+        "data": {
+          "levelId": 1,
+          "moves": 19,
+          "pushes": 8,
+          "timeMillis": 3681
+        }
+      },
+      "length": 8
+    },
+    "achievements": {
+      "size": 0
+    }
+  },
+  "currentDirection": "RIGHT"
+}

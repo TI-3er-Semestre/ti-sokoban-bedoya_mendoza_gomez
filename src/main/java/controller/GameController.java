@@ -63,13 +63,13 @@ public class GameController {
 
         if (!isValidMove(direction)) return false;
 
+        // Save current state before modifying it for the undo stack
         undoStack.push(cloneState(currentState));
-
 
         Position nextPos = getNextPosition(currentPos, direction);
         Cell targetCell = board.getCell(nextPos.getRow(), nextPos.getCol());
 
-        //EMPUJAR CAJA
+        // PUSH BOX LOGIC
         if (targetCell instanceof BoxCell || targetCell instanceof BoxOnGoalCell) {
 
             Position boxDest = getNextPosition(nextPos, direction);
@@ -90,7 +90,7 @@ public class GameController {
             pushCount++;
         }
 
-        //LIMPIAR POSICIÓN ANTERIOR
+        // CLEAR PREVIOUS PLAYER POSITION
         Cell currentCell = board.getCell(currentPos.getRow(), currentPos.getCol());
 
         board.setCell(
@@ -99,7 +99,7 @@ public class GameController {
                 (currentCell instanceof PlayerOnGoalCell) ? new GoalCell() : new EmptyCell()
         );
 
-        //MOVER JUGADOR
+        // PLACE PLAYER IN NEW POSITION
         Cell destCell = board.getCell(nextPos.getRow(), nextPos.getCol());
 
         board.setCell(
@@ -161,7 +161,6 @@ public class GameController {
         if (targetCell instanceof BoxCell || targetCell instanceof BoxOnGoalCell) {
 
             Position afterNext = getNextPosition(nextPos, direction);
-
 
             if (!board.isValidPosition(afterNext.getRow(), afterNext.getCol())) {
                 return false;
@@ -239,16 +238,19 @@ public class GameController {
     }
 
     /**
-     * Loads a level by id and initializes a fresh game state.
-     * @param id level identifier
+     * Loads a level by ID and initializes a fresh game state.
+     * * @param id The level identifier.
+     * @return true if the level was loaded successfully, false otherwise.
      */
-    public void loadLevel(int id) {
-
-        if (levelRepo == null) return;
+    public boolean loadLevel(int id) {
+        if (levelRepo == null) return false;
 
         Level level = levelRepo.loadLevel(id);
 
-        if (level == null) return;
+        if (level == null) {
+            System.err.println("Could not load level " + id + ". Verify that the file exists.");
+            return false;
+        }
 
         this.currentLevel = level;
         this.currentState = level.getInitialState();
@@ -258,6 +260,7 @@ public class GameController {
         this.gameOver = false;
 
         startTimer();
+        return true;
     }
 
     /**

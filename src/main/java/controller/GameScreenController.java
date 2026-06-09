@@ -63,23 +63,18 @@ public class GameScreenController {
     void initialize() {
         gameController = MainMenuController.getGameController();
 
-        // Cargar tileset desde resources
-        tileset = new Image(
-                getClass().getResourceAsStream("/images/tileset.png")
-        );
-
-
+        // Load images
+        tileset = new Image(getClass().getResourceAsStream("/images/tileset.png"));
         playerSprites = new Image(getClass().getResourceAsStream("/images/PlayerSprites.png"));
 
-        System.out.println("Tileset cargado: " + !tileset.isError());
-        System.out.println("Tileset ancho: " + tileset.getWidth());
-        System.out.println("Tileset alto: " + tileset.getHeight());
-        System.out.println("Estado: " + gameController.getCurrentState());
+        System.out.println("Tileset loaded: " + !tileset.isError());
+        System.out.println("Current GameState: " + gameController.getCurrentState());
 
         Platform.runLater(() -> {
-            // Solo cargar nivel nuevo si no estamos retomando partida
-            int levelToLoad = 1;
-            if (!gameController.isResumingGame()) {
+            // 1. Logic to load the level only if it's NOT already loaded
+            // This allows the VictoryController to pre-load the next level before navigation
+            if (gameController.getCurrentState() == null && !gameController.isResumingGame()) {
+                int levelToLoad = 1;
                 Player p = gameController.getCurrentPlayer();
                 if (p != null && p.getExperienceLevel() != null) {
                     switch (p.getExperienceLevel()) {
@@ -89,43 +84,42 @@ public class GameScreenController {
                     }
                 }
                 gameController.loadLevel(levelToLoad);
-            } else {
+            } else if (gameController.isResumingGame()) {
                 gameController.setResumingGame(false);
             }
 
+            // 2. Setup Timer
             gameController.startTimer();
-            drawBoard();
-            updateCounters();
             startTimerThread();
 
-            // dificultad
-            if (levelToLoad == 3 && !gameController.isResumingGame()) {
-                aiControls.setVisible(true);
-                aiControls.setManaged(true);
-
-                if (algoChooser.getItems().isEmpty()) {
-                    algoChooser.getItems().addAll("BFS (Cola)", "DFS (Pila)", "Dijkstra", "Floyd-Warshall");
-                    algoChooser.setValue("BFS (Cola)");
-                }
-
-                rootPane.getScene().setOnKeyPressed(null);
-            } else {
-                //nivel 1 y 2 ocultar menu IA y dar control al teclado
-                aiControls.setVisible(false);
-                aiControls.setManaged(false);
-                rootPane.getScene().setOnKeyPressed(this::handleKeyPress);
-                rootPane.requestFocus();
-            }
+            // 3. UI Setup
+            drawBoard();
+            updateCounters();
+            setupControls();
         });
-        gameController.startTimer();
+    }
 
-        Platform.runLater(() -> {
-            drawBoard();
-            updateCounters();
-            startTimerThread();
+    /**
+     * Configures controls based on the current level or game state.
+     */
+    private void setupControls() {
+        int currentLevelId = (gameController.getCurrentState() != null)
+                ? gameController.getCurrentState().getCurrentLevel() : 1;
+
+        if (currentLevelId == 3 && !gameController.isResumingGame()) {
+            aiControls.setVisible(true);
+            aiControls.setManaged(true);
+            if (algoChooser.getItems().isEmpty()) {
+                algoChooser.getItems().addAll("BFS (Cola)", "DFS (Pila)", "Dijkstra", "Floyd-Warshall");
+                algoChooser.setValue("BFS (Cola)");
+            }
+            rootPane.getScene().setOnKeyPressed(null);
+        } else {
+            aiControls.setVisible(false);
+            aiControls.setManaged(false);
             rootPane.getScene().setOnKeyPressed(this::handleKeyPress);
             rootPane.requestFocus();
-        });
+        }
     }
 
     // ---------------------------------------------------------------
