@@ -9,33 +9,38 @@ import java.io.*;
  */
 public class GameStateRepository {
 
+    private final String saveFolder = "saves";
     private String savePath;
 
     public GameStateRepository(String savePath) {
-        this.savePath = savePath;
+        new File(saveFolder).mkdirs();
     }
 
     /**
      * Serializes and saves the current game state to disk.
      * @param state current GameState to persist
      */
-    public void save(GameState state) {
+    public void save(GameState state, String username) {
+        String playerSavePath = saveFolder + File.separator + username + ".ser";
         try (ObjectOutputStream out = new ObjectOutputStream(
-                new FileOutputStream(savePath))) {
+                new FileOutputStream(playerSavePath))) {
 
             out.writeObject(state);
 
         } catch (IOException e) {
-            System.err.println("Error al guardad el juego: " + e.getMessage());
+            System.err.println("Error saving game for player " + username + ": " + e.getMessage());
         }
     }
 
     /**
-     * Loads and deserializes the saved game state from disk.
-     * @return saved GameState, or null if no save exists
+     * Loads a saved game state for a specific player from disk.
+     * @param username The unique ID of the player.
+     * @return saved GameState, or null if no save exists or error occurs.
      */
-    public GameState load() {
-        File file = new File(savePath);
+    public GameState load(String username) {
+        // Construimos la ruta dinámica basada en el ID
+        String playerSavePath = saveFolder + File.separator + username + ".ser";
+        File file = new File(playerSavePath);
 
         if (!file.exists()) return null;
 
@@ -45,24 +50,28 @@ public class GameStateRepository {
             return (GameState) in.readObject();
 
         } catch (IOException | ClassNotFoundException e) {
-            System.err.println("Error loading game: " + e.getMessage());
-        return null;
+            System.err.println("Error loading game for player " + username + ": " + e.getMessage());
+            return null;
         }
     }
 
     /**
-     * Returns true if a saved game file exists.
+     * Checks if a saved game file exists for a specific player.
+     * @param username The unique ID of the player.
      * @return true if save file is present
      */
-    public boolean hasSavedGame() {
-        return new File(savePath).exists();
+    public boolean hasSavedGame(String username) {
+        String path = saveFolder + File.separator + username + ".ser";
+        return new File(path).exists();
     }
 
     /**
-     * Deletes the saved game file from disk.
+     * Deletes the saved game file for a specific player.
+     * @param playerId The unique ID of the player.
      */
-    public void deleteSave() {
-        File file = new File(savePath);
+    public void deleteSave(int playerId) {
+        String playerSavePath = "save_player_" + playerId + ".ser";
+        File file = new File(playerSavePath);
 
         if (file.exists()) {
             file.delete();

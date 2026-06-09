@@ -72,4 +72,9 @@ public class Player {
     public void setCurrentDirection(Direction currentDirection) {
         this.currentDirection = currentDirection;
     }
+
+    @Override
+    public String toString() {
+        return this.username;
+    }
 }

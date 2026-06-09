@@ -53,7 +53,7 @@ public class VictoryController {
 
         // Registrar resultado en el historial del jugador
         if (player != null) {
-            GameResult result = new GameResult(player, levelId, moves, pushes, timeMillis);
+            GameResult result = new GameResult(levelId, moves, pushes, timeMillis);
             player.getStats().addResult(result);
             gc.savePlayerStats();
         }

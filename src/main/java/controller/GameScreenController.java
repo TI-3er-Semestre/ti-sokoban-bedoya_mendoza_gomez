@@ -352,8 +352,11 @@ public class GameScreenController {
     }
 
     @FXML void handleSave() {
-        gameController.saveGame();
-        showInfo("Partida guardada correctamente.");
+        // Obtenemos el jugador actual y guardamos la partida con su username
+        String username = gameController.getCurrentPlayer().getUsername();
+        gameController.saveGame(username);
+
+        showInfo("Partida guardada correctamente para el jugador.");
         rootPane.requestFocus();
     }
 
@@ -368,6 +371,12 @@ public class GameScreenController {
 
     private void showVictory() {
         try {
+            // 1. Guardar automáticamente el progreso al ganar
+            // Esto asegura que el estado "completado" o "nivel avanzado" se registre
+            String username = gameController.getCurrentPlayer().getUsername();
+            gameController.saveGame(username);
+
+            // 2. Actualizar los datos de victoria
             // Fijar los datos de la partida para que VictoryController los lea
             VictoryController.VictoryData.levelId    = gameController.getCurrentState().getCurrentLevel();
             VictoryController.VictoryData.moves      = gameController.getMoveCount();
@@ -376,7 +385,7 @@ public class GameScreenController {
 
             SokobanApplication.navigateTo("Victory");
         } catch (Exception e) {
-            showError("Error al cargar la pantalla de victoria.");
+            showError("Error al guardar progreso y cargar pantalla de victoria.");
         }
     }
 

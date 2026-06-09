@@ -281,26 +281,34 @@ public class GameController {
     /**
      * Persists the current game state to disk.
      */
-    public void saveGame() {
+    public void saveGame(String username) {
 
         if (stateRepo != null && currentState != null) {
-            stateRepo.save(currentState);
+            // Actualizamos el nivel en el estado antes de guardar si es necesario
+            // currentState.setCurrentLevel(...);
+
+            stateRepo.save(currentState, username);
+            System.out.println("Partida guardada exitosamente para el jugador: " + username);
         }
     }
 
     /**
-     * Loads a previously saved game state from disk.
+     * Loads the game state specifically for the given player ID.
+     * @param username The unique ID of the player to load the game for.
      */
-    public void loadGame() {
-
+    public void loadGame(String username) {
         if (stateRepo == null) return;
 
-        GameState loaded = stateRepo.load();
+        // Pasamos el ID al repositorio para que busque el archivo correcto
+        GameState loaded = stateRepo.load(username);
 
         if (loaded != null) {
-            this.currentState = loaded;
+            this.currentState = loaded.clone();
             this.moveCount = loaded.getMoveCount();
             this.pushCount = loaded.getPushCount();
+            System.out.println("Game loaded successfully for player ID: " + username);
+        } else {
+            System.err.println("No saved game found for player ID: " + username);
         }
     }
 
@@ -381,8 +389,12 @@ public class GameController {
         return false;
     }
 
-    public boolean hasSavedGame() {
-        return stateRepo != null && stateRepo.hasSavedGame();
+    /**
+     * Checks if a save file exists for a specific player.
+     * @param username The unique ID of the player to check.
+     */
+    public boolean hasSavedGame(String username) {
+        return stateRepo != null && stateRepo.hasSavedGame(username);
     }
 
     public boolean usernameExists(String username) {
@@ -546,5 +558,7 @@ public class GameController {
         return resumingGame;
     }
 
+    public void setCurrentPlayer(Player selectedPlayer) {
+    }
 }
 

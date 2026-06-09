@@ -14,6 +14,7 @@ public class PlayerStats {
     private LinkedList<GameResult> results;
     private BinarySearchTree<Achievement> achievements;
 
+
     public PlayerStats() {
         this.results = new LinkedList<>();
         this.achievements = new BinarySearchTree<>();

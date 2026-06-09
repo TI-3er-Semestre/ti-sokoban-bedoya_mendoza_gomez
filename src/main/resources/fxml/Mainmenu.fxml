@@ -6,6 +6,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.geometry.Insets?>
 
+<?import javafx.scene.control.ChoiceBox?>
 <StackPane xmlns="http://javafx.com/javafx"
            xmlns:fx="http://javafx.com/fxml"
            fx:controller="controller.MainMenuController"
@@ -28,7 +29,18 @@
                style="-fx-font-size: 14px;
                       -fx-text-fill: #888888;"/>
 
+
         <VBox prefHeight="30"/>
+
+        <VBox alignment="CENTER" spacing="10">
+            <Label text="Selecciona tu perfil:"
+                   style="-fx-text-fill: #888888; -fx-font-size: 12px;"/>
+            <ChoiceBox fx:id="playerSelector"
+                       prefWidth="280"
+                       style="-fx-background-color: #16213e;
+                              -fx-text-fill: #e0e0e0;
+                              -fx-border-color: #0f3460;"/>
+        </VBox>
 
         <!-- Botones -->
         <Button fx:id="btnNewGame"
