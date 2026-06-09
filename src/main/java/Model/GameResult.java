@@ -6,14 +6,12 @@ package Model;
  */
 public class GameResult implements Comparable<GameResult> {
 
-    private Player player;
     private int levelId;
     private int moves;
     private int pushes;
     private long timeMillis;
 
-    public GameResult(Player player, int levelId, int moves, int pushes, long timeMillis) {
-        this.player = player;
+    public GameResult(int levelId, int moves, int pushes, long timeMillis) {
         this.levelId = levelId;
         this.moves = moves;
         this.pushes = pushes;
@@ -38,9 +36,6 @@ public class GameResult implements Comparable<GameResult> {
 
     }
 
-    public Player getPlayer() {
-        return player;
-    }
 
     public int getLevelId() {
         return levelId;

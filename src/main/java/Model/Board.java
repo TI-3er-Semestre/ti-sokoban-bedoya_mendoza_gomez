@@ -1,5 +1,7 @@
 package Model;
 
+import Model.structures.Graph.AdjacencyListGraph;
+
 import java.io.Serializable;
 
 /**<
@@ -197,5 +199,48 @@ public class Board implements Serializable {
 
     public void setGoalPositions(Position[] goalPositions) {
         this.goalPositions = goalPositions;
+    }
+
+    /**
+     * Converts the current 2D board grid into an Adjacency List Graph.
+     * Vertices are walkable positions, and Edges connect adjacent valid cells.
+     * @return AdjacencyListGraph of Position
+     */
+    public AdjacencyListGraph<Position> toGraph() {
+        AdjacencyListGraph<Position> graph = new AdjacencyListGraph<>();
+
+        // 1. Add all non-wall cells as vertices
+        for (int i = 0; i < this.rows; i++) {
+            for (int j = 0; j < this.cols; j++) {
+                if (!(grid[i][j] instanceof WallCell)) {
+                    graph.addVertex(new Position(i, j));
+                }
+            }
+        }
+
+        // 2. Connect adjacent vertices with edges (Weight = 1)
+        int[] dRow = {-1, 1, 0, 0}; // UP, DOWN, LEFT, RIGHT
+        int[] dCol = {0, 0, -1, 1};
+
+        for (int i = 0; i < this.rows; i++) {
+            for (int j = 0; j < this.cols; j++) {
+                if (!(grid[i][j] instanceof WallCell)) {
+                    Position currentPos = new Position(i, j);
+
+                    // Check all 4 possible directions
+                    for (int d = 0; d < 4; d++) {
+                        int nextRow = i + dRow[d];
+                        int nextCol = j + dCol[d];
+
+                        // If neighbor is within bounds and is not a wall, add edge
+                        if (isValidPosition(nextRow, nextCol) && !(grid[nextRow][nextCol] instanceof WallCell)) {
+                            Position neighborPos = new Position(nextRow, nextCol);
+                            graph.addEdge(currentPos, neighborPos, 1); // Costo normal de 1
+                        }
+                    }
+                }
+            }
+        }
+        return graph;
     }
 }

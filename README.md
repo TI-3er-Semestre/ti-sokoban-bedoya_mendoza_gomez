@@ -89,3 +89,9 @@ ti-sokoban-bedoya_mendoza_gomez created by GitHub Classroom
 - Densidad de errores = 0.00
 - Confiabilidad  = 1.00
 - Completitud  = 3.06
+
+- ### Iteracion 15: ec2aa15
+
+- Densidad de errores = 0.00
+- Confiabilidad = 1.00
+- Completitud = 5.50

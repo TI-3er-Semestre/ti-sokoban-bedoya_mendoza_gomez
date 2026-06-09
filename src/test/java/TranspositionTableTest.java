@@ -1,6 +1,6 @@
 import org.junit.jupiter.api.Test;
-import structures.TranspositionTable;
-import structures.StateKey;
+import Model.structures.TranspositionTable;
+import Model.structures.StateKey;
 import Model.Position;
 
 import static org.junit.jupiter.api.Assertions.*;

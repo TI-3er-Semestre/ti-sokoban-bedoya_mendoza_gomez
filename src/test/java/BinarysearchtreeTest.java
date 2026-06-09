@@ -1,4 +1,4 @@
-import structures.BinarySearchTree;
+import Model.structures.BinarySearchTree;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

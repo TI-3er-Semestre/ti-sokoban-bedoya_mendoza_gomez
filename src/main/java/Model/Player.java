@@ -1,5 +1,6 @@
 package Model;
 
+import Model.Direction;
 /**
  * Represents a registered player with their profile and statistics.
  */
@@ -11,6 +12,7 @@ public class Player {
     private String avatar;
     private ExperienceLevel experienceLevel;
     private PlayerStats stats;
+    private Direction currentDirection;
 
     public Player(String name, String email, String username,
                   String avatar, ExperienceLevel experienceLevel) {
@@ -22,6 +24,7 @@ public class Player {
         this.experienceLevel = experienceLevel;
 
         this.stats = new PlayerStats();
+        this.currentDirection = Direction.DOWN;
     }
 
     public Player(String username) {
@@ -31,6 +34,7 @@ public class Player {
         this.avatar = "";
         this.experienceLevel = ExperienceLevel.BEGINNER;
         this.stats = new PlayerStats();
+        this.currentDirection = Direction.DOWN;
     }
 
     public String getName() {
@@ -60,5 +64,17 @@ public class Player {
     public void setStats(PlayerStats stats) {
 
         this.stats = stats;
+    }
+    public Direction getCurrentDirection() {
+        return currentDirection;
+    }
+
+    public void setCurrentDirection(Direction currentDirection) {
+        this.currentDirection = currentDirection;
+    }
+
+    @Override
+    public String toString() {
+        return this.username;
     }
 }

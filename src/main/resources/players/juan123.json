@@ -1,0 +1,64 @@
+{
+  "name": "juan",
+  "email": "juan@gmail.com",
+  "username": "juan123",
+  "avatar": "👩",
+  "experienceLevel": "BEGINNER",
+  "stats": {
+    "results": {
+      "first": {
+        "data": {
+          "levelId": 3,
+          "moves": 12,
+          "pushes": 6,
+          "timeMillis": 5968
+        },
+        "next": {
+          "data": {
+            "levelId": 1,
+            "moves": 17,
+            "pushes": 8,
+            "timeMillis": 3776
+          },
+          "next": {
+            "data": {
+              "levelId": 1,
+              "moves": 18,
+              "pushes": 8,
+              "timeMillis": 2082
+            },
+            "next": {
+              "data": {
+                "levelId": 2,
+                "moves": 56,
+                "pushes": 17,
+                "timeMillis": 17834
+              },
+              "next": {
+                "data": {
+                  "levelId": 2,
+                  "moves": 57,
+                  "pushes": 17,
+                  "timeMillis": 1451
+                }
+              }
+            }
+          }
+        }
+      },
+      "last": {
+        "data": {
+          "levelId": 2,
+          "moves": 57,
+          "pushes": 17,
+          "timeMillis": 1451
+        }
+      },
+      "length": 5
+    },
+    "achievements": {
+      "size": 0
+    }
+  },
+  "currentDirection": "UP"
+}

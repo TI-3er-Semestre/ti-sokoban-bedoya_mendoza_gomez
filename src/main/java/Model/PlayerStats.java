@@ -1,6 +1,9 @@
 package Model;
 
-import structures.*;
+import Model.structures.BinarySearchTree;
+import Model.structures.Iterator;
+import Model.structures.LinkedList;
+import Model.structures.TreeNode;
 
 /**
  * Tracks all game results for a player across sessions.
@@ -10,6 +13,7 @@ public class PlayerStats {
 
     private LinkedList<GameResult> results;
     private BinarySearchTree<Achievement> achievements;
+
 
     public PlayerStats() {
         this.results = new LinkedList<>();

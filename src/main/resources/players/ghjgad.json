@@ -1,0 +1,56 @@
+{
+  "name": "nsnak",
+  "email": "jksa@jdas.com",
+  "username": "ghjgad",
+  "avatar": "🧑",
+  "experienceLevel": "EXPERT",
+  "stats": {
+    "results": {
+      "first": {
+        "data": {
+          "levelId": 3,
+          "moves": 12,
+          "pushes": 6,
+          "timeMillis": 5542
+        },
+        "next": {
+          "data": {
+            "levelId": 3,
+            "moves": 12,
+            "pushes": 6,
+            "timeMillis": 8242
+          },
+          "next": {
+            "data": {
+              "levelId": 3,
+              "moves": 12,
+              "pushes": 6,
+              "timeMillis": 9466
+            },
+            "next": {
+              "data": {
+                "levelId": 3,
+                "moves": 27,
+                "pushes": 10,
+                "timeMillis": 11962
+              }
+            }
+          }
+        }
+      },
+      "last": {
+        "data": {
+          "levelId": 3,
+          "moves": 27,
+          "pushes": 10,
+          "timeMillis": 11962
+        }
+      },
+      "length": 4
+    },
+    "achievements": {
+      "size": 0
+    }
+  },
+  "currentDirection": "UP"
+}

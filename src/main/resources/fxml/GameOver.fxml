@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<StackPane prefHeight="600" prefWidth="800" style="-fx-background-color: #1a1a2e;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.GameOverController">
+
+    <VBox alignment="CENTER" maxHeight="400" maxWidth="450" spacing="30" style="-fx-background-color: #16213e; -fx-border-color: #e94560; -fx-border-width: 2; -fx-border-radius: 10; -fx-background-radius: 10;">
+        <padding>
+            <Insets bottom="40" left="50" right="50" top="40" />
+        </padding>
+
+        <Label style="-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: #e94560;" text="¡GAME OVER!" />
+
+        <Label prefHeight="20.0" prefWidth="258.0" style="-fx-font-size: 14px; -fx-text-fill: #aaaaaa;" text="Una caja quedo atrapada en una esquina" textAlignment="CENTER" wrapText="true" />
+        <Label style="-fx-font-size: 14px; -fx-text-fill: #aaaaaa;" text="y es imposible moverla" textAlignment="CENTER" wrapText="true" />
+        <Label style="-fx-font-size: 14px; -fx-text-fill: #aaaaaa;" text="El nivel ya no se puede completar." textAlignment="CENTER" wrapText="true" />
+
+        <VBox alignment="CENTER" spacing="15" style="-fx-padding: 20 0 0 0;">
+            <Button onAction="#handleUndo" prefHeight="45" prefWidth="300" style="-fx-background-color: #16c79a; -fx-text-fill: white; -fx-font-size: 15px; -fx-font-weight: bold; -fx-cursor: hand;" text="Deshacer ultimo movimiento" />
+
+            <Button onAction="#handleStats" prefHeight="40" prefWidth="300" style="-fx-background-color: #0f3460; -fx-text-fill: white; -fx-font-size: 14px; -fx-cursor: hand;" text="Ver Estadisticas" />
+
+            <Button onAction="#handleMenu" prefHeight="40" prefWidth="300" style="-fx-background-color: #34495e; -fx-text-fill: white; -fx-font-size: 14px; -fx-cursor: hand;" text="Volver al Menu Principal" />
+        </VBox>
+    </VBox>
+</StackPane>
