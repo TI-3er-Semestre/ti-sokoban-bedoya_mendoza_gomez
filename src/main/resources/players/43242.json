@@ -5,52 +5,44 @@
   "avatar": "🧑",
   "experienceLevel": "BEGINNER",
   "stats": {
-    "results": {
-      "first": {
-        "data": {
-          "levelId": 1,
-          "moves": 17,
-          "pushes": 8,
-          "timeMillis": 3558
-        },
-        "next": {
-          "data": {
-            "levelId": 1,
-            "moves": 17,
-            "pushes": 8,
-            "timeMillis": 4134
-          },
-          "next": {
-            "data": {
-              "levelId": 1,
-              "moves": 17,
-              "pushes": 8,
-              "timeMillis": 4782
-            },
-            "next": {
-              "data": {
-                "levelId": 1,
-                "moves": 17,
-                "pushes": 8,
-                "timeMillis": 11101
-              }
-            }
-          }
-        }
+    "resultsForSave": [
+      {
+        "levelId": 1,
+        "moves": 17,
+        "pushes": 8,
+        "timeMillis": 3989
       },
-      "last": {
-        "data": {
-          "levelId": 1,
-          "moves": 20,
-          "pushes": 8,
-          "timeMillis": 3857
-        }
+      {
+        "levelId": 1,
+        "moves": 17,
+        "pushes": 8,
+        "timeMillis": 3989
       },
-      "length": 8
-    },
-    "achievements": {
-      "size": 0
-    }
+      {
+        "levelId": 2,
+        "moves": 56,
+        "pushes": 17,
+        "timeMillis": 5709
+      },
+      {
+        "levelId": 2,
+        "moves": 56,
+        "pushes": 17,
+        "timeMillis": 5709
+      },
+      {
+        "levelId": 2,
+        "moves": 57,
+        "pushes": 17,
+        "timeMillis": 2173
+      },
+      {
+        "levelId": 2,
+        "moves": 57,
+        "pushes": 17,
+        "timeMillis": 2173
+      }
+    ]
   },
-  "currentDirection": "LEFT"
+  "currentDirection": "RIGHT"
 }

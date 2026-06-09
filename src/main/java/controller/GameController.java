@@ -332,9 +332,9 @@ public class GameController {
             this.moveCount = loaded.getMoveCount();
             this.pushCount = loaded.getPushCount();
             this.currentLevel = levelRepo.loadLevel(loaded.getCurrentLevel());
-            System.out.println("Game loaded successfully for player ID: " + username);
+            System.out.println("Game loaded successfully for player username: " + username);
         } else {
-            System.err.println("No saved game found for player ID: " + username);
+            System.err.println("No saved game found for player username: " + username);
         }
     }
 

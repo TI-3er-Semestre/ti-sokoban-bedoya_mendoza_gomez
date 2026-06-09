@@ -11,13 +11,16 @@ import Model.structures.TreeNode;
  */
 public class PlayerStats {
 
-    private LinkedList<GameResult> results;
-    private BinarySearchTree<Achievement> achievements;
+    private transient  LinkedList<GameResult> results;
+    private transient  BinarySearchTree<Achievement> achievements;
+    private java.util.ArrayList<GameResult> resultsForSave = new java.util.ArrayList<>();
+
 
 
     public PlayerStats() {
         this.results = new LinkedList<>();
         this.achievements = new BinarySearchTree<>();
+        this.resultsForSave = new java.util.ArrayList<>();
     }
 
     /**
@@ -28,6 +31,7 @@ public class PlayerStats {
     public void addResult(GameResult r) {
         if (r != null) {
             results.add(r);
+            resultsForSave.add(r);
         }
     }
 
@@ -207,6 +211,18 @@ public class PlayerStats {
 
     public void removeAchievement(Achievement a) {
         achievements.delete(a);
+    }
+
+    public void rehydrate() {
+        this.results = new LinkedList<>();
+        if (resultsForSave != null) {
+            for (GameResult r : resultsForSave) {
+                results.add(r);
+            }
+        }
+        if (this.achievements == null) {
+            this.achievements = new BinarySearchTree<>();
+        }
     }
 
 }

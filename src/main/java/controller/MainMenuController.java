@@ -70,14 +70,18 @@ public class MainMenuController {
         Player selected = playerSelector.getValue();
 
         if (selected == null) {
-            showError("No hay un usuario seleccionado. Regístrate o selecciona un jugador.");
-            return; // Salida controlada
+            showError("No hay un usuario seleccionado.");
+            return;
         }
 
         try {
             GameController gc = getGameController();
+
             gc.setCurrentPlayer(selected);
+
             gc.setResumingGame(false);
+
+            gc.loadLevel(1);
 
             SokobanApplication.navigateTo("Game");
         } catch (Exception e) {

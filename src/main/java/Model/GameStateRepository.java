@@ -13,7 +13,8 @@ public class GameStateRepository {
     private String savePath;
 
     public GameStateRepository(String savePath) {
-        new File(saveFolder).mkdirs();
+        this.savePath = savePath;
+        new File(savePath).mkdirs();
     }
 
     /**
@@ -26,7 +27,7 @@ public class GameStateRepository {
             folder.mkdirs();
         }
 
-        String playerSavePath = saveFolder + File.separator + username + ".ser";
+        String playerSavePath = savePath + File.separator + username + ".ser";
 
         try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(playerSavePath))) {
             out.writeObject(state);
@@ -41,7 +42,7 @@ public class GameStateRepository {
      * @return saved GameState, or null if no save exists or error occurs.
      */
     public GameState load(String username) {
-        String playerSavePath = saveFolder + File.separator + username + ".ser";
+        String playerSavePath = savePath + File.separator + username + ".ser";
         File file = new File(playerSavePath);
 
         if (!file.exists()) return null;
@@ -63,7 +64,7 @@ public class GameStateRepository {
      * @return true if save file is present
      */
     public boolean hasSavedGame(String username) {
-        String path = saveFolder + File.separator + username + ".ser";
+        String path = savePath + File.separator + username + ".ser";
         return new File(path).exists();
     }
 

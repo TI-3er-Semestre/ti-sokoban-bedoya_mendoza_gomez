@@ -381,13 +381,11 @@ public class GameScreenController {
 
     private void showVictory() {
         try {
-            // 1. Guardar automáticamente el progreso al ganar
-            // Esto asegura que el estado "completado" o "nivel avanzado" se registre
-            String username = gameController.getCurrentPlayer().getUsername();
-            gameController.saveGame(username);
+            Player player = gameController.getCurrentPlayer();
+            if (player != null) {
+                gameController.saveGame(player.getUsername());
+            }
 
-            // 2. Actualizar los datos de victoria
-            // Fijar los datos de la partida para que VictoryController los lea
             VictoryController.VictoryData.levelId    = gameController.getCurrentState().getCurrentLevel();
             VictoryController.VictoryData.moves      = gameController.getMoveCount();
             VictoryController.VictoryData.pushes     = gameController.getPushCount();
@@ -395,6 +393,7 @@ public class GameScreenController {
 
             SokobanApplication.navigateTo("Victory");
         } catch (Exception e) {
+            e.printStackTrace();
             showError("Error al guardar progreso y cargar pantalla de victoria.");
         }
     }

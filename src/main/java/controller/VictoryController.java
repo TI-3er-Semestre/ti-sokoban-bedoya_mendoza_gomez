@@ -51,32 +51,35 @@ public class VictoryController {
         int    pushes     = VictoryData.pushes;
         long   timeMillis = VictoryData.timeMillis;
 
-        // Registrar resultado en el historial del jugador
         if (player != null) {
             GameResult result = new GameResult(levelId, moves, pushes, timeMillis);
             player.getStats().addResult(result);
             gc.savePlayerStats();
         }
 
-        // Llenar resultados de la partida
         lblLevelName.setText("Nivel " + levelId);
         lblMoves.setText(String.valueOf(moves));
         lblPushes.setText(String.valueOf(pushes));
         lblTime.setText(formatTime(timeMillis));
 
-        // Mejores marcas personales
         if (player != null) {
             PlayerStats stats = player.getStats();
+
+            GameResult prevBestMoves = stats.getBestByMoves(levelId);
+            GameResult prevBestTime  = stats.getBestByTime(levelId);
+
+            GameResult result = new GameResult(levelId, moves, pushes, timeMillis);
+            stats.addResult(result);
+            gc.savePlayerStats();
 
             GameResult bestMoves = stats.getBestByMoves(levelId);
             GameResult bestTime  = stats.getBestByTime(levelId);
 
             lblBestMoves.setText(bestMoves != null ? bestMoves.getMoves() + " mov" : "-");
-            lblBestTime.setText(bestTime  != null ? formatTime(bestTime.getTimeMillis()) : "-");
+            lblBestTime.setText(bestTime   != null ? formatTime(bestTime.getTimeMillis()) : "-");
 
-            // Detectar récord nuevo
-            boolean isMovesRecord = bestMoves != null && bestMoves.getMoves() == moves;
-            boolean isTimeRecord  = bestTime  != null && bestTime.getTimeMillis() == timeMillis;
+            boolean isMovesRecord = prevBestMoves == null || moves < prevBestMoves.getMoves();
+            boolean isTimeRecord  = prevBestTime  == null || timeMillis < prevBestTime.getTimeMillis();
 
             if (isMovesRecord || isTimeRecord) {
                 lblNewRecord.setText("¡Nuevo récord personal! 🏆");
@@ -89,7 +92,6 @@ public class VictoryController {
             lblNewRecord.setText("");
         }
 
-        // Deshabilitar "Siguiente nivel" si es el último
         if (levelId >= 3) {
             btnNextLevel.setDisable(true);
             btnNextLevel.setStyle(btnNextLevel.getStyle() + "-fx-opacity: 0.4;");
