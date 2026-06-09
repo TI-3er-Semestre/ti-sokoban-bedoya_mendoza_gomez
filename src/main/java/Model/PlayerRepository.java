@@ -45,7 +45,11 @@ public class PlayerRepository {
             return null;
         }
         try (Reader reader = new FileReader(file)) {
-            return gson.fromJson(reader, Player.class);
+            Player p = gson.fromJson(reader, Player.class);
+            if (p != null && p.getStats() != null) {
+                p.getStats().rehydrate();
+            }
+            return p;
         } catch (IOException e) {
             System.err.println("Error loading player: " + e.getMessage());
             return null;
